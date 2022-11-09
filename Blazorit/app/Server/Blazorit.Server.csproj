@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blazorit.Core\Blazorit.Core.csproj" />
-    <ProjectReference Include="..\Blazorit.SharedKernel\Blazorit.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\kernel\Core\Blazorit.Core.csproj" />
+    <ProjectReference Include="..\..\kernel\SharedKernel\Blazorit.SharedKernel.csproj" />
     <ProjectReference Include="..\Client\Blazorit.Client.csproj" />
     <ProjectReference Include="..\Shared\Blazorit.Shared.csproj" />
   </ItemGroup>

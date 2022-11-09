@@ -363,4 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 ##### Custom hidden files #####
-/Blazorit/Server/appsettings.json
+/Blazorit/app/Server/appsettings.json
+/Blazorit/app/Client/Properties/launchSettings.json

@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blazorit.SharedKernel\Blazorit.SharedKernel.csproj" />
+    <ProjectReference Include="..\Infrastructure\Blazorit.Infrastructure.csproj" />
+    <ProjectReference Include="..\SharedKernel\Blazorit.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
