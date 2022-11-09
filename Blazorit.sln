@@ -8,9 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazorit.UnitTests", "tests\Blazorit.UnitTests\Blazorit.UnitTests.csproj", "{5F4163C5-B21D-4830-97FB-F53484558FED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{4C2CB061-5B7E-4F42-A184-F1A21843C8E5}"
-	ProjectSection(SolutionItems) = preProject
-		Blazorit\app\Class1.cs = Blazorit\app\Class1.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kernel", "kernel", "{DF4E3067-EF7A-43AE-A677-F63F81B3C69A}"
 EndProject
