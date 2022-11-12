@@ -10,4 +10,14 @@
     <ProjectReference Include="..\SharedKernel\Blazorit.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DBStorages\BlazoritDB\ADO\" />
+    <Folder Include="DBStorages\BlazoritDB\EF\dom\" />
+    <Folder Include="DBStorages\BlazoritDB\EF\public\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0" />
+  </ItemGroup>
+
 </Project>

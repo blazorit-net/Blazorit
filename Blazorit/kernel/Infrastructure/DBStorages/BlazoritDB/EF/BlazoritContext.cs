@@ -1,13 +1,17 @@
-﻿using Blazorit.Shared;
+﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.ident;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blazorit.Server.Data {
-    public partial class DataContext : DbContext {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) {
+namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
+    public partial class BlazoritContext : DbContext {
+        public BlazoritContext(DbContextOptions<BlazoritContext> options) : base(options) {
 
         }
 
+
         public virtual DbSet<User> Users { get; set; } = null!;
+
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {

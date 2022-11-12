@@ -1,4 +1,5 @@
-using Blazorit.Server.Data;
+
+using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Blazorit.Server.Services.AuthService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -10,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<DataContext>(options => {
+//For Parallels calls methods and BlazorServer (https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/#using-a-dbcontext-factory-eg-for-blazor)
+//Not builder.Services.AddDbContext (scoped)
+builder.Services.AddDbContextFactory<BlazoritContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
@@ -23,6 +26,7 @@ builder.Services.AddEndpointsApiExplorer(); //custom add
 
 /***custom add - start***/
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.Identity.IIdentityRepository, Blazorit.Infrastructure.Repositories.Concrete.Identity.IdentityRepository>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new TokenValidationParameters {

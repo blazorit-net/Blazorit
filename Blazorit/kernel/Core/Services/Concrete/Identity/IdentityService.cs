@@ -1,61 +1,50 @@
-﻿using Blazorit.Infrastructure.;
-using Blazorit.Shared;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using Blazorit.Core.Services.Abstract.Identity;
+using Blazorit.Infrastructure.Repositories.Abstract.Identity;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Blazorit.Server.Services.AuthService
-{
-    public class AuthService : IAuthService
-    {
-        private readonly DataContext _context;
+namespace Blazorit.Core.Services.Concrete.Identity {
+    public class IdentityService : IIdentityService {
+        private readonly IIdentityRepository _identRepo;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        //private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(DataContext context,
-            IConfiguration configuration,
-            IHttpContextAccessor httpContextAccessor)
-        {
-            _context = context;
+        public IdentityService(IIdentityRepository identRepo, IConfiguration configuration) {  //IHttpContextAccessor httpContextAccessor) {
+            _identRepo = identRepo;
             _configuration = configuration;
-            _httpContextAccessor = httpContextAccessor;
+            //_httpContextAccessor = httpContextAccessor;
         }
 
-        public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        public string GetUserName() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+        //public string GetUserName() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
 
-        public async Task<ServiceResponse<string>> Login(string userName, string password)
-        {
+        public async Task<ServiceResponse<string>> Login(string userName, string password) {
             var response = new ServiceResponse<string>();
             var user = await _context.Users
                 .FirstOrDefaultAsync(x => x.UserName.ToLower().Equals(userName.ToLower()));
-            if (user == null)
-            {
+            if (user == null) {
                 response.Success = false;
                 response.Message = "User not found.";
-            }
-            else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-            {
+            } else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt)) {
                 response.Success = false;
                 response.Message = "Wrong password.";
-            }
-            else
-            {
+            } else {
                 response.Data = CreateToken(user);
             }
 
             return response;
         }
 
-        public async Task<ServiceResponse<int>> Register(User user, string password)
-        {
-            if (await UserExists(user.UserName))
-            {
-                return new ServiceResponse<int>
-                {
+        public async Task<ServiceResponse<int>> Register(User user, string password) {
+            if (await UserExists(user.UserName)) {
+                return new ServiceResponse<int> {
                     Success = false,
                     Message = "User already exists."
                 };
@@ -72,38 +61,31 @@ namespace Blazorit.Server.Services.AuthService
             return new ServiceResponse<int> { Data = user.Id, Message = "Registration successful!" };
         }
 
-        public async Task<bool> UserExists(string userName)
-        {
+        public async Task<bool> UserExists(string userName) {
             if (await _context.Users.AnyAsync(user => user.UserName.ToLower()
-                 .Equals(userName.ToLower())))
-            {
+                 .Equals(userName.ToLower()))) {
                 return true;
             }
             return false;
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt) {
+            using (var hmac = new HMACSHA512()) {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac
                     .ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
 
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt) {
+            using (var hmac = new HMACSHA512(passwordSalt)) {
                 var computedHash =
                     hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
 
-        private string CreateToken(User user)
-        {
+        private string CreateToken(User user) {
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -126,13 +108,10 @@ namespace Blazorit.Server.Services.AuthService
             return jwt;
         }
 
-        public async Task<ServiceResponse<bool>> ChangePassword(int userId, string newPassword)
-        {
+        public async Task<ServiceResponse<bool>> ChangePassword(int userId, string newPassword) {
             var user = await _context.Users.FindAsync(userId);
-            if (user == null)
-            {
-                return new ServiceResponse<bool>
-                {
+            if (user == null) {
+                return new ServiceResponse<bool> {
                     Success = false,
                     Message = "User not found."
                 };
@@ -148,8 +127,7 @@ namespace Blazorit.Server.Services.AuthService
             return new ServiceResponse<bool> { Data = true, Message = "Password has been changed." };
         }
 
-        public async Task<User> GetUserByUserName(string userName)
-        {
+        public async Task<User> GetUserByUserName(string userName) {
             return await _context.Users.FirstOrDefaultAsync(u => u.UserName.Equals(userName));
         }
     }
