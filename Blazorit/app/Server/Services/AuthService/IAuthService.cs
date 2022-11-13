@@ -1,4 +1,5 @@
-﻿using Blazorit.Shared;
+﻿/*
+using Blazorit.Shared;
 
 namespace Blazorit.Server.Services.AuthService
 {
@@ -13,3 +14,4 @@ namespace Blazorit.Server.Services.AuthService
         Task<User> GetUserByUserName(string userName);
     }
 }
+*/

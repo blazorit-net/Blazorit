@@ -1,5 +1,4 @@
 ﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
-using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.ident;
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
 using Blazorit.SharedKernel.Services.DTO.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -60,11 +59,32 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
         }
 
 
-        public async Task<SharedKernel.Services.DTO.Identity.User?> GetUser(string userName) {
+        public async Task<User?> GetUser(string userName) {
             using (var context = _contextFactory.CreateDbContext()) {
                 try {
                     var user = await context.Users.FirstOrDefaultAsync(x => x.UserName.ToLower().Equals(userName.ToLower()));
-                    return new SharedKernel.Services.DTO.Identity.User {
+                    return new User {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        PasswordHash = user.PasswordHash,
+                        PasswordSalt = user.PasswordSalt,
+                        DateCreated = user.DateCreated,
+                        Role = user.Role
+                    };
+                } catch {
+                    //TODO: log error
+                }
+            }
+
+            return null;
+        }
+
+
+        public async Task<User?> GetUser(long userId) {
+            using (var context = _contextFactory.CreateDbContext()) {
+                try {
+                    var user = await context.Users.FindAsync(userId);
+                    return new User {
                         Id = user.Id,
                         UserName = user.UserName,
                         PasswordHash = user.PasswordHash,

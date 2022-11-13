@@ -1,4 +1,4 @@
-﻿using Blazorit.Server.Services.AuthService;
+﻿using Blazorit.Server.Services.Abstract.Identity;
 using Blazorit.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,9 +11,9 @@ namespace Blazorit.Server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IIdentityService _authService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IIdentityService authService)
         {
             _authService = authService;
         }
@@ -21,12 +21,7 @@ namespace Blazorit.Server.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<ServiceResponse<int>>> Register(UserRegister request)
         {
-            var response = await _authService.Register(
-                new User
-                {
-                    UserName = request.UserName
-                },
-                request.Password);
+            var response = await _authService.Register(request.UserName, request.Password);
 
             if (!response.Success)
             {
