@@ -1,10 +1,10 @@
 ﻿@page "/login"
 @using Blazored.LocalStorage
-@using Blazorit.Client.Services.AuthService
+@using Blazorit.Client.Services.Abstract.Identity
 @using Blazorit.Shared
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.WebUtilities
-@inject IAuthService AuthService
+@inject IIdentityService IdentityService
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -49,7 +49,7 @@
 
     private async Task HandleLogin()
     {
-        var result = await AuthService.Login(user);
+        var result = await IdentityService.Login(user);
         if (result.Success)
         {
             errorMessage = string.Empty;

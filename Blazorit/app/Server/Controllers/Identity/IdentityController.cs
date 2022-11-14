@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Blazorit.Server.Controllers
+namespace Blazorit.Server.Controllers.Identity
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class IdentityController : ControllerBase
     {
         private readonly IIdentityService _authService;
 
-        public AuthController(IIdentityService authService)
+        public IdentityController(IIdentityService authService)
         {
             _authService = authService;
         }

@@ -11,7 +11,7 @@ namespace Blazorit.Server.Services.Abstract.Identity {
         Task<ServiceResponse<long>> Register(string userName, string password);
         Task<ServiceResponse<bool>> ChangePassword(long userId, string newPassword);
 
-        int GetUserId();
-        string GetUserName();
+        //int GetUserId();
+        //string GetUserName();
     }
 }

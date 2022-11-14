@@ -1,15 +1,16 @@
-﻿using Blazorit.Shared;
+﻿using Blazorit.Client.Services.Abstract.Identity;
+using Blazorit.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
 
-namespace Blazorit.Client.Services.AuthService
+namespace Blazorit.Client.Services.Concrete.Identity
 {
-    public class AuthService : IAuthService
+    public class IdentityService : IIdentityService
     {
         private readonly HttpClient _http;
         private readonly AuthenticationStateProvider _authStateProvider;
 
-        public AuthService(HttpClient http, AuthenticationStateProvider authStateProvider)
+        public IdentityService(HttpClient http, AuthenticationStateProvider authStateProvider)
         {
             _http = http;
             _authStateProvider = authStateProvider;
@@ -17,24 +18,24 @@ namespace Blazorit.Client.Services.AuthService
 
         public async Task<ServiceResponse<bool>> ChangePassword(UserChangePassword request)
         {
-            var result = await _http.PostAsJsonAsync("api/auth/change-password", request.Password);
+            var result = await _http.PostAsJsonAsync("api/identity/change-password", request.Password);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
         }
 
         public async Task<bool> IsUserAuthenticated()
         {
-            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
+            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity?.IsAuthenticated ?? false;
         }
 
         public async Task<ServiceResponse<string>> Login(UserLogin request)
         {
-            var result = await _http.PostAsJsonAsync("api/auth/login", request);
+            var result = await _http.PostAsJsonAsync("api/identity/login", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();
         }
 
         public async Task<ServiceResponse<int>> Register(UserRegister request)
         {
-            var result = await _http.PostAsJsonAsync("api/auth/register", request);
+            var result = await _http.PostAsJsonAsync("api/identity/register", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
     }

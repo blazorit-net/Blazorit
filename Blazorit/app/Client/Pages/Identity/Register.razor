@@ -1,7 +1,7 @@
 ﻿@page "/register"
-@using Blazorit.Client.Services.AuthService
+@using Blazorit.Client.Services.Abstract.Identity
 @using Blazorit.Shared
-@inject IAuthService AuthService
+@inject IIdentityService IdentityService
 
 <PageTitle>Register</PageTitle>
 
@@ -38,7 +38,7 @@
 
     async Task HandleRegistration()
     {
-        var result = await AuthService.Register(user);
+        var result = await IdentityService.Register(user);
         message = result.Message;
         if (result.Success)
             messageCssClass = "text-success";

@@ -1,9 +1,10 @@
 ﻿@page "/account"
-@using Blazorit.Client.Services.AuthService
+@using Blazorit.Client.Services.Abstract.Identity
 @using Blazorit.Shared
+@using Blazorit.Client.Providers.Concrete.Identity
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
-@inject IAuthService AuthService
+@inject IIdentityService IdentityService
 @inject NavigationManager NavigationManager 
 @inject AuthenticationStateProvider authenticationStateProvider
 @attribute [Authorize]
@@ -38,7 +39,7 @@
 
     private async Task ChangePassword()
     {
-        var result = await AuthService.ChangePassword(request);
+        var result = await IdentityService.ChangePassword(request);
         message = result.Message;
     }
 

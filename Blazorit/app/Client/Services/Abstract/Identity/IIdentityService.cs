@@ -1,8 +1,8 @@
 ﻿using Blazorit.Shared;
 
-namespace Blazorit.Client.Services.AuthService
+namespace Blazorit.Client.Services.Abstract.Identity
 {
-    public interface IAuthService
+    public interface IIdentityService
     {
         Task<ServiceResponse<int>> Register(UserRegister request);
         Task<ServiceResponse<string>> Login(UserLogin request);

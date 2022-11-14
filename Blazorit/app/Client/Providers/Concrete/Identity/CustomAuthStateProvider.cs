@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Text.Json;
 
-namespace Blazorit.Client
+namespace Blazorit.Client.Providers.Concrete.Identity 
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
@@ -49,7 +49,8 @@ namespace Blazorit.Client
         }
 
 
-        public async Task LogoutAuthenticationStateAsync() {
+        public async Task LogoutAuthenticationStateAsync()
+        {
             await _localStorageService.RemoveItemAsync("authToken");
             var identity = new ClaimsIdentity();
             var anonymous = new ClaimsPrincipal(identity);
