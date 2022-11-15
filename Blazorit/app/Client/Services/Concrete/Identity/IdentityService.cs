@@ -1,7 +1,7 @@
 ﻿using Blazorit.Client.Services.Abstract.Identity;
-using Blazorit.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
+using Blazorit.Shared.Models.Identity;
 
 namespace Blazorit.Client.Services.Concrete.Identity
 {
@@ -16,10 +16,10 @@ namespace Blazorit.Client.Services.Concrete.Identity
             _authStateProvider = authStateProvider;
         }
 
-        public async Task<ServiceResponse<bool>> ChangePassword(UserChangePassword request)
+        public async Task<Response<bool>> ChangePassword(UserChangePassword request)
         {
             var result = await _http.PostAsJsonAsync("api/identity/change-password", request.Password);
-            return await result.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
+            return await result.Content.ReadFromJsonAsync<Response<bool>>() ?? new Response<bool> { Success = false, Message = "Error response" };
         }
 
         public async Task<bool> IsUserAuthenticated()
@@ -27,16 +27,16 @@ namespace Blazorit.Client.Services.Concrete.Identity
             return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity?.IsAuthenticated ?? false;
         }
 
-        public async Task<ServiceResponse<string>> Login(UserLogin request)
+        public async Task<Response<string>> Login(UserLogin request)
         {
             var result = await _http.PostAsJsonAsync("api/identity/login", request);
-            return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();
+            return await result.Content.ReadFromJsonAsync<Response<string>>() ?? new Response<string> { Success = false, Message = "Error response" };
         }
 
-        public async Task<ServiceResponse<int>> Register(UserRegister request)
+        public async Task<Response<int>> Register(UserRegister request)
         {
             var result = await _http.PostAsJsonAsync("api/identity/register", request);
-            return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
+            return await result.Content.ReadFromJsonAsync<Response<int>>() ?? new Response<int> { Success = false, Message = "Error response" };
         }
     }
 }

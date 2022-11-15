@@ -1,22 +1,12 @@
 ﻿using Blazorit.Server.Services.Abstract.Identity;
-using Blazorit.Shared;
-
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+using CoreServices = Blazorit.Core.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CoreServices = Blazorit.Core.Services;
-using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.ident;
+using Blazorit.Shared.Models.Identity;
 
-
-namespace Blazorit.Server.Services.Concrete.Identity {
+namespace Blazorit.Server.Services.Concrete.Identity
+{
     public class IdentityService : IIdentityService {
         private readonly CoreServices.Abstract.Identity.IIdentityService _identService;
         private readonly IConfiguration _configuration;
@@ -28,14 +18,13 @@ namespace Blazorit.Server.Services.Concrete.Identity {
             _httpContextAccessor = httpContextAccessor;
         }
 
-        //public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-        //public string GetUserName() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+        public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? int.MinValue.ToString());
+        public string GetUserName() => _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
 
 
-
-        public async Task<ServiceResponse<string>> Login(string userName, string password) {            
+        public async Task<Response<string>> Login(string userName, string password) {            
             var responseFromCore = await _identService.CheckUser(userName, password);
-            var response = new ServiceResponse<string>();
+            var response = new Response<string>();
 
             response.Success = responseFromCore.Success;
             response.Message = responseFromCore.Message;
@@ -48,19 +37,17 @@ namespace Blazorit.Server.Services.Concrete.Identity {
         }
 
 
-        public async Task<ServiceResponse<long>> Register(string userName, string password) {
+        public async Task<Response<long>> Register(string userName, string password) {
             var resultFromCore = await _identService.RegisterUser(userName, password);
-            ServiceResponse<long> response;
-            ConvertResponseFromCoreToServer(resultFromCore, out response);
+            ConvertResponseFromCoreToServer(resultFromCore, out Response<long> response);
 
             return response;
         }
 
 
-        public async Task<ServiceResponse<bool>> ChangePassword(long userId, string newPassword) {
+        public async Task<Response<bool>> ChangePassword(long userId, string newPassword) {
             var resultFromCore = await _identService.ChangeUserPassword(userId, newPassword);
-            ServiceResponse<bool> response;
-            ConvertResponseFromCoreToServer(resultFromCore, out response);
+            ConvertResponseFromCoreToServer(resultFromCore, out Response<bool> response);
 
             return response;
         }
@@ -75,7 +62,7 @@ namespace Blazorit.Server.Services.Concrete.Identity {
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8
-                .GetBytes(_configuration.GetSection("AppSettings:SecurityKey").Value));
+                .GetBytes(_configuration.GetSection("AppSettings:SecurityKey").Value ?? string.Empty));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -89,8 +76,8 @@ namespace Blazorit.Server.Services.Concrete.Identity {
             return jwt;
         }
 
-        private void ConvertResponseFromCoreToServer<T>(Blazorit.Core.Services.DTO.Identity.ServiceResult<T> from, out ServiceResponse<T> to) {
-            to = new ServiceResponse<T>();
+        private void ConvertResponseFromCoreToServer<T>(CoreServices.Models.Identity.ServiceResult<T> from, out Response<T> to) {
+            to = new Response<T>();
             to.Success = from.Success;
             to.Message = from.Message;
             to.Data = from.Data;

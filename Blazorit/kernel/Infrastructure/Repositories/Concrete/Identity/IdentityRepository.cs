@@ -1,6 +1,6 @@
 ﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
-using Blazorit.SharedKernel.Services.DTO.Identity;
+using Blazorit.SharedKernel.Services.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

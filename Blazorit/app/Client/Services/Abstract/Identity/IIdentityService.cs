@@ -1,12 +1,12 @@
-﻿using Blazorit.Shared;
+﻿using Blazorit.Shared.Models.Identity;
 
 namespace Blazorit.Client.Services.Abstract.Identity
 {
     public interface IIdentityService
     {
-        Task<ServiceResponse<int>> Register(UserRegister request);
-        Task<ServiceResponse<string>> Login(UserLogin request);
-        Task<ServiceResponse<bool>> ChangePassword(UserChangePassword request);
+        Task<Response<int>> Register(UserRegister request);
+        Task<Response<string>> Login(UserLogin request);
+        Task<Response<bool>> ChangePassword(UserChangePassword request);
         Task<bool> IsUserAuthenticated();
     }
 }

@@ -1,50 +1,16 @@
 ﻿using Blazorit.Core.Services.Abstract.Identity;
-using Blazorit.Core.Services.DTO.Identity;
+using Blazorit.Core.Services.Models.Identity;
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
-
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-//using Microsoft.IdentityModel.Tokens;
-//using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Cryptography;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Blazorit.SharedKernel.Services.DTO.Identity;
+using Blazorit.SharedKernel.Services.Models.Identity;
 
 namespace Blazorit.Core.Services.Concrete.Identity {
     public class IdentityService : IIdentityService {
         private readonly IIdentityRepository _identRepo;
-        //private readonly IConfiguration _configuration;
-        //private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityService(IIdentityRepository identRepo) {  //IHttpContextAccessor httpContextAccessor) {
+
+        public IdentityService(IIdentityRepository identRepo) {
             _identRepo = identRepo;
-            //_configuration = configuration;
-            //_httpContextAccessor = httpContextAccessor;
-        }
-
-
-        public async Task<(bool isOk, User)> GetUser(string userName) {
-            User? user = await _identRepo.GetUser(userName);
-            if (user == null) {
-                return (false, new User());
-            }
-            
-            return (true, user);
-        }
-
-
-        public async Task<(bool isOk, User)> GetUser(long userId) {
-            User? user = await _identRepo.GetUser(userId);
-            if (user == null) {
-                return (false, new User());
-            }
-
-            return (true, user);
         }
 
 
@@ -53,10 +19,10 @@ namespace Blazorit.Core.Services.Concrete.Identity {
             var user = await _identRepo.GetUser(userName);
             if (user == null) {
                 response.Success = false;
-                response.Message = "User not found.";
+                response.Message = "User not found";
             } else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt)) {
                 response.Success = false;
-                response.Message = "Wrong password.";
+                response.Message = "Wrong password";
             } else {
                 response.Success = true;
                 response.Message = "User password matches";
@@ -67,22 +33,36 @@ namespace Blazorit.Core.Services.Concrete.Identity {
         }
 
 
-        public async Task<ServiceResult<long>> RegisterUser(string userName, string password) {
-            //TODO: rewrite code: need for checking
-            if (await _identRepo.UserExists(userName) == SharedKernel.Services.DTO.Identity.UserExistsResult.Exists) {
+        public async Task<ServiceResult<long>> RegisterUser(string userName, string password) {            
+            var userExists = await _identRepo.UserExists(userName);
+            if (userExists == UserExistsResult.Exists) {
                 return new ServiceResult<long> {
                     Success = false,
                     Message = "User already exists."
                 };
+            } else if (userExists == UserExistsResult.Error) {
+                return new ServiceResult<long> {
+                    Success = false,
+                    Message = "User check failed."
+                };
             }
 
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
-
-            //TODO: rewrite code: check result of RegisterUser
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt); //local creating in memory
+            
             var regRslt = await _identRepo.RegisterUser(userName, passwordHash, passwordSalt, "user_role");
-
-            return new ServiceResult<long> { Data = regRslt.userId, Message = "Registration successful!" };
+            if (regRslt.isOk == true) {
+                return new ServiceResult<long> { 
+                    Data = regRslt.userId, 
+                    Success = true,
+                    Message = "Registration successful!" };
+            } else {
+                return new ServiceResult<long> {
+                    Success = false,
+                    Message = "User registration error."
+                };
+            }
         }
+
 
         public async Task<ServiceResult<bool>> ChangeUserPassword(long userId, string newPassword) {
             var user = await _identRepo.GetUser(userId);
@@ -95,19 +75,22 @@ namespace Blazorit.Core.Services.Concrete.Identity {
 
             CreatePasswordHash(newPassword, out byte[] passwordHash, out byte[] passwordSalt);
 
-            await _identRepo.ChangeUserPassword(userId, passwordHash, passwordSalt);
+            if (await _identRepo.ChangeUserPassword(userId, passwordHash, passwordSalt)) {
+                return new ServiceResult<bool> { Success = true, Message = "Password has been changed." };
+            }
 
-            return new ServiceResult<bool> { Data = true, Message = "Password has been changed." };
+            return new ServiceResult<bool> { Success = false, Message = "Password hasn't been changed!" };
         }
 
 
-        public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt) {
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt) {
             using (var hmac = new HMACSHA512(passwordSalt)) {
                 var computedHash =
                     hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
+
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt) {
             using (var hmac = new HMACSHA512()) {
@@ -118,8 +101,28 @@ namespace Blazorit.Core.Services.Concrete.Identity {
         }
 
 
-        //public async Task<User> GetUserByUserName(string userName) {
-        //    return await _context.Users.FirstOrDefaultAsync(u => u.UserName.Equals(userName));
-        //}
+        ////public async Task<(bool isOk, User)> GetUser(string userName) {
+        ////    User? user = await _identRepo.GetUser(userName);
+        ////    if (user == null) {
+        ////        return (false, new User());
+        ////    }
+
+        ////    return (true, user);
+        ////}
+
+
+        ////public async Task<(bool isOk, User)> GetUser(long userId) {
+        ////    User? user = await _identRepo.GetUser(userId);
+        ////    if (user == null) {
+        ////        return (false, new User());
+        ////    }
+
+        ////    return (true, user);
+        ////}
+
+
+        ////public async Task<User> GetUserByUserName(string userName) {
+        ////    return await _context.Users.FirstOrDefaultAsync(u => u.UserName.Equals(userName));
+        ////}
     }
 }

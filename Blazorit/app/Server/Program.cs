@@ -2,10 +2,9 @@
 using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Blazorit.Server.Services.Abstract.Identity;
 using Blazorit.Server.Services.Concrete.Identity;
-//using Blazorit.Server.Services.AuthService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.ResponseCompression;
+////using Microsoft.AspNetCore.Cors.Infrastructure;
+////using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -36,7 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey =
                 new SymmetricSecurityKey(System.Text.Encoding.UTF8
-                .GetBytes(builder.Configuration.GetSection("AppSettings:SecurityKey").Value)),
+                .GetBytes(builder.Configuration.GetSection("AppSettings:SecurityKey").Value ?? string.Empty)),
             ValidateIssuer = false,
             ValidateAudience = false
         };

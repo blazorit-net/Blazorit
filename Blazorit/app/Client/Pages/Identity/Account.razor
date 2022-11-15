@@ -1,12 +1,12 @@
 ﻿@page "/account"
-@using Blazorit.Client.Services.Abstract.Identity
-@using Blazorit.Shared
+@using Blazorit.Shared.Models.Identity
 @using Blazorit.Client.Providers.Concrete.Identity
+@using Blazorit.Client.Services.Abstract.Identity
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @inject IIdentityService IdentityService
 @inject NavigationManager NavigationManager 
-@inject AuthenticationStateProvider authenticationStateProvider
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
 <AuthorizeView>
@@ -45,7 +45,7 @@
 
 
     private async Task Logout() {
-        var authProvider = (CustomAuthStateProvider)authenticationStateProvider;
+        var authProvider = (CustomAuthStateProvider)AuthenticationStateProvider;
         await authProvider.LogoutAuthenticationStateAsync();
         NavigationManager.NavigateTo("/", true);
     }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Text.Json;
 
 namespace Blazorit.Client.Providers.Concrete.Identity 

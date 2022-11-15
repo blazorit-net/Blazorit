@@ -1,5 +1,5 @@
 ﻿using Blazorit.Server.Services.Abstract.Identity;
-using Blazorit.Shared;
+using Blazorit.Shared.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ namespace Blazorit.Server.Controllers.Identity
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<ServiceResponse<int>>> Register(UserRegister request)
+        public async Task<ActionResult<Response<int>>> Register(UserRegister request)
         {
             var response = await _authService.Register(request.UserName, request.Password);
 
@@ -32,7 +32,7 @@ namespace Blazorit.Server.Controllers.Identity
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<ServiceResponse<string>>> Login(UserLogin request)
+        public async Task<ActionResult<Response<string>>> Login(UserLogin request)
         {
             var response = await _authService.Login(request.UserName, request.Password);
             if (!response.Success)
@@ -44,7 +44,7 @@ namespace Blazorit.Server.Controllers.Identity
         }
 
         [HttpPost("change-password"), Authorize]
-        public async Task<ActionResult<ServiceResponse<bool>>> ChangePassword([FromBody] string newPassword)
+        public async Task<ActionResult<Response<bool>>> ChangePassword([FromBody] string newPassword)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var response = await _authService.ChangePassword(int.Parse(userId), newPassword);

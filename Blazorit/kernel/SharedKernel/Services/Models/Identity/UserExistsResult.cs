@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blazorit.SharedKernel.Services.DTO.Identity {
+namespace Blazorit.SharedKernel.Services.Models.Identity {
     public enum UserExistsResult {
         Exists,
         NotExists,
