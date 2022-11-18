@@ -58,6 +58,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
             using (var context = _contextFactory.CreateDbContext()) {
                 try {
                     var user = await context.Users.FirstOrDefaultAsync(x => x.UserName.ToLower().Equals(userName.ToLower()));
+                    if (user is null) return null;
                     return new User {
                         Id = user.Id,
                         UserName = user.UserName,
@@ -79,6 +80,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
             using (var context = _contextFactory.CreateDbContext()) {
                 try {
                     var user = await context.Users.FindAsync(userId);
+                    if (user is null) return null;
                     return new User {
                         Id = user.Id,
                         UserName = user.UserName,

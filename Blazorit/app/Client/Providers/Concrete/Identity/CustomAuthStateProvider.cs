@@ -69,14 +69,16 @@ namespace Blazorit.Client.Providers.Concrete.Identity
             return Convert.FromBase64String(base64);
         }
 
-        private IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
+        private IEnumerable<Claim>? ParseClaimsFromJwt(string jwt)
         {
             var payload = jwt.Split('.')[1];
             var jsonBytes = ParseBase64WithoutPadding(payload);
             var keyValuePairs = JsonSerializer
                 .Deserialize<Dictionary<string, object>>(jsonBytes);
 
-            var claims = keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
+            if (keyValuePairs == null) return null;
+
+            var claims = keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value?.ToString() ?? string.Empty));
 
             return claims;
         }
