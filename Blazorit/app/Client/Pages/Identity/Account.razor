@@ -10,7 +10,7 @@
 @attribute [Authorize]
 
 <AuthorizeView>
-    <h3>Hi! You're logged in with <i>@context.User.Identity.Name</i>.</h3>
+    <h3>Hi! You're logged in with <i>@context.User.Identity?.Name</i>.</h3>
     <button class="btn btn-warning" onclick="@(() => Logout())">Logout</button>
 </AuthorizeView>
 <p></p>

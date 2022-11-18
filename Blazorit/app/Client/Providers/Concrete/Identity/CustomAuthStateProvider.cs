@@ -19,22 +19,22 @@ namespace Blazorit.Client.Providers.Concrete.Identity
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            string authToken = await _localStorageService.GetItemAsStringAsync("authToken");
+            string identityToken = await _localStorageService.GetItemAsStringAsync("identityToken");
 
             var identity = new ClaimsIdentity();
             _http.DefaultRequestHeaders.Authorization = null;
 
-            if (!string.IsNullOrEmpty(authToken))
+            if (!string.IsNullOrEmpty(identityToken))
             {
                 try
                 {
-                    identity = new ClaimsIdentity(ParseClaimsFromJwt(authToken), "jwt");
+                    identity = new ClaimsIdentity(ParseClaimsFromJwt(identityToken), "jwt");
                     _http.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Bearer", authToken.Replace("\"", ""));
+                        new AuthenticationHeaderValue("Bearer", identityToken.Replace("\"", ""));
                 }
                 catch
                 {
-                    await _localStorageService.RemoveItemAsync("authToken");
+                    await _localStorageService.RemoveItemAsync("identityToken");
                     identity = new ClaimsIdentity();
                 }
             }
@@ -50,7 +50,7 @@ namespace Blazorit.Client.Providers.Concrete.Identity
 
         public async Task LogoutAuthenticationStateAsync()
         {
-            await _localStorageService.RemoveItemAsync("authToken");
+            await _localStorageService.RemoveItemAsync("identityToken");
             var identity = new ClaimsIdentity();
             var anonymous = new ClaimsPrincipal(identity);
             var state = new AuthenticationState(anonymous);

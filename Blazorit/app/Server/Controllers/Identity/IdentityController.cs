@@ -1,8 +1,8 @@
 ﻿using Blazorit.Server.Services.Abstract.Identity;
 using Blazorit.Shared.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using System.Security.Claims;
 
 namespace Blazorit.Server.Controllers.Identity
@@ -46,10 +46,10 @@ namespace Blazorit.Server.Controllers.Identity
         [HttpPost("change-password"), Authorize]
         public async Task<ActionResult<Response<bool>>> ChangePassword([FromBody] string newPassword)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
             var response = await _authService.ChangePassword(int.Parse(userId), newPassword);
 
-            if (!response.Success)
+            if (!response.Success || string.IsNullOrEmpty(userId))
             {
                 return BadRequest(response);
             }
