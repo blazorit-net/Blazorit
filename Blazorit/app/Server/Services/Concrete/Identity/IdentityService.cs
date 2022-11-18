@@ -76,6 +76,7 @@ namespace Blazorit.Server.Services.Concrete.Identity
             return jwt;
         }
 
+
         private void ConvertResponseFromCoreToServer<T>(CoreServices.Models.Identity.ServiceResult<T> from, out Response<T> to) {
             to = new Response<T>();
             to.Success = from.Success;

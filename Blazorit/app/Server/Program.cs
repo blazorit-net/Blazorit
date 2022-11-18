@@ -22,7 +22,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 
-builder.Services.AddEndpointsApiExplorer(); //custom add
+////builder.Services.AddEndpointsApiExplorer(); //custom add
 ////builder.Services.AddSwaggerGen(); //custom add
 
 /***custom add - start***/
