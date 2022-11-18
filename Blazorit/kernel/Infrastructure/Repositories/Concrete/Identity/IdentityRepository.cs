@@ -33,12 +33,12 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
             using (var context = _contextFactory.CreateDbContext()) {
                 try {
                     var user = new DBStorages.BlazoritDB.EF.ident.User() {
-                        Id = long.MinValue,
+                        ////Id = long.MinValue,
                         UserName = userName,
                         PasswordHash = passwordHash,
                         PasswordSalt = passwordSalt,
                         DateCreated = DateTime.Now,
-                        Role = userRole
+                        UserRole = userRole
                     };
 
                     context.Users.Add(user);
@@ -64,7 +64,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
                         PasswordHash = user.PasswordHash,
                         PasswordSalt = user.PasswordSalt,
                         DateCreated = user.DateCreated,
-                        Role = user.Role
+                        Role = user.UserRole
                     };
                 } catch {
                     //TODO: log error
@@ -85,7 +85,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
                         PasswordHash = user.PasswordHash,
                         PasswordSalt = user.PasswordSalt,
                         DateCreated = user.DateCreated,
-                        Role = user.Role
+                        Role = user.UserRole
                     };
                 } catch {
                     //TODO: log error
