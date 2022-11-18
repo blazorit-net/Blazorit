@@ -1,10 +1,4 @@
 ﻿using Blazorit.Core.Services.Models.Identity;
-using Blazorit.SharedKernel.Services.Models.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blazorit.Core.Services.Abstract.Identity {
     public interface IIdentityService {

@@ -2,11 +2,6 @@
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
 using Blazorit.SharedKernel.Services.Models.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
     public class IdentityRepository : IIdentityRepository {
