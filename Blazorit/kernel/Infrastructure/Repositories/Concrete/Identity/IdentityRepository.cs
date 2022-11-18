@@ -102,6 +102,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
             try {
                 using (var context = _contextFactory.CreateDbContext()) {
                     var user = await context.Users.FindAsync(userId);
+                    if (user is null) return false;
+
                     user.PasswordHash = passwordHash;
                     user.PasswordSalt = passwordSalt;
 
