@@ -8,30 +8,31 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
 
         private readonly IDbContextFactory<BlazoritContext> _contextFactory;
 
+
         public IdentityRepository(IDbContextFactory<BlazoritContext> contextFactory) {
-            this._contextFactory = contextFactory;
+            _contextFactory = contextFactory;
         }
 
-        public async Task<UserExistsResult> UserExists(string userName) {
-            using (var context = _contextFactory.CreateDbContext()) {
-                try {
+
+        public async Task<UserExistsResult> UserExists(string userName) {            
+            try {
+                using (var context = _contextFactory.CreateDbContext()) {
                     if (await context.Users.AnyAsync(user => user.UserName.ToLower().Equals(userName.ToLower()))) {
                         return UserExistsResult.Exists;
                     }
                     return UserExistsResult.NotExists;
-
-                } catch {
-                    //TODO: log error
                 }
-            }          
+            } catch {
+                //TODO: log error
+            }                     
 
             return UserExistsResult.Error;
         }
 
 
         public async Task<(bool isOk, long userId)> RegisterUser(string userName, byte[] passwordHash, byte[] passwordSalt, string userRole) {
-            using (var context = _contextFactory.CreateDbContext()) {
-                try {
+            try {
+                using (var context = _contextFactory.CreateDbContext()) {
                     var user = new DBStorages.BlazoritDB.EF.ident.User() {
                         ////Id = long.MinValue,
                         UserName = userName,
@@ -44,19 +45,18 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
                     context.Users.Add(user);
                     await context.SaveChangesAsync();
                     return (true, user.Id);
-
-                } catch {
-                    //TODO: log error
                 }
-            }
+            } catch {
+                //TODO: log error
+            }            
 
             return (false, long.MinValue);
         }
 
 
-        public async Task<User?> GetUser(string userName) {
-            using (var context = _contextFactory.CreateDbContext()) {
-                try {
+        public async Task<User?> GetUser(string userName) {            
+            try {
+                using (var context = _contextFactory.CreateDbContext()) {
                     var user = await context.Users.FirstOrDefaultAsync(x => x.UserName.ToLower().Equals(userName.ToLower()));
                     if (user is null) return null;
                     return new User {
@@ -67,18 +67,18 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
                         DateCreated = user.DateCreated,
                         Role = user.UserRole
                     };
-                } catch {
-                    //TODO: log error
                 }
-            }
+            } catch {
+                //TODO: log error
+            }            
 
             return null;
         }
 
 
-        public async Task<User?> GetUser(long userId) {
-            using (var context = _contextFactory.CreateDbContext()) {
-                try {
+        public async Task<User?> GetUser(long userId) {            
+            try {
+                using (var context = _contextFactory.CreateDbContext()) {
                     var user = await context.Users.FindAsync(userId);
                     if (user is null) return null;
                     return new User {
@@ -89,10 +89,10 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
                         DateCreated = user.DateCreated,
                         Role = user.UserRole
                     };
-                } catch {
-                    //TODO: log error
                 }
-            }
+            } catch {
+                //TODO: log error
+            }            
 
             return null;
         }
@@ -116,6 +116,5 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
 
             return false;
         }
-
     }
 }
