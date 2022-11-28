@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Client", "Blazorit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Server", "Blazorit\app\Server\Blazorit.Server.csproj", "{C6E1CD81-AAFA-40BC-A9B1-3A3E7F1A114C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazorit.ConsoleApp", "tests\Blazorit.ConsoleApp\Blazorit.ConsoleApp.csproj", "{3D5112E9-F6A8-491E-954F-616F93FE98C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.ConsoleApp", "tests\Blazorit.ConsoleApp\Blazorit.ConsoleApp.csproj", "{3D5112E9-F6A8-491E-954F-616F93FE98C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

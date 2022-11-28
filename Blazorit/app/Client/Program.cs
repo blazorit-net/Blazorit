@@ -13,6 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddBlazoredLocalStorage(); //custom add
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddAntDesign(); //AntDesign
 builder.Services.AddScoped<IIdentityService, IdentityService>(); //custom add
 builder.Services.AddOptions(); //custom add
 builder.Services.AddAuthorizationCore(); //custom add
