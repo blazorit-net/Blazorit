@@ -7,7 +7,7 @@
 @inject IIdentityService IdentityService
 @inject NavigationManager NavigationManager 
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@attribute [Authorize]
+
 
 <AuthorizeView>
     <h3>Hi! You're logged in with <i>@context.User.Identity?.Name</i>.</h3>

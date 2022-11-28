@@ -4,11 +4,11 @@
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeView Roles="admin_role">
+            <AuthorizeView Roles="admin_role" Context="admin_context">
                 <Authorized>
                     <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(AdminLayout)">
                     </AuthorizeRouteView>
-                    <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                    <FocusOnNavigate RouteData="@routeData" Selector="h1" />                    
                 </Authorized>
                 <NotAuthorized>
                     <AuthorizeView Roles="user_role" Context="user_context">
@@ -24,13 +24,7 @@
                         </NotAuthorized>
                     </AuthorizeView>
                 </NotAuthorized>
-
-
-
-
             </AuthorizeView>
-            
-
 @*
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(AdminLayout)">
                 <NotAuthorized>
@@ -40,11 +34,8 @@
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />*@
 
-        </Found>
-        
-        
-        
-        <NotFound>
+        </Found>     
+         <NotFound>
             <PageTitle>Not found</PageTitle>
             <LayoutView Layout="@typeof(MainLayout)">
                 <p role="alert">Sorry, there's nothing at this address.</p>

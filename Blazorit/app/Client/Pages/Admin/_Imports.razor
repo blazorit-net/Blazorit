@@ -1,3 +1,4 @@
 ﻿@using AntDesign
 @using Blazorit.Client.Shared.Layouts.Admin;
 @layout AdminLayout
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin_role")]
