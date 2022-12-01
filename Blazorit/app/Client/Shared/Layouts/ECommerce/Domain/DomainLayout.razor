@@ -1,0 +1,31 @@
+﻿@using MudBlazor
+@inherits LayoutComponentBase
+
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudGrid Spacing="0">
+        <MudItem xs="12" xl="12">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=12 xl=12</MudPaper>
+        </MudItem>
+        <MudItem xs="12" xl="12">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=12 xl=12</MudPaper>
+        </MudItem>
+        <MudItem xs="12" xl="12">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=12 xl=12</MudPaper>
+        </MudItem>
+        <MudItem xs="12" xl="10">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=12 xl=10</MudPaper>
+        </MudItem>
+        <MudItem xs="0" xl=10 lg="1"></MudItem>
+        <MudItem xs="12" xl=10 lg="10">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=12 xl=10 lg=10</MudPaper>
+        </MudItem>
+        <MudItem xs="0" xl=10 lg="1"></MudItem>
+    </MudGrid>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
