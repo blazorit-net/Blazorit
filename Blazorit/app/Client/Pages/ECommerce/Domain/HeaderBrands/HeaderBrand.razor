@@ -3,22 +3,22 @@
 @inject IMessageService message;
 
 
-<GridRow Justify="space-between" Align="center" Class="@Name">
-        <GridCol Flex=1 Class=@($"{Name}__logo")>
-            <figure>
-                Image
-            </figure>
-        </GridCol>
-        <GridCol Flex=1 Class=@($"{Name}__search")>
-            <div>
-            <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="OnSearch" />
-            </div>
-        </GridCol>
-        <GridCol Flex=1 Class=@($"{Name}__contacts")>
-            <div style="float:right">
-                <p>Contacts</p>
-            </div>
-        </GridCol>
+<GridRow Justify="space-between" Align="center" Class=@($"{Name} header-brand")>
+    <GridCol Flex=1 Class="header-brand_logo")>
+        <figure>
+            Image
+        </figure>
+    </GridCol>
+    <GridCol Flex=1 Class="header-brand-search">
+        <div>
+        <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="OnSearch" />
+        </div>
+    </GridCol>
+    <GridCol Flex=1 Class="header-brand-contacts">
+        <div style="float:right">
+            <p>Contacts</p>
+        </div>
+    </GridCol>
 </GridRow>
 
 
@@ -27,7 +27,7 @@
     public string? Name { get; set; }
 
 
-    private string txtValue { get; set; }
+    private string? txtValue { get; set; }
     private bool loading;
 
     private void Handle(string value) {

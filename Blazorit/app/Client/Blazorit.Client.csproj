@@ -15,12 +15,12 @@
 
   <ItemGroup>
     <PackageReference Include="AntDesign" Version="0.13.0" />
+    <PackageReference Include="BlazorComponentUtilities" Version="1.8.0" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
-    <PackageReference Include="MudBlazor" Version="6.1.2" />
   </ItemGroup>
 
   <ItemGroup>

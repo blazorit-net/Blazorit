@@ -1,0 +1,9 @@
+﻿.site-footer-comp {
+    padding: 0.5em 0;
+}
+
+.site-footer-comp .content {
+    font-size: 1.1em;
+    color: white;
+    text-align: center;
+}
