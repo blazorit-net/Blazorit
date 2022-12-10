@@ -1,0 +1,28 @@
+﻿
+<HeadContent>
+<style>
+    @($".{Name}") {
+        padding: 0.5em 0;
+    }
+
+    @($".{Name}__some-content") {
+        font-size: 1.1em;
+        color: white;
+        text-align:center;
+    }
+</style>
+</HeadContent>
+
+
+
+
+<GridRow Class=@Name>
+    <GridCol Span="24">
+        <h1 class="@($"{Name}__some-content")">SiteFooter </h1>
+    </GridCol>    
+</GridRow>
+
+@code {
+    [Parameter]
+    public string? Name { get; set; }
+}

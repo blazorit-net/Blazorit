@@ -1,0 +1,57 @@
+﻿
+<style>
+    .@Name {
+        padding: 0.5em 0;
+    }
+
+    .@Name .tool a {
+        font-size: 1.1em;
+        color: white;
+    }
+
+    .@Name .tool .nav-divider {
+        background-color:white;
+    }
+</style>
+
+
+<GridRow Justify="space-between" Class="@Name">
+    <GridCol Flex="1" Class=@($"{Name}__accout tool")>
+        <Space Direction="DirectionVHType.Horizontal">
+            <Split>
+                <Divider Type="DirectionVHType.Vertical" Class="nav-divider" />
+            </Split>
+            <ChildContent>
+                <SpaceItem>
+                    <a>Login</a>
+                </SpaceItem>
+                <SpaceItem>
+                    <a>Register</a>
+                </SpaceItem>
+            </ChildContent>            
+            </Space>  
+    </GridCol>            
+
+    <GridCol Flex="1" Class=@($"{Name}__cart tool") Style="float:right;">
+        <Space Direction="DirectionVHType.Horizontal">
+            <Split>
+                <Divider Type="DirectionVHType.Vertical" Class="nav-divider" />
+            </Split>
+            <ChildContent>
+                <SpaceItem>
+                    <a>Favorite</a>
+                </SpaceItem>
+                <SpaceItem>
+                    <a>ShopCart</a>
+                </SpaceItem>
+            </ChildContent>
+        </Space>
+    </GridCol>
+</GridRow>        
+
+
+
+@code {
+    [Parameter]
+    public string? Name { get; set; }
+}
