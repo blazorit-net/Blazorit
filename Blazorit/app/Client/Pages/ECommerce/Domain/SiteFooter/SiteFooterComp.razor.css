@@ -1,5 +1,9 @@
-﻿.site-footer-comp {
-    padding: 0.5em 0;
+﻿/*::deep .site-footer-comp {
+    padding: 2em 0;
+}*/
+
+.site-footer-comp {
+    padding: 0.5em;
 }
 
 .site-footer-comp .content {

@@ -2,29 +2,39 @@
 
 @inject IMessageService message;
 
+<div class="@GetClass("header-brand")">
+    <GridRow Justify="space-between" Align="center">
+        <GridCol Flex=1 Class="header-brand_logo">
+            <figure>
+                Image
+            </figure>
+        </GridCol>
+        <GridCol Flex=1 Class="header-brand-search">
+            <div>
+                <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="OnSearch" />
+            </div>
+        </GridCol>
+        <GridCol Flex=1 Class="header-brand-contacts">
+            <div style="float:right">
+                <p>Contacts</p>
+            </div>
+        </GridCol>
+    </GridRow>
+</div>
 
-<GridRow Justify="space-between" Align="center" Class=@($"{Name} header-brand")>
-    <GridCol Flex=1 Class="header-brand_logo")>
-        <figure>
-            Image
-        </figure>
-    </GridCol>
-    <GridCol Flex=1 Class="header-brand-search">
-        <div>
-        <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="OnSearch" />
-        </div>
-    </GridCol>
-    <GridCol Flex=1 Class="header-brand-contacts">
-        <div style="float:right">
-            <p>Contacts</p>
-        </div>
-    </GridCol>
-</GridRow>
 
 
 @code {
     [Parameter]
     public string? Name { get; set; }
+
+    private string GetClass(string classes) {
+        if (string.IsNullOrEmpty(Name)) {
+            return classes;
+        }
+
+        return $"{Name} {classes}";
+    }
 
 
     private string? txtValue { get; set; }

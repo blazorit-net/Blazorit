@@ -1,15 +1,15 @@
-﻿<div class="@GetClass("site-footer-comp")">
-    <GridRow>
-        <GridCol Span="24">
-            <h1 class="content">SiteFooter </h1>
-        </GridCol>
-    </GridRow>
+﻿<div class="@GetClass("site-content")">
+    <h3>SiteContent from component</h3>
+    @Body
 </div>
 
 
 @code {
     [Parameter]
     public string? Name { get; set; }
+
+    [Parameter]
+    public RenderFragment? Body { get; set; }
 
     private string GetClass(string classes) {
         if (string.IsNullOrEmpty(Name)) {
