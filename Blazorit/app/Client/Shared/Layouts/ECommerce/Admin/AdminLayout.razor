@@ -1,67 +1,70 @@
 ﻿@using AntDesign
 @inherits LayoutComponentBase
 
-<Layout Style="min-height: 100vh; ">
-    <Sider Collapsible Collapsed=@collapsed OnCollapse=@onCollapse Style="overflow:auto; height:100vh; position:fixed; left:0">
-        <div id="ant-site-layout-sider-logo" class="logo" />
-        <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
-            <MenuItem Key="1" RouterLink="/account">
-                <Icon Type="user" Theme="outline" />
-                <span>Account</span>
-            </MenuItem>
-            <MenuItem Key="2" RouterLink="/counter">
-                <Icon Type="desktop" Theme="outline" />
-                <span>Counter</span>
-            </MenuItem>
-            <MenuItem Key="3" RouterLink="/fetchdata">
-                <Icon Type="desktop" Theme="outline" />
-                <span>Fetch Data</span>
-            </MenuItem>
-            @{
-                RenderFragment sub1Title =
-                @<span>
+<div class="ecom-admin-layout">
+    <Layout Style="min-height: 100vh; ">
+        <Sider Collapsible Collapsed=@collapsed OnCollapse=@onCollapse Style="overflow:auto; height:100vh; position:fixed; left:0">
+            <div id="ant-site-layout-sider-logo" class="logo" />
+            <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
+                <MenuItem Key="1" RouterLink="/account">
                     <Icon Type="user" Theme="outline" />
-                    <span>User</span>
-                </span>
-                ;
-            }
-            <SubMenu Key="sub1" TitleTemplate=sub1Title>
-                <MenuItem Key="4">Login</MenuItem>
-                <MenuItem Key="5">Bill</MenuItem>
-                <MenuItem Key="6">Alex</MenuItem>
-            </SubMenu>
+                    <span>Account</span>
+                </MenuItem>
+                <MenuItem Key="2" RouterLink="/counter">
+                    <Icon Type="desktop" Theme="outline" />
+                    <span>Counter</span>
+                </MenuItem>
+                <MenuItem Key="3" RouterLink="/fetchdata">
+                    <Icon Type="desktop" Theme="outline" />
+                    <span>Fetch Data</span>
+                </MenuItem>
+                @{
+                    RenderFragment sub1Title =
+                    @<span>
+                        <Icon Type="user" Theme="outline" />
+                        <span>User</span>
+                    </span>
+                    ;
+                }
+                <SubMenu Key="sub1" TitleTemplate=sub1Title>
+                    <MenuItem Key="4">Login</MenuItem>
+                    <MenuItem Key="5">Bill</MenuItem>
+                    <MenuItem Key="6">Alex</MenuItem>
+                </SubMenu>
 
 
-            @{
-                RenderFragment sub2Title =
-                @<span>
-                    <Icon Type="team" Theme="outline" />
-                    <span>Team</span>
-                </span>
-                ;
-            }
-            <SubMenu Key="sub2" TitleTemplate=sub2Title>
-                <MenuItem Key="7">Team 1</MenuItem>
-                <MenuItem Key="8">Team 2</MenuItem>
-            </SubMenu>
-            <MenuItem Key="9">
-                <Icon Type="file" Theme="outline" />
-            </MenuItem>
-        </Menu>
-    </Sider>
+                @{
+                    RenderFragment sub2Title =
+                    @<span>
+                        <Icon Type="team" Theme="outline" />
+                        <span>Team</span>
+                    </span>
+                    ;
+                }
+                <SubMenu Key="sub2" TitleTemplate=sub2Title>
+                    <MenuItem Key="7">Team 1</MenuItem>
+                    <MenuItem Key="8">Team 2</MenuItem>
+                </SubMenu>
+                <MenuItem Key="9">
+                    <Icon Type="file" Theme="outline" />
+                </MenuItem>
+            </Menu>
+        </Sider>
 
-    <Layout Class="site-layout" Style="@siteLayoutMarginLeft">
-        <Header Class="site-layout-background" Style="padding: 0;"></Header>
-        <Content Style="margin:0 16px;">
-            <Breadcrumb Style="margin:16px 0;">
-                <BreadcrumbItem>User</BreadcrumbItem>
-                <BreadcrumbItem>Bill</BreadcrumbItem>
-            </Breadcrumb>
-            @Body
-        </Content>
-        <Footer Style="text-align:center ">Blazorit.NET © @DateTime.Today.Year.ToString() Created by Semukov Artem</Footer>
+        <Layout Class="site-layout" Style="@siteLayoutMarginLeft">
+            <Header Class="site-layout-background" Style="padding: 0;"></Header>
+            <Content Style="margin:0 16px;">
+                <Breadcrumb Style="margin:16px 0;">
+                    <BreadcrumbItem>User</BreadcrumbItem>
+                    <BreadcrumbItem>Bill</BreadcrumbItem>
+                </Breadcrumb>
+                @Body
+            </Content>
+            <Footer Style="text-align:center ">Blazorit.NET © @DateTime.Today.Year.ToString() Created by Semukov Artem</Footer>
+        </Layout>
     </Layout>
-</Layout>
+</div>
+
 
 
 @code {

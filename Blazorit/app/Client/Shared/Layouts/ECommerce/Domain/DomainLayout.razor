@@ -2,12 +2,12 @@
 @using Blazorit.Client.Pages.ECommerce.Domain.HeaderBrands
 @using Blazorit.Client.Pages.ECommerce.Domain.HeaderMenus
 @using Blazorit.Client.Pages.ECommerce.Domain.SiteContents
-@using Blazorit.Client.Pages.ECommerce.Domain.SiteFooter
+@using Blazorit.Client.Pages.ECommerce.Domain.SiteFooters
 @using AntDesign
 
 @inherits LayoutComponentBase
 
-<div class="layout-site">
+<div class="ecom-domain-layout">
     <header>
         <GridRow Class="site-header-top">
             <GridCol Offset="3" Span="18">
@@ -37,22 +37,10 @@
         </GridRow>
     </main>
     <footer>
-        <GridRow Class="site-footer">
+        <GridRow Class="main-footer">
             <GridCol Offset="2" Span="20">
-                <SiteFooterComp Name="site-footer-body"/>
+                <SiteFooter Name="main-footer-body"/>
             </GridCol>
         </GridRow>
     </footer>
 </div>
-
-
-@*@code {
-
-    BreakpointType[] types = new[] { BreakpointType.Xxl, BreakpointType.Xl, BreakpointType.Lg, BreakpointType.Md, BreakpointType.Sm, BreakpointType.Xs };
-
-    BreakpointType current;
-
-    void HandleBreakpoint(BreakpointType breakpoint) {
-        current = breakpoint;
-    }
-}*@

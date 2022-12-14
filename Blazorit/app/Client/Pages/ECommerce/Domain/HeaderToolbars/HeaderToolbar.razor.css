@@ -2,11 +2,11 @@
     padding: 0.5em 0;
 }
 
-.header-toolbar .tool a {
+/*.header-toolbar .tool a {
     font-size: 1.1em;
     color: white;
-}
+}*/
 
-.header-toolbar .tool .nav-divider {
+::deep.header-toolbar .tool .nav-divider {
     background-color: white;
 }

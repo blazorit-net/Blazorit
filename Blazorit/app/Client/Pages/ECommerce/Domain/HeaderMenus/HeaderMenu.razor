@@ -1,6 +1,6 @@
 ﻿@using AntDesign
 
-<div class="@($"{Name} header-menu")">
+<div class="@GetClass("header-menu")">
     <GridRow>
         <GridCol Span=24>
             <Menu Mode=MenuMode.Horizontal>
@@ -112,7 +112,6 @@
         </GridCol>
     </GridRow>
 </div>
-
 
 
 @code
