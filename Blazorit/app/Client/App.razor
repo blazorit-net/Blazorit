@@ -18,8 +18,8 @@
                             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
                         </Authorized>
                         <NotAuthorized>
-                            <!--TODO: here must be also DomainLayout-->
-                            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                            <!--Not autentithication user-->
+                            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(DomainLayout)">
                             </AuthorizeRouteView>
                         </NotAuthorized>
                     </AuthorizeView>

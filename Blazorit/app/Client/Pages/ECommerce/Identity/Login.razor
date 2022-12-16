@@ -9,11 +9,44 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Sign in</PageTitle>
 
-<h3>Login</h3>
+<GridRow>
+    <GridCol Xs="24" Lg="12" Xxl=8>
+        <Card Title="Sign in">
+            <Body>
+                <Form Loading="loading" Model="@userModel"
+                      LabelColSpan="6"
 
-<EditForm Model="user" OnValidSubmit="HandleLogin">
+                      OnFinish="HandleLogin">
+                    <FormItem Label="Username">
+                        <Input @bind-Value="@context.UserName" />
+                    </FormItem>
+                    <FormItem Label="Password">
+                        <InputPassword @bind-Value="@context.Password" />
+                    </FormItem>
+                    @*    <FormItem WrapperColOffset="8" WrapperColSpan="16">
+                    <Checkbox @bind-Value="context.RememberMe">Remember me</Checkbox>
+                    </FormItem>*@
+                    <FormItem WrapperColOffset="6" >
+                        <Button Type="@ButtonType.Primary" HtmlType="submit">
+                            Sign in
+                        </Button>
+                    </FormItem>
+                </Form>
+
+                @if (!string.IsNullOrEmpty(message)) {
+                    <div style="text-align:center;">
+                        <Tag Color="@messageCssClass">@message</Tag>
+                    </div>
+                }
+            </Body>
+        </Card>
+    </GridCol>
+</GridRow>
+
+
+@*<EditForm Model="user" OnValidSubmit="HandleLogin">
     <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="userName">UserName</label>
@@ -29,12 +62,16 @@
 </EditForm>
 <div class="text-danger">
     <span>@errorMessage</span>
-</div>
+</div>*@
+
 
 @code {
-    private UserLogin user = new UserLogin();
+    bool loading = false;
 
-    private string errorMessage = string.Empty;
+    private UserLogin userModel = new UserLogin();
+
+    private string message = string.Empty;
+    string messageCssClass = string.Empty;
 
     private string returnUrl = string.Empty;
 
@@ -49,18 +86,24 @@
 
     private async Task HandleLogin()
     {
-        var result = await IdentityService.Login(user);
+        message = string.Empty;
+        loading = true;
+
+        var result = await IdentityService.Login(userModel);
         if (result.Success)
         {
-            errorMessage = string.Empty;
+            message = string.Empty;
 
             await LocalStorage.SetItemAsync("identityToken", result.Data);
-            await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            await AuthenticationStateProvider.GetAuthenticationStateAsync();            
             NavigationManager.NavigateTo(returnUrl);
         }
         else
         {
-            errorMessage = result.Message;
+            messageCssClass = PresetColor.Red.ToString();
+            message = result.Message;
         }
+
+        loading = false;
     }
 }

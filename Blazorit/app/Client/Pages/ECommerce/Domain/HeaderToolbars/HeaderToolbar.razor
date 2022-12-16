@@ -1,21 +1,40 @@
-﻿<div class="@GetClass("header-toolbar")">
+﻿@using Blazorit.Client.Providers.Concrete.Identity;
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="@GetClass("header-toolbar")">
     <GridRow Justify="space-between">
         <GridCol Flex="1" Class="header-toolbar-accout tool">
             <Space Direction="DirectionVHType.Horizontal">
-                <Split>
-                    <Divider Type="DirectionVHType.Vertical" Class="nav-divider" />
-                </Split>
                 <ChildContent>
                     <SpaceItem>
-                        <Button Ghost Type="@ButtonType.Text">
-                            Login
-                        </Button>
+                        <AuthorizeView>
+                            <Authorized>
+                                <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Navigation.NavigateTo("/account"))>
+                                    Account
+                                </Button>
+                            </Authorized>
+                            <NotAuthorized>
+                                <Button Ghost Type="@ButtonType.Dashed" OnClick="NavigateToLogin">
+                                    Sign in
+                                </Button>
+                            </NotAuthorized>
+                        </AuthorizeView>
                     </SpaceItem>
                     <SpaceItem>
-                        <Button Ghost Type="@ButtonType.Text">
-                            Register
-                        </Button>
-                    </SpaceItem>
+                        <AuthorizeView>
+                            <Authorized>
+                                <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Logout())>
+                                    Sign out
+                                </Button>
+                            </Authorized>
+                            <NotAuthorized>
+                                <Button Ghost Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo("/signup"))>
+                                    Sign up
+                                </Button>
+                            </NotAuthorized>
+                        </AuthorizeView>
+                    </SpaceItem>                 
                 </ChildContent>            
                 </Space>  
         </GridCol>            
@@ -56,6 +75,18 @@
 
         return $"{Name} {classes}";
     }
+
+    private void NavigateToLogin() {
+        Navigation.NavigateTo("/login");
+    }
+
+    private async Task Logout() {
+        var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
+        if (authProvider == null) return;
+        await authProvider.LogoutAuthenticationStateAsync();
+        Navigation.NavigateTo("/", true);
+    }
+
 
 
     ////CssBuilder classHeaderToolboar = BlazorComponentUtilities.CssBuilder.Default("header-toolbar").AddClass("");    

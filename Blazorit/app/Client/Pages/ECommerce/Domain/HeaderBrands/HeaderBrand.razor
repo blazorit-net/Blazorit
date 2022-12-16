@@ -1,11 +1,12 @@
 ﻿@using AntDesign
+@inject NavigationManager Navigation
 
 @inject IMessageService message;
 
 <div class="@GetClass("header-brand")">
     <GridRow Justify="space-between" Align="center">
         <GridCol Flex=1 Class="header-brand_logo">
-            <figure>
+            <figure onclick="@(() => Navigation.NavigateTo("/"))">
                 Image
             </figure>
         </GridCol>
