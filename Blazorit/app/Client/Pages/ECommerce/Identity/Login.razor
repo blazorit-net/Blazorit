@@ -17,7 +17,6 @@
             <Body>
                 <Form Loading="loading" Model="@userModel"
                       LabelColSpan="6"
-
                       OnFinish="HandleLogin">
                     <FormItem Label="Username">
                         <Input @bind-Value="@context.UserName" />
@@ -66,14 +65,15 @@
 
 
 @code {
-    bool loading = false;
+    private bool loading = false;
 
     private UserLogin userModel = new UserLogin();
 
     private string message = string.Empty;
-    string messageCssClass = string.Empty;
+    private string messageCssClass = string.Empty;
 
     private string returnUrl = string.Empty;
+
 
     protected override void OnInitialized()
     {
@@ -84,12 +84,14 @@
         }
     }
 
+
     private async Task HandleLogin()
     {
         message = string.Empty;
         loading = true;
 
         var result = await IdentityService.Login(userModel);
+
         if (result.Success)
         {
             message = string.Empty;

@@ -22,7 +22,7 @@
                 <Form Loading="loading" Model="@changePassModel"
                       LabelColSpan="8"
                       
-                      OnFinish="ChangePassword">
+                      OnFinish="HandleChangePassword">
                     <FormItem Label="New Password">
                         <InputPassword @bind-Value="@context.Password" />
                     </FormItem>
@@ -48,16 +48,19 @@
 
 
 @code {
-    bool loading = false;
-    string messageCssClass = string.Empty;
+    private bool loading = false;
 
-    UserChangePassword changePassModel = new UserChangePassword();
-    string message = string.Empty;
+    private UserChangePassword changePassModel = new UserChangePassword();
 
-    private async Task ChangePassword()
+    private string message = string.Empty;
+    private string messageCssClass = string.Empty;
+    
+
+    private async Task HandleChangePassword()
     {
         message = string.Empty;
         loading = true;
+        
         var result = await IdentityService.ChangePassword(changePassModel);
         message = result.Message;
 

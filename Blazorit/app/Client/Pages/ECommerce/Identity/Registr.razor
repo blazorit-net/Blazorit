@@ -63,23 +63,30 @@
     </div>
 </EditForm>*@
 
+
 @code {
-    bool loading = false;
+    private bool loading = false;
 
-    UserRegister userModel = new UserRegister();
+    private UserRegister userModel = new UserRegister();
 
-    string message = string.Empty;
-    string messageCssClass = string.Empty;
+    private string message = string.Empty;
+    private string messageCssClass = string.Empty;
 
-    async Task HandleRegistration()
+
+    private async Task HandleRegistration()
     {
         message = string.Empty;
         loading = true;
 
         var result = await IdentityService.Register(userModel);
         message = result.Message;
-        if (result.Success) {
+
+        if (result.Success) {          
             messageCssClass = PresetColor.Green.ToString();
+            message = "Success. You'll be redirected to Login...";
+            StateHasChanged();                      
+            await Task.Delay(TimeSpan.FromSeconds(1)); //sleep, so that user can have time to read 'Success'
+
             Navigation.NavigateTo("/login");
         } else {
             messageCssClass = PresetColor.Red.ToString();
