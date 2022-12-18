@@ -1,11 +1,19 @@
 ﻿@using AntDesign
+@using Blazorit.Client.Pages.ECommerce.Admin.HeaderToolbars
 @inherits LayoutComponentBase
 @*@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin_role")]*@
 
 <div class="ecom-admin-layout">
-    <Layout Style="min-height: 100vh; ">
+    <Layout Style="min-height: 100vh;" Class="admin-wrapper">
         <Sider Collapsible Collapsed=@collapsed OnCollapse=@onCollapse Style="overflow:auto; height:100vh; position:fixed; left:0">
-            <div id="ant-site-layout-sider-logo" class="logo" />
+            <div class="ant-site-layout-sider-logo" id="logo">
+                <a href="/admin">
+                    <img src="./favicon.png" alt="logo" />
+                    @if (!collapsed) {
+                        <h1>Admin Panel</h1>        
+                    }
+                </a>
+            </div>
             <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
                 <MenuItem Key="1" RouterLink="/account">
                     <Icon Type="user" Theme="outline" />
@@ -52,13 +60,20 @@
             </Menu>
         </Sider>
 
-        <Layout Class="site-layout" Style="@siteLayoutMarginLeft">
-            <Header Class="site-layout-background" Style="padding: 0;"></Header>
-            <Content Style="margin:0 16px;">
-                <Breadcrumb Style="margin:16px 0;">
+        <Layout Class="site-wrapper" Style="@siteLayoutMarginLeft">
+            <Header Class="site-header">
+                <GridRow>
+                    <GridCol Offset="1" Span="22">
+                        <HeaderToolbar Name="site-header-body" />
+                    </GridCol>
+                </GridRow>
+                
+            </Header>
+            <Content Class="main-content">
+    @*            <Breadcrumb Style="margin:16px 0;">
                     <BreadcrumbItem>User</BreadcrumbItem>
                     <BreadcrumbItem>Bill</BreadcrumbItem>
-                </Breadcrumb>
+                </Breadcrumb>*@
                 @Body
             </Content>
             <Footer Style="text-align:center ">Blazorit.NET © @DateTime.Today.Year.ToString() Created by Semukov Artem</Footer>
@@ -69,8 +84,8 @@
 
 
 @code {
-    bool collapsed;
-    string siteLayoutMarginLeft = "margin-left:200px;";
+    private bool collapsed;
+    private string siteLayoutMarginLeft = "margin-left:200px;";
 
     void onCollapse(bool collapsed) {
         if (collapsed) {
@@ -86,17 +101,60 @@
 
 
 <style>
-    #ant-site-layout-sider-logo.logo {
-        height: 32px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 16px;
-    }
-
-    .site-layout .site-layout-background {
-        background: #fff;
-    }
-
-    .site-layout {
+    .site-wrapper {
         transition: all .5s;
     }
+
+    .ant-site-layout-sider-logo {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 16px 16px;
+        line-height: 32px;
+        cursor: pointer;
+    }
+
+    .ant-site-layout-sider-logo > a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 32px;
+    }
+
+    .ant-site-layout-sider-logo img {
+        display: inline-block;
+        height: 32px;
+        vertical-align: middle;
+        transition: .2s;
+    }
+
+    .ant-site-layout-sider-logo h1 {
+        display: inline-block;
+        height: 32px;
+        margin: 0 0 0 12px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 32px;
+        vertical-align: middle;
+        animation: fade-in;
+        animation-duration: .2s;
+    }
+
+    .site-wrapper .site-header {
+        background: #fff;
+        box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+        padding: 0;
+        height: 48px;
+        line-height: 48px;
+        width: 100%;
+        z-index: 9;
+    }
+
+    .site-wrapper .main-content {
+        position: relative;
+        margin: 24px;
+    }
+
+
 </style>

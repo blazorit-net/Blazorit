@@ -1,4 +1,4 @@
-﻿@using Blazorit.Client.Providers.Concrete.Identity;
+﻿@using Blazorit.Client.Providers.Concrete.Identity
 @using Blazorit.Client.Pages.ECommerce.Identity
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -11,12 +11,12 @@
                     <SpaceItem>
                         <AuthorizeView>
                             <Authorized>
-                                <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Navigation.NavigateTo(ConstPage.ACCOUNT))>
+                                <Button OnClick=@(() => Navigation.NavigateTo(ConstPage.ACCOUNT))>
                                     Account
                                 </Button>
                             </Authorized>
                             <NotAuthorized>
-                                <Button Ghost Type="@ButtonType.Dashed" OnClick="NavigateToLogin">
+                                <Button Type="@ButtonType.Dashed" OnClick="NavigateToLogin">
                                     Sign in
                                 </Button>
                             </NotAuthorized>
@@ -25,12 +25,12 @@
                     <SpaceItem>
                         <AuthorizeView>
                             <Authorized>
-                                <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Logout())>
+                                <Button OnClick=@(() => Logout())>
                                     Sign out
                                 </Button>
                             </Authorized>
                             <NotAuthorized>
-                                <Button Ghost Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(ConstPage.REGISTR))>
+                                <Button Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(ConstPage.REGISTR))>
                                     Sign up
                                 </Button>
                             </NotAuthorized>
@@ -40,20 +40,20 @@
                 </Space>  
         </GridCol>            
 
-        <GridCol Flex="1" Class="header-toolbar-cart tool" Style="float:right;">
+        <GridCol Flex="1" Class="header-toolbar-right tool" Style="float:right;">
             <Space Direction="DirectionVHType.Horizontal">
                 <Split>
                     <Divider Type="DirectionVHType.Vertical" Class="nav-divider" />
                 </Split>
                 <ChildContent>
                     <SpaceItem>
-                        <Button Ghost Type="@ButtonType.Text">
-                            Favorite
+                        <Button Type="@ButtonType.Text">
+                            SomeItem
                         </Button>
                     </SpaceItem>
                     <SpaceItem>
-                         <Button Ghost Type="@ButtonType.Text">
-                             ShopCart
+                         <Button Type="@ButtonType.Text">
+                            SomeItem
                          </Button>
                     </SpaceItem>
                 </ChildContent>

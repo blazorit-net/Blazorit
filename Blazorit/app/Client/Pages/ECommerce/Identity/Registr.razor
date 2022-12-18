@@ -87,7 +87,7 @@
             StateHasChanged();                      
             await Task.Delay(TimeSpan.FromSeconds(1)); //sleep, so that user can have time to read 'Success'
 
-            Navigation.NavigateTo("/login");
+            Navigation.NavigateTo(ConstPage.LOGIN);
         } else {
             messageCssClass = PresetColor.Red.ToString();
         }        

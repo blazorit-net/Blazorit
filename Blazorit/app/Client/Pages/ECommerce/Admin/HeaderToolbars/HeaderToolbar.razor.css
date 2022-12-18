@@ -1,0 +1,12 @@
+﻿.header-toolbar {
+    padding: 0.5em 0;
+}
+
+/*.header-toolbar .tool a {
+    font-size: 1.1em;
+    color: white;
+}*/
+
+::deep.header-toolbar .tool .nav-divider {
+    background-color: white;
+}
