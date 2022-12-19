@@ -1,0 +1,63 @@
+﻿@using Blazorit.Client.Pages.ECommerce.Identity
+
+<Sider Collapsible Collapsed=@collapsed OnCollapse=@HandleCollapse Style="overflow:auto; height:100vh; position:fixed; left:0">
+    <div class="ant-site-layout-sider-logo" id="logo">
+        <a href="/admin">
+            <img src="./favicon.png" alt="logo" />
+            @if (!collapsed) {
+                <h1>Admin Panel</h1>
+            }
+        </a>
+    </div>
+    <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
+        <MenuItem Key="1" RouterLink="/">
+            <Icon Type="global" Theme="outline" />
+            <span>Domain</span>
+        </MenuItem>
+        @{
+            RenderFragment TestsTitle =
+            @<span>
+                <Icon Type="code" Theme="outline" />
+                <span>Tests</span>
+            </span>
+            ;
+        }
+        <SubMenu Key="testsMenu" TitleTemplate=TestsTitle>
+            <MenuItem Key="2" RouterLink="/counter">
+                <Icon Type="desktop" Theme="outline" />
+                <span>Counter</span>
+            </MenuItem>
+            <MenuItem Key="3" RouterLink="/fetchdata">
+                <Icon Type="desktop" Theme="outline" />
+                <span>Fetch Data</span>
+            </MenuItem>
+        </SubMenu>
+        @{
+            RenderFragment userMenuTitle =
+            @<span>
+                <Icon Type="user" Theme="outline" />
+                <span>User</span>
+            </span>
+            ;
+        }
+        <SubMenu Key="userMenu" TitleTemplate=userMenuTitle>
+            <MenuItem Key="1000" RouterLink=@ConstPage.ACCOUNT>Account</MenuItem>
+            <MenuItem Key="1001" RouterLink=@ConstPage.LOGIN>SignIn</MenuItem>
+            <MenuItem Key="1002" RouterLink=@ConstPage.REGISTR>SignUp</MenuItem>
+        </SubMenu>
+    </Menu>
+</Sider>
+
+
+@code {
+    [Parameter]
+    public EventCallback<bool> OnCollapse { get; set; }
+
+    private bool collapsed;
+
+    private void HandleCollapse(bool collapsed) {
+        //Console.WriteLine(collapsed);
+        this.collapsed = collapsed;
+        OnCollapse.InvokeAsync(collapsed);
+    }
+}

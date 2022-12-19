@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Blazorit.Server.Controllers {
     [ApiController]
     [Route("[controller]")]
-    [Authorize(Roles = "user_role")]
+    [Authorize(Roles = "admin_role")]
     public class WeatherForecastController : ControllerBase {
         private static readonly string[] Summaries = new[]
         {
