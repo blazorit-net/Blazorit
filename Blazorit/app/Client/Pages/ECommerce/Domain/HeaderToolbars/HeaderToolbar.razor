@@ -35,7 +35,16 @@
                                 </Button>
                             </NotAuthorized>
                         </AuthorizeView>
-                    </SpaceItem>                 
+                    </SpaceItem>
+                    <SpaceItem>
+                        <AuthorizeView Roles="admin_role">
+                            <Authorized>
+                                <Button Ghost Danger OnClick=@(() => Navigation.NavigateTo("/admin"))>
+                                    Admin
+                                </Button>
+                            </Authorized>
+                        </AuthorizeView>
+                    </SpaceItem>
                 </ChildContent>            
                 </Space>  
         </GridCol>            

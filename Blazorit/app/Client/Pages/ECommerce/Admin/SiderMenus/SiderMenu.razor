@@ -1,6 +1,6 @@
 ﻿@using Blazorit.Client.Pages.ECommerce.Identity
 
-<Sider Collapsible Collapsed=@collapsed OnCollapse=@HandleCollapse Style="overflow:auto; height:100vh; position:fixed; left:0">
+<Sider Collapsible Collapsed=@collapsed OnCollapse=@HandleCollapse Style="overflow:auto; height:100vh; position:fixed; left:0; z-index:1000">
     <div class="ant-site-layout-sider-logo" id="logo">
         <a href="/admin">
             <img src="./favicon.png" alt="logo" />
@@ -41,7 +41,7 @@
             ;
         }
         <SubMenu Key="userMenu" TitleTemplate=userMenuTitle>
-            <MenuItem Key="1000" RouterLink=@ConstPage.ACCOUNT>Account</MenuItem>
+            <MenuItem Key="1000" RouterLink="/admin/account">Account</MenuItem>
             <MenuItem Key="1001" RouterLink=@ConstPage.LOGIN>SignIn</MenuItem>
             <MenuItem Key="1002" RouterLink=@ConstPage.REGISTR>SignUp</MenuItem>
         </SubMenu>

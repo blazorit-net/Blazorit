@@ -1,5 +1,4 @@
-﻿@page "/account"
-@using Blazorit.Shared.Models.Identity
+﻿@using Blazorit.Shared.Models.Identity
 @using Blazorit.Client.Providers.Concrete.Identity
 @using Blazorit.Client.Services.Abstract.Identity
 @using Microsoft.AspNetCore.Authorization
@@ -8,8 +7,6 @@
 @inject NavigationManager NavigationManager 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
-
-<PageTitle>Account</PageTitle>
 
 <AuthorizeView>
     <h3>Hi! You're logged in with <i>@context.User.Identity?.Name</i>.</h3>
