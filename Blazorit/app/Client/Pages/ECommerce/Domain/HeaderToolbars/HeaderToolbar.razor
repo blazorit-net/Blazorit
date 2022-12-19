@@ -9,17 +9,26 @@
             <Space Direction="DirectionVHType.Horizontal">
                 <ChildContent>
                     <SpaceItem>
-                        <AuthorizeView>
+                        <AuthorizeView Roles="admin_role" Context="admin_context">
                             <Authorized>
-                                <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Navigation.NavigateTo(ConstPage.ACCOUNT))>
-                                    Account
+                                <Button Ghost Danger OnClick=@(() => Navigation.NavigateTo("/admin"))>
+                                    Admin
                                 </Button>
                             </Authorized>
                             <NotAuthorized>
-                                <Button Ghost Type="@ButtonType.Dashed" OnClick="NavigateToLogin">
-                                    Sign in
-                                </Button>
-                            </NotAuthorized>
+                                <AuthorizeView Context="user_context">
+                                    <Authorized>
+                                        <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Navigation.NavigateTo(ConstPage.ACCOUNT))>
+                                            Account
+                                        </Button>
+                                    </Authorized>
+                                    <NotAuthorized>
+                                        <Button Ghost Type="@ButtonType.Dashed" OnClick="NavigateToLogin">
+                                            Sign in
+                                        </Button>
+                                    </NotAuthorized>
+                                </AuthorizeView>
+                            </NotAuthorized>                            
                         </AuthorizeView>
                     </SpaceItem>
                     <SpaceItem>
@@ -34,15 +43,6 @@
                                     Sign up
                                 </Button>
                             </NotAuthorized>
-                        </AuthorizeView>
-                    </SpaceItem>
-                    <SpaceItem>
-                        <AuthorizeView Roles="admin_role">
-                            <Authorized>
-                                <Button Ghost Danger OnClick=@(() => Navigation.NavigateTo("/admin"))>
-                                    Admin
-                                </Button>
-                            </Authorized>
                         </AuthorizeView>
                     </SpaceItem>
                 </ChildContent>            
@@ -94,7 +94,7 @@
         var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
         if (authProvider == null) return;
         await authProvider.LogoutAuthenticationStateAsync();
-        Navigation.NavigateTo("/", true);
+        Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
     }
 
 

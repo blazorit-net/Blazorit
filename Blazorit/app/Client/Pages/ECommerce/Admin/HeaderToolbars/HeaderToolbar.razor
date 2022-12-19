@@ -85,7 +85,7 @@
         var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
         if (authProvider == null) return;
         await authProvider.LogoutAuthenticationStateAsync();
-        Navigation.NavigateTo("/", true);
+        Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
     }
 
 
