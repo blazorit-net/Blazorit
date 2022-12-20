@@ -26,4 +26,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Shared\Blazorit.Shared.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Support\Helpers\" />
+  </ItemGroup>
 </Project>

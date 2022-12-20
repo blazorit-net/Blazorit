@@ -1,9 +1,11 @@
 ﻿@using AntDesign
+@using Blazorit.Client.Base.Components
 @inject NavigationManager Navigation
 
 @inject IMessageService message;
+@implements IBlazoritComponent
 
-<div class="@GetClass("header-brand")">
+<div class="@(((IBlazoritComponent)this).GetClass("bit-header-brand"))">
     <GridRow Justify="space-between" Align="center">
         <GridCol Flex=1 Class="header-brand_logo">
             <figure onclick="@(() => Navigation.NavigateTo("/"))">
@@ -27,15 +29,7 @@
 
 @code {
     [Parameter]
-    public string? Name { get; set; }
-
-    private string GetClass(string classes) {
-        if (string.IsNullOrEmpty(Name)) {
-            return classes;
-        }
-
-        return $"{Name} {classes}";
-    }
+    public string? Class { get; set; }
 
 
     private string? txtValue { get; set; }

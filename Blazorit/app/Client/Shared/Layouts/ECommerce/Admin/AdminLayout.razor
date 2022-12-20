@@ -6,13 +6,13 @@
 
 
 <div class="ecom-admin-layout">
-    <Layout Style="min-height: 100vh;" Class="admin-wrapper">
+    <Layout Class="admin-wrapper">
         <SiderMenu OnCollapse="HandleCollapse" />
         <Layout Class=@($"site-wrapper {siderCollapsed}")>
             <Header Class="site-header">
                 <GridRow>
                     <GridCol Offset="1" Span="22">
-                        <HeaderToolbar Name="site-header-body" />
+                        <HeaderToolbar Class="site-header-body" />
                     </GridCol>
                 </GridRow>                
             </Header>
@@ -45,6 +45,10 @@
 
 
 <style>
+    .admin-wrapper {
+        min-height: 100vh;
+    }
+
     .site-wrapper {
         transition: all .5s;
         margin-left: 200px;

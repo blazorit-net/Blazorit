@@ -1,9 +1,12 @@
-﻿@using Blazorit.Client.Providers.Concrete.Identity
+﻿@using Blazorit.Client.Base.Components;
+@using Blazorit.Client.Providers.Concrete.Identity
 @using Blazorit.Client.Pages.ECommerce.Identity
+@using Blazorit.Client.Shared.Routes.ECommerce;
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@implements IBlazoritComponent
 
-<div class="@GetClass("header-toolbar")">
+<div class="@(((IBlazoritComponent)this).GetClass("bit-header-toolbar"))">
     <GridRow Justify="space-between">
         <GridCol Flex="1" Class="header-toolbar-accout tool">
             <Space Direction="DirectionVHType.Horizontal">
@@ -11,7 +14,7 @@
                     <SpaceItem>
                         <AuthorizeView>
                             <Authorized>
-                                <Button OnClick=@(() => Navigation.NavigateTo("/admin/account"))>
+                                <Button OnClick=@(() => Navigation.NavigateTo(ConstPage.ADMIN_ACCOUNT))>
                                     Account
                                 </Button>
                             </Authorized>
@@ -30,7 +33,7 @@
                                 </Button>
                             </Authorized>
                             <NotAuthorized>
-                                <Button Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(ConstPage.REGISTR))>
+                                <Button Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(ConstPage.ADMIN_REGISTR))>
                                     Sign up
                                 </Button>
                             </NotAuthorized>
@@ -61,34 +64,3 @@
         </GridCol>
     </GridRow>   
 </div>
-     
-
-
-
-@code {
-    [Parameter]
-    public string? Name { get; set; }
-
-    private string GetClass(string classes) {
-        if (string.IsNullOrEmpty(Name)) {
-            return classes;
-        }
-
-        return $"{Name} {classes}";
-    }
-
-    private void NavigateToLogin() {
-        Navigation.NavigateTo(ConstPage.LOGIN);
-    }
-
-    private async Task Logout() {
-        var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
-        if (authProvider == null) return;
-        await authProvider.LogoutAuthenticationStateAsync();
-        Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
-    }
-
-
-
-    ////CssBuilder classHeaderToolboar = BlazorComponentUtilities.CssBuilder.Default("header-toolbar").AddClass("");    
-}

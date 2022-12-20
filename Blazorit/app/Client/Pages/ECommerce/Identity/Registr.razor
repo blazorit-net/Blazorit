@@ -1,4 +1,5 @@
 ﻿@page "/signup"
+@using Blazorit.Client.Shared.Routes.ECommerce;
 @using Blazorit.Shared.Models.Identity
 @using Blazorit.Client.Services.Abstract.Identity
 @inject IIdentityService IdentityService
@@ -87,7 +88,7 @@
             StateHasChanged();                      
             await Task.Delay(TimeSpan.FromSeconds(1)); //sleep, so that user can have time to read 'Success'
 
-            Navigation.NavigateTo(ConstPage.LOGIN);
+            Navigation.NavigateTo(ConstPage.USER_LOGIN);
         } else {
             messageCssClass = PresetColor.Red.ToString();
         }        

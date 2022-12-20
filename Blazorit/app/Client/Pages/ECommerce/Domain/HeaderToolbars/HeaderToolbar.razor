@@ -1,5 +1,5 @@
 ﻿@using Blazorit.Client.Providers.Concrete.Identity;
-@using Blazorit.Client.Pages.ECommerce.Identity
+@using Blazorit.Client.Shared.Routes.ECommerce;
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
@@ -11,14 +11,14 @@
                     <SpaceItem>
                         <AuthorizeView Roles="admin_role" Context="admin_context">
                             <Authorized>
-                                <Button Ghost Danger OnClick=@(() => Navigation.NavigateTo("/admin"))>
+                                <Button Ghost Danger OnClick=@(() => Navigation.NavigateTo(ConstPage.ADMIN_INDEX))>
                                     Admin
                                 </Button>
                             </Authorized>
                             <NotAuthorized>
                                 <AuthorizeView Context="user_context">
                                     <Authorized>
-                                        <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Navigation.NavigateTo(ConstPage.ACCOUNT))>
+                                        <Button Ghost Type="@ButtonType.Text" OnClick=@(() => Navigation.NavigateTo(ConstPage.USER_ACCOUNT))>
                                             Account
                                         </Button>
                                     </Authorized>
@@ -39,7 +39,7 @@
                                 </Button>
                             </Authorized>
                             <NotAuthorized>
-                                <Button Ghost Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(ConstPage.REGISTR))>
+                                <Button Ghost Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(ConstPage.USER_REGISTR))>
                                     Sign up
                                 </Button>
                             </NotAuthorized>
@@ -87,7 +87,7 @@
     }
 
     private void NavigateToLogin() {
-        Navigation.NavigateTo(ConstPage.LOGIN);
+        Navigation.NavigateTo(ConstPage.USER_LOGIN);
     }
 
     private async Task Logout() {
