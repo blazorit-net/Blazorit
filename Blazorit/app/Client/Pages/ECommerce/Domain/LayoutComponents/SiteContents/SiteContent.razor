@@ -1,0 +1,15 @@
+﻿@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("site-content"))">
+    <h3>SiteContent from component</h3>
+    @Body
+</div>
+
+
+@code {
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter]
+    public RenderFragment? Body { get; set; }
+}

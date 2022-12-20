@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Blazorit.Client.Pages.ECommerce.Admin.SiderMenus {
+namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.SiderMenus {
     public partial class SiderMenu {
         [Parameter]
         public string? Class { get; set; }

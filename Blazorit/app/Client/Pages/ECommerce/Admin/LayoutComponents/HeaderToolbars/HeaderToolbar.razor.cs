@@ -2,7 +2,7 @@
 using Blazorit.Client.Providers.Concrete.Identity;
 using Microsoft.AspNetCore.Components;
 
-namespace Blazorit.Client.Pages.ECommerce.Admin.HeaderToolbars {
+namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.HeaderToolbars {
     public partial class HeaderToolbar {
         [Parameter]
         public string? Class { get; set; }

@@ -1,9 +1,10 @@
-﻿@using Blazorit.Client.Providers.Concrete.Identity;
-@using Blazorit.Client.Shared.Routes.ECommerce;
+﻿@using Blazorit.Client.Providers.Concrete.Identity
+@using Blazorit.Client.Shared.Routes.ECommerce
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@implements IBlazoritComponent
 
-<div class="@GetClass("header-toolbar")">
+<div class="@(((IBlazoritComponent)this).GetClass("header-toolbar"))">
     <GridRow Justify="space-between">
         <GridCol Flex="1" Class="header-toolbar-accout tool">
             <Space Direction="DirectionVHType.Horizontal">
@@ -76,15 +77,7 @@
 
 @code {
     [Parameter]
-    public string? Name { get; set; }
-
-    private string GetClass(string classes) {
-        if (string.IsNullOrEmpty(Name)) {
-            return classes;
-        }
-
-        return $"{Name} {classes}";
-    }
+    public string? Class { get; set; }
 
     private void NavigateToLogin() {
         Navigation.NavigateTo(ConstPage.USER_LOGIN);

@@ -1,6 +1,7 @@
 ﻿@using AntDesign
+@implements IBlazoritComponent
 
-<div class="@GetClass("header-menu")">
+<div class="@(((IBlazoritComponent)this).GetClass("header-menu"))">
     <GridRow>
         <GridCol Span=24>
             <Menu Mode=MenuMode.Horizontal>
@@ -117,14 +118,7 @@
 @code
 {
     [Parameter]
-    public string? Name { get; set; }
-
-    private string GetClass(string classes) {
-        if (string.IsNullOrEmpty(Name)) {
-            return classes;
-        }
-        return $"{Name} {classes}";
-    }
+    public string? Class { get; set; }
 
     RenderFragment sub1Title =
     @<Template>
