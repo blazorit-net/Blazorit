@@ -13,7 +13,7 @@
         </GridCol>
         <GridCol Flex=1 Class="header-brand-search">
             <div>
-                <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="OnSearch" />
+                <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="SearchHandler" />
             </div>
         </GridCol>
         <GridCol Flex=1 Class="header-brand-contacts">
@@ -23,29 +23,3 @@
         </GridCol>
     </GridRow>
 </div>
-
-
-
-@code {
-    [Parameter]
-    public string? Class { get; set; }
-
-
-    private string? txtValue { get; set; }
-    private bool loading;
-
-    private void Handle(string value) {
-        Console.WriteLine(value);
-    }
-
-    public async Task OnSearch() {
-        await message.Loading($"searching {txtValue}", 2);
-    }
-
-    private async Task OnEnter(KeyboardEventArgs e) {
-        Console.WriteLine("Enter pressed");
-        loading = true;
-        await Task.Delay(3000);
-        loading = false;
-    }
-}

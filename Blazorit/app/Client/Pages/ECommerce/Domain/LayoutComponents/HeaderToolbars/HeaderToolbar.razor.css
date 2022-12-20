@@ -1,4 +1,4 @@
-﻿.header-toolbar {
+﻿.bit-header-toolbar {
     padding: 0.5em 0;
 }
 
@@ -7,6 +7,6 @@
     color: white;
 }*/
 
-::deep.header-toolbar .tool .nav-divider {
+::deep.bit-header-toolbar .tool .nav-divider {
     background-color: white;
 }

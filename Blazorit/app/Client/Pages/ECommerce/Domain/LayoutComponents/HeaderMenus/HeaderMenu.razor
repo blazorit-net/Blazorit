@@ -1,7 +1,7 @@
 ﻿@using AntDesign
 @implements IBlazoritComponent
 
-<div class="@(((IBlazoritComponent)this).GetClass("header-menu"))">
+<div class="@(((IBlazoritComponent)this).GetClass("bit-header-menu"))">
     <GridRow>
         <GridCol Span=24>
             <Menu Mode=MenuMode.Horizontal>
@@ -117,9 +117,6 @@
 
 @code
 {
-    [Parameter]
-    public string? Class { get; set; }
-
     RenderFragment sub1Title =
     @<Template>
         <Icon Type="appstore" Theme="outline"></Icon>

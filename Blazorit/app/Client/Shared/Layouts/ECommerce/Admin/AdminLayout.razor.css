@@ -1,0 +1,27 @@
+﻿::deep .admin-wrapper {
+    min-height: 100vh;
+}
+
+::deep .site-wrapper {
+    transition: all .5s;
+    margin-left: 200px;
+}
+
+::deep .site-wrapper.sider-collapsed {
+        margin-left: 80px;
+    }
+
+::deep .site-wrapper .site-header {
+    background: #fff;
+    box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+    padding: 0;
+    height: 48px;
+    line-height: 48px;
+    width: 100%;
+    z-index: 9;
+}
+
+::deep .site-wrapper .main-content {
+    position: relative;
+    margin: 24px;
+}

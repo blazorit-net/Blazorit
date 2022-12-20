@@ -7,6 +7,6 @@
     color: white;
 }*/
 
-::deep.header-toolbar .tool .nav-divider {
+::deep.bit-header-toolbar .tool .nav-divider {
     background-color: white;
 }

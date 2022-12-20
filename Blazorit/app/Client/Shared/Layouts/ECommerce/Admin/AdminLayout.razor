@@ -5,10 +5,10 @@
 @*@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "admin_role")]*@
 
 
-<div class="ecom-admin-layout">
+<div class="bit-ecom-admin-layout">
     <Layout Class="admin-wrapper">
         <SiderMenu OnCollapse="HandleCollapse" />
-        <Layout Class=@($"site-wrapper {siderCollapsed}")>
+        <Layout Class=@($"site-wrapper {siderCollapsedClass}")>
             <Header Class="site-header">
                 <GridRow>
                     <GridCol Offset="1" Span="22">
@@ -17,7 +17,7 @@
                 </GridRow>                
             </Header>
             <Content Class="main-content">
-    @*            <Breadcrumb Style="margin:16px 0;">
+                @*<Breadcrumb Style="margin:16px 0;">
                     <BreadcrumbItem>User</BreadcrumbItem>
                     <BreadcrumbItem>Bill</BreadcrumbItem>
                 </Breadcrumb>*@
@@ -31,83 +31,13 @@
 
 
 @code {
-    private string siderCollapsed = string.Empty;
+    private string siderCollapsedClass = string.Empty;
 
     private void HandleCollapse(bool collapsed) {
         if (collapsed) {
-            siderCollapsed = "sider-collapsed";
+            siderCollapsedClass = "sider-collapsed";
         } else {
-            siderCollapsed = string.Empty;
+            siderCollapsedClass = string.Empty;
         }
-        //Console.WriteLine(collapsed);
     }
 }
-
-
-<style>
-    .admin-wrapper {
-        min-height: 100vh;
-    }
-
-    .site-wrapper {
-        transition: all .5s;
-        margin-left: 200px;
-    }
-
-    .site-wrapper.sider-collapsed {
-        margin-left: 80px;
-    }
-
-    .ant-site-layout-sider-logo {
-        position: relative;
-        display: flex;
-        align-items: center;
-        padding: 16px 16px;
-        line-height: 32px;
-        cursor: pointer;
-    }
-
-    .ant-site-layout-sider-logo > a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 32px;
-    }
-
-    .ant-site-layout-sider-logo img {
-        display: inline-block;
-        height: 32px;
-        vertical-align: middle;
-        transition: .2s;
-    }
-
-    .ant-site-layout-sider-logo h1 {
-        display: inline-block;
-        height: 32px;
-        margin: 0 0 0 12px;
-        color: #fff;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 32px;
-        vertical-align: middle;
-        animation: fade-in;
-        animation-duration: .2s;
-    }
-
-    .site-wrapper .site-header {
-        background: #fff;
-        box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-        padding: 0;
-        height: 48px;
-        line-height: 48px;
-        width: 100%;
-        z-index: 9;
-    }
-
-    .site-wrapper .main-content {
-        position: relative;
-        margin: 24px;
-    }
-
-
-</style>
