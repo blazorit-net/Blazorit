@@ -6,8 +6,8 @@
 
 
 <div class="bit-ecom-admin-layout">
-    <Layout Class="admin-wrapper">
-        <SiderMenu OnCollapse="HandleCollapse" />
+    <Layout Class="layout-wrapper">
+        <SiderMenu OnCollapse="CollapseHandler" />
         <Layout Class=@($"site-wrapper {siderCollapsedClass}")>
             <Header Class="site-header">
                 <GridRow>
@@ -33,7 +33,7 @@
 @code {
     private string siderCollapsedClass = string.Empty;
 
-    private void HandleCollapse(bool collapsed) {
+    private void CollapseHandler(bool collapsed) {
         if (collapsed) {
             siderCollapsedClass = "sider-collapsed";
         } else {
