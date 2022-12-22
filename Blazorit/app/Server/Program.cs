@@ -68,7 +68,6 @@ app.UseRouting();
 app.UseAuthentication(); //custom add
 app.UseAuthorization(); //custom add
 
-
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");

@@ -5,18 +5,20 @@
 @implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-header-brand"))">
-    <GridRow Justify="space-between" Align="center">
-        <GridCol Flex=1 Class="header-brand_logo">
+    <GridRow Align="center">
+        <GridCol Span="4" Class="header-brand_logo">
             <figure onclick="@(() => Navigation.NavigateTo("/"))">
-                Image
+                <img id="logo" src="./images/logo/logo_blazorit.png" alt="Роботобор  – Магазин гаджетов, роботов и интересных решений" class="logoFloat">
             </figure>
         </GridCol>
-        <GridCol Flex=1 Class="header-brand-search">
-            <div>
-                <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="SearchHandler" />
-            </div>
+        <GridCol Span="14" Class="header-brand-search">
+            <GridRow>
+                <GridCol Offset="1" Span="22">
+                    <Search Placeholder="input search text" AllowClear Size="@InputSize.Large" EnterButton="true" @bind-Value="@txtValue" OnSearch="SearchHandler" />
+                </GridCol>
+            </GridRow>
         </GridCol>
-        <GridCol Flex=1 Class="header-brand-contacts">
+        <GridCol Span="6" Class="header-brand-contacts">
             <div style="float:right">
                 <p>Contacts</p>
             </div>
