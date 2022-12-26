@@ -7,11 +7,18 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
         public BlazoritContext(DbContextOptions<BlazoritContext> options) : base(options) {
         }
 
+        //################################################################
+        //  #######################--IDENT--############################
+        //################################################################
         public virtual DbSet<User> Users { get; set; } = null!;
+        //################################################################
+        //  ############################################################
+        //################################################################
 
-        //#############################################################
-        //################---DOM ECOMMERCE---##########################
-        //#############################################################
+
+        //################################################################
+        //  ###################--DOM ECOMMERCE--########################
+        //################################################################
         public virtual DbSet<CartShopcart> CartShopcarts { get; set; }
 
         public virtual DbSet<CartShopcartList> CartShopcartLists { get; set; }
@@ -31,12 +38,15 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
         public virtual DbSet<WishWishlist> WishWishlists { get; set; }
 
         public virtual DbSet<WishWishlistList> WishWishlistLists { get; set; }
-        //#############################################################
-        //#############################################################
-        //#############################################################
+        //################################################################
+        //  ############################################################
+        //################################################################
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            //#############################################################
+            //  #######################--IDENT--#########################
+            //#############################################################
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("users_pkey");
@@ -56,12 +66,14 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasMaxLength(100)
                     .HasColumnName("user_role");
             });
+            //################################################################
+            //  ############################################################
+            //################################################################
 
 
-            //#############################################################
-            //################---DOM ECOMMERCE---##########################
-            //#############################################################
-
+            //################################################################
+            //  ###################--DOM ECOMMERCE--########################
+            //################################################################
             modelBuilder.Entity<CartShopcart>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("cart_shopcarts_pkey");
@@ -92,12 +104,12 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.HasOne(d => d.Cart).WithMany(p => p.CartShopcartLists)
                     .HasForeignKey(d => d.CartId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk__cart_shopcart_lists__ cart_shopcart");
+                    .HasConstraintName("fk__cart_shopcart_lists__cart_shopcart");
 
                 entity.HasOne(d => d.Product).WithMany(p => p.CartShopcartLists)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk__cart_shopcart_lists__ prod_products");
+                    .HasConstraintName("fk__cart_shopcart_lists__prod_products");
             });
 
             modelBuilder.Entity<OrdOrder>(entity =>
@@ -286,10 +298,10 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk__wish_whishlist_lists__wish_whishlist");
             });
+            //################################################################
+            //  ############################################################
+            //################################################################
 
-            //#############################################################
-            //#############################################################
-            //#############################################################
 
             OnModelCreatingPartial(modelBuilder);
         }
