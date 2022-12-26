@@ -80,7 +80,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.ToTable("cart_shopcarts", "dom");
 
-                entity.HasIndex(e => e.UserId, "fki_fk__cart_shop_carts__ident_users");
+                entity.HasIndex(e => e.UserId, "fki_fk__cart_shopcarts__ident_users");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
