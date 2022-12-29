@@ -364,5 +364,4 @@ FodyWeavers.xsd
 
 ##### Custom hidden files #####
 /Blazorit/app/Server/appsettings.json
-/Blazorit/tests/Blazorit.ConsoleApp/appsettings.json
 /tests/Blazorit.ConsoleApp/appsettings.json

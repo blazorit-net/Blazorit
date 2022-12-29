@@ -83,7 +83,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.HasIndex(e => e.UserId, "fki_fk__cart_shopcarts__ident_users");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    //.ValueGeneratedNever()
                     .HasColumnName("id");
                 entity.Property(e => e.DateTimeCreate)
                     .HasDefaultValueSql("now()")
