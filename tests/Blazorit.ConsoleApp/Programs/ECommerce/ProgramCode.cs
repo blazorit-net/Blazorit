@@ -24,7 +24,11 @@ namespace Blazorit.ConsoleApp.Programs.ECommerce
             //var result = await _ecomRepo.AddProductAsync("Test3 not existing product", "rub", 1111.567m, "some text2", "robot");
             //var result = await _ecomRepo.AddProductToWishlistAsync(1, "gad-8000");
 
-            var result = await _ecomRepo.AddProductToCartByCartIdAsync(14, "some-sku".ToString(), 5);
+            //var result = await _ecomRepo.AddProductToCartByCartIdAsync(14, "some-sku".ToString(), 5);
+
+            //var result = await _ecomRepo.AddProductToWishlistAsync(1, "gad-8000");
+            //var result = await _ecomRepo.AddProductToWishlistByWishlistIdAsync(3, "1211");
+            var result = await _ecomRepo.CreateOrderFromCart(1);
         }
     }
 }

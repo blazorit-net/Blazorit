@@ -13,6 +13,8 @@ public partial class VwCartShopcart
 
     public DateTime? DateTimeCreate { get; set; }
 
+    public long? ProductId { get; set; }
+
     public string? Sku { get; set; }
 
     public string? Name { get; set; }
@@ -20,4 +22,8 @@ public partial class VwCartShopcart
     public string? Curr { get; set; }
 
     public decimal? ProductPrice { get; set; }
+
+    public int? Quantity { get; set; }
+
+    public DateTime? DateTimeModified { get; set; }
 }

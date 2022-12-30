@@ -49,33 +49,6 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
             //#############################################################
             //  #######################--IDENT--#########################
             //#############################################################
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("users_pkey");
-
-                entity.ToTable("users", "ident");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.DateCreated)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_created");
-                entity.Property(e => e.PasswordHash).HasColumnName("password_hash");
-                entity.Property(e => e.PasswordSalt).HasColumnName("password_salt");
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(50)
-                    .HasColumnName("user_name");
-                entity.Property(e => e.UserRole)
-                    .HasMaxLength(100)
-                    .HasColumnName("user_role");
-            });
-            //################################################################
-            //  ############################################################
-            //################################################################
-
-
-            //################################################################
-            //  ###################--DOM ECOMMERCE--########################
-            //################################################################
             modelBuilder.Entity<CartShopcart>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("cart_shopcarts_pkey");
@@ -235,12 +208,15 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasColumnName("curr");
                 entity.Property(e => e.DateCreate).HasColumnName("date_create");
                 entity.Property(e => e.DateTimeCreate).HasColumnName("date_time_create");
+                entity.Property(e => e.DateTimeModified).HasColumnName("date_time_modified");
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .HasColumnName("name");
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
                 entity.Property(e => e.ProductPrice)
                     .HasPrecision(16, 4)
                     .HasColumnName("product_price");
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
                 entity.Property(e => e.Sku)
                     .HasMaxLength(50)
                     .HasColumnName("sku");
@@ -268,6 +244,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.ProductPrice)
                     .HasPrecision(16, 4)
                     .HasColumnName("product_price");
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
                 entity.Property(e => e.Sku)
                     .HasMaxLength(50)
                     .HasColumnName("sku");
@@ -322,10 +299,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.ToTable("wish_wish_lists", "dom");
 
-                entity.Property(e => e.WishId)
-                    .ValueGeneratedOnAdd()
-                    .UseIdentityAlwaysColumn()
-                    .HasColumnName("wish_id");
+                entity.Property(e => e.WishId).HasColumnName("wish_id");
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
                 entity.Property(e => e.DateTimeCreate)
                     .HasDefaultValueSql("now()")

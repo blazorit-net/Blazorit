@@ -22,4 +22,6 @@ public partial class VwOrdOrder
     public decimal? ProductPrice { get; set; }
 
     public decimal? OrderPrice { get; set; }
+
+    public int? Quantity { get; set; }
 }

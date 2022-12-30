@@ -52,7 +52,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce {
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="productSKU"></param>
-        /// <returns>Success</returns>
+        /// <returns>(Success, wishlistId)</returns>
         Task<(bool ok, long wishId)> AddProductToWishlistAsync(long userId, string productSKU);
 
         /// <summary>
@@ -62,5 +62,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce {
         /// <param name="productSKU"></param>
         /// <returns></returns>
         Task<bool> AddProductToWishlistByWishlistIdAsync(long wishlistId, string productSKU);
+
+        Task<bool> CreateOrderFromCart(long cartId);
     }
 }
