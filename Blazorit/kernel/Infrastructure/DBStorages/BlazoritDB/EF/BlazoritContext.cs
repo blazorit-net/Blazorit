@@ -27,6 +27,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<OrdOrderList> OrdOrderLists { get; set; }
 
+        public virtual DbSet<ProdCategory> ProdCategories { get; set; }
+
         public virtual DbSet<ProdProduct> ProdProducts { get; set; }
 
         public virtual DbSet<VwCartShopcart> VwCartShopcarts { get; set; }
@@ -80,10 +82,10 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.ToTable("cart_shopcarts", "dom");
 
-                entity.HasIndex(e => e.UserId, "fki_fk__cart_shopcarts__ident_users");
+                entity.HasIndex(e => e.UserId, "fki_fk__cart_shop_carts__ident_users");
 
                 entity.Property(e => e.Id)
-                    //.ValueGeneratedNever()
+                    .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
                 entity.Property(e => e.DateTimeCreate)
                     .HasDefaultValueSql("now()")
@@ -157,15 +159,39 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasConstraintName("fk__ord_order_list__prod_products");
             });
 
+            modelBuilder.Entity<ProdCategory>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("prod_categories_pkey");
+
+                entity.ToTable("prod_categories", "dom");
+
+                entity.HasIndex(e => e.Name, "UQIX__prod_categories__name").IsUnique();
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .HasColumnName("name");
+                entity.Property(e => e.PrefixSku)
+                    .HasMaxLength(20)
+                    .HasColumnName("prefix_sku");
+            });
+
             modelBuilder.Entity<ProdProduct>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("prod_products_pkey");
 
                 entity.ToTable("prod_products", "dom");
 
+                entity.HasIndex(e => e.Sku, "UQIX__prod_products__sku").IsUnique();
+
+                entity.HasIndex(e => e.CategoryId, "fki_fk__prod_products__prod_categories");
+
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
                 entity.Property(e => e.Curr)
                     .HasMaxLength(3)
                     .HasColumnName("curr");
@@ -175,6 +201,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.DateTimeModified)
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_modified");
+                entity.Property(e => e.Description).HasColumnName("description");
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .HasColumnName("name");
@@ -185,6 +212,10 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasMaxLength(50)
                     .HasComment("articul")
                     .HasColumnName("sku");
+
+                entity.HasOne(d => d.Category).WithMany(p => p.ProdProducts)
+                    .HasForeignKey(d => d.CategoryId)
+                    .HasConstraintName("fk__prod_products__prod_categories");
             });
 
             modelBuilder.Entity<VwCartShopcart>(entity =>

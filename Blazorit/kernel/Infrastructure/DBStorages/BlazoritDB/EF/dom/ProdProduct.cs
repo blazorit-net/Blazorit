@@ -12,7 +12,7 @@ public partial class ProdProduct
     /// <summary>
     /// articul
     /// </summary>
-    public string? Sku { get; set; }
+    public string Sku { get; set; } = null!;
 
     public string Curr { get; set; } = null!;
 
@@ -22,7 +22,13 @@ public partial class ProdProduct
 
     public DateTime DateTimeModified { get; set; }
 
+    public string? Description { get; set; }
+
+    public long? CategoryId { get; set; }
+
     public virtual ICollection<CartShopcartList> CartShopcartLists { get; } = new List<CartShopcartList>();
+
+    public virtual ProdCategory? Category { get; set; }
 
     public virtual ICollection<OrdOrderList> OrdOrderLists { get; } = new List<OrdOrderList>();
 

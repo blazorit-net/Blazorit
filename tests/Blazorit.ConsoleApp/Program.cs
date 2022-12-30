@@ -5,11 +5,55 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog.Events;
+using Serilog;
 
-Console.WriteLine("Hello, World!");
+//################################################################
+//  ##################--Logging Wrapper--#######################
+//      https://github.com/serilog/serilog-extensions-hosting
+//################################################################
+Log.Logger = new LoggerConfiguration() //logger settings
+            .MinimumLevel.Debug()
+            .MinimumLevel.Verbose()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .CreateLogger();
 
+//Start Host in try-catch-finally
+try {
+    Log.Information("Starting host");
+    await Host.CreateDefaultBuilder(args)
+        .UseSerilog()
+        .ConfigureServices((hostContext, services) => {
+            //services.AddLogging();
+            services.AddHostedService<ConsoleHostedService>();
+            services.AddDbContextFactory<BlazoritContext>(options =>
+                options.UseNpgsql(hostContext.Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
+        })
+        .RunConsoleAsync();
+    return 0;
+} catch (Exception ex) {
+    Log.Fatal(ex, "Host terminated unexpectedly");
+    return 1;
+} finally {
+    Log.CloseAndFlush();
+}
+//################################################################
+//  ############################################################
+//################################################################
+
+
+/***
 await Host.CreateDefaultBuilder(args)
+    .ConfigureLogging(logging => {
+        logging.ClearProviders();
+        logging.AddConsole();
+    })
     .ConfigureServices((hostContext, services) => {
+        services.AddLogging();
         services.AddHostedService<ConsoleHostedService>();
         services.AddDbContextFactory<BlazoritContext>(options => 
             options.UseNpgsql(hostContext.Configuration.GetConnectionString("DefaultConnection")));
@@ -20,5 +64,5 @@ await Host.CreateDefaultBuilder(args)
 //var host = builder.Build();
 //await host.RunAsync();
 
-
 Console.WriteLine("The End");
+***/
