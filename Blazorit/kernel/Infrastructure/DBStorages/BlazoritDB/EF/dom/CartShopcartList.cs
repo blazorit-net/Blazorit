@@ -11,6 +11,8 @@ public partial class CartShopcartList
 
     public int Quantity { get; set; }
 
+    public DateTime DateTimeModified { get; set; }
+
     public virtual CartShopcart Cart { get; set; } = null!;
 
     public virtual ProdProduct Product { get; set; } = null!;

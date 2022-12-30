@@ -25,39 +25,6 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce {
         }
 
 
-        public async Task<bool> AddProductToCartAsync(long userId, string productSKU, int quantity) {
-            try {
-                using var context = await _contextFactory.CreateDbContextAsync();
-
-                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
-
-                if (product == null) {
-                    return false;
-                }
-
-                CartShopcart cart = new CartShopcart() {
-                    UserId = userId,
-                };
-                CartShopcartList cartList = new CartShopcartList() {
-                    Cart = cart,
-                    //CartId = cart.Id,
-                    Product = product,
-                    //ProductId = product.Id,
-                    Quantity = quantity
-                };
-                
-                await context.CartShopcartLists.AddAsync(cartList);
-                await context.CartShopcarts.AddAsync(cart);
-                await context.SaveChangesAsync();
-
-                return true;
-            } catch (Exception ex) {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToCartAsync)} of the {nameof(ECommerceRepository)} repository");
-            }
-
-            return false;
-        }
-
 
         public async Task<(bool ok, string sku)> AddProductAsync(string name, string curr, decimal price, string? description, string? categoryName) {
             try {
@@ -66,16 +33,16 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce {
                 ProdCategory? category = null;
                 string prefixSku = string.Empty;
 
-                ProdProduct product = new ProdProduct { 
+                ProdProduct product = new ProdProduct {
                     Name = name,
                     Curr = curr,
                     Price = price,
-                    Description = description                        
+                    Description = description
                 };
 
                 if (categoryName != null) {
                     category = await context.ProdCategories.Where(x => x.Name == categoryName).FirstOrDefaultAsync();
-                }                
+                }
 
                 if (category != null && category.PrefixSku != null) {
                     prefixSku = $"{category.PrefixSku}-";
@@ -124,6 +91,142 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce {
             }
 
             return (false, string.Empty);
+        }
+
+
+        public async Task<(bool ok, long cartId)> AddProductToCartAsync(long userId, string productSKU, int quantity) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+
+                if (product == null) {
+                    return (false, 0);
+                }
+
+                CartShopcart? cart = await context.CartShopcarts.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+                if (cart is null) {
+                    cart = new CartShopcart { UserId = userId };
+                    await context.CartShopcarts.AddAsync(cart);
+                }
+
+                CartShopcartList cartList = new CartShopcartList() {
+                    Cart = cart,
+                    Product = product,
+                    Quantity = quantity
+                };
+
+                await context.CartShopcartLists.AddAsync(cartList);
+                await context.SaveChangesAsync();
+                return (true, cart.Id);
+            
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToCartAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return (false, 0);
+        }
+
+
+        public async Task<bool> AddProductToCartByCartIdAsync(long cartId, string productSKU, int quantity) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+
+                if (product == null) {
+                    return false;
+                }
+
+                CartShopcartList cartList = new CartShopcartList() {
+                    CartId = cartId,
+                    Product = product,
+                    Quantity = quantity
+                };
+
+                await context.CartShopcartLists.AddAsync(cartList);
+                await context.SaveChangesAsync();
+                return true;
+
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToCartByCartIdAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// Method adds product to user's wishlist
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="productSKU"></param>
+        /// <returns>(Success, wishlistId)</returns>
+        public async Task<(bool ok, long wishId)> AddProductToWishlistAsync(long userId, string productSKU) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+
+                if (product == null) {
+                    return (false, 0);
+                }
+
+                WishWish? wish = await context.WishWishes.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+                if (wish is null) {
+                    wish = new WishWish { UserId = userId };
+                    await context.WishWishes.AddAsync(wish);
+                }
+
+                WishWishList wishList = new WishWishList() {
+                    Wish = wish,
+                    Product = product
+                };
+
+                await context.WishWishLists.AddAsync(wishList);
+                await context.SaveChangesAsync();
+                return (true, wish.Id);
+
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToWishlistAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return (false, 0);
+        }
+
+
+        /// <summary>
+        /// Method adds product to user's wishlist (this method is a bit faster than AddProductToWishlistAsync method)
+        /// </summary>
+        /// <param name="wishlistId"></param>
+        /// <param name="productSKU"></param>
+        /// <returns></returns>
+        public async Task<bool> AddProductToWishlistByWishlistIdAsync(long wishlistId, string productSKU) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+
+                if (product == null) {
+                    return false;
+                }                
+
+                WishWishList wishList = new WishWishList() {
+                    WishId = wishlistId,
+                    Product = product
+                };
+
+                await context.WishWishLists.AddAsync(wishList);
+                await context.SaveChangesAsync();
+                return true;
+
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToWishlistByWishlistIdAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return false;
         }
     }
 }

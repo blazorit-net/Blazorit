@@ -32,5 +32,5 @@ public partial class ProdProduct
 
     public virtual ICollection<OrdOrderList> OrdOrderLists { get; } = new List<OrdOrderList>();
 
-    public virtual ICollection<WishWishlistList> WishWishlistLists { get; } = new List<WishWishlistList>();
+    public virtual ICollection<WishWishList> WishWishLists { get; } = new List<WishWishList>();
 }

@@ -37,9 +37,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<VwProdProduct> VwProdProducts { get; set; }
 
-        public virtual DbSet<WishWishlist> WishWishlists { get; set; }
+        public virtual DbSet<WishWish> WishWishes { get; set; }
 
-        public virtual DbSet<WishWishlistList> WishWishlistLists { get; set; }
+        public virtual DbSet<WishWishList> WishWishLists { get; set; }
         //################################################################
         //  ############################################################
         //################################################################
@@ -82,6 +82,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.ToTable("cart_shopcarts", "dom");
 
+                entity.HasIndex(e => e.UserId, "UQIX__cart_shopcarts__user_id").IsUnique();
+
                 entity.HasIndex(e => e.UserId, "fki_fk__cart_shop_carts__ident_users");
 
                 entity.Property(e => e.Id)
@@ -101,6 +103,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.Property(e => e.CartId).HasColumnName("cart_id");
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
+                entity.Property(e => e.DateTimeModified)
+                    .HasDefaultValueSql("now()")
+                    .HasColumnName("date_time_modified");
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.HasOne(d => d.Cart).WithMany(p => p.CartShopcartLists)
@@ -294,14 +299,16 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasColumnName("sku");
             });
 
-            modelBuilder.Entity<WishWishlist>(entity =>
+            modelBuilder.Entity<WishWish>(entity =>
             {
-                entity.HasKey(e => e.Id).HasName("wish_wishlists_pkey");
+                entity.HasKey(e => e.Id).HasName("wish_wishes_pkey");
 
-                entity.ToTable("wish_wishlists", "dom");
+                entity.ToTable("wish_wishes", "dom");
+
+                entity.HasIndex(e => e.UserId, "UQIX__wish_wishes__user_id").IsUnique();
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
                 entity.Property(e => e.DateTimeCreate)
                     .HasDefaultValueSql("now()")
@@ -309,25 +316,30 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
-            modelBuilder.Entity<WishWishlistList>(entity =>
+            modelBuilder.Entity<WishWishList>(entity =>
             {
-                entity.HasKey(e => new { e.WishId, e.ProductId }).HasName("wish_wishlist_lists_pkey");
+                entity.HasKey(e => new { e.WishId, e.ProductId }).HasName("wish_wish_lists_pkey");
 
-                entity.ToTable("wish_wishlist_lists", "dom");
+                entity.ToTable("wish_wish_lists", "dom");
 
-                entity.Property(e => e.WishId).HasColumnName("wish_id");
+                entity.Property(e => e.WishId)
+                    .ValueGeneratedOnAdd()
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("wish_id");
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
+                entity.Property(e => e.DateTimeCreate)
+                    .HasDefaultValueSql("now()")
+                    .HasColumnName("date_time_create");
 
-                entity.HasOne(d => d.Product).WithMany(p => p.WishWishlistLists)
+                entity.HasOne(d => d.Product).WithMany(p => p.WishWishLists)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk__wish_wishlist_lists__prod_products");
+                    .HasConstraintName("fk__wish_wish_lists__prod_products");
 
-                entity.HasOne(d => d.Wish).WithMany(p => p.WishWishlistLists)
+                entity.HasOne(d => d.Wish).WithMany(p => p.WishWishLists)
                     .HasForeignKey(d => d.WishId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk__wish_whishlist_lists__wish_whishlist");
+                    .HasConstraintName("fk__wish_wish_lists__wish_wishes");
             });
             //################################################################
             //  ############################################################

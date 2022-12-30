@@ -3,13 +3,15 @@ using System.Collections.Generic;
 
 namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
 
-public partial class WishWishlist
+public partial class WishWishList
 {
-    public long Id { get; set; }
+    public long WishId { get; set; }
 
-    public long UserId { get; set; }
+    public long ProductId { get; set; }
 
     public DateTime DateTimeCreate { get; set; }
 
-    public virtual ICollection<WishWishlistList> WishWishlistLists { get; } = new List<WishWishlistList>();
+    public virtual ProdProduct Product { get; set; } = null!;
+
+    public virtual WishWish Wish { get; set; } = null!;
 }
