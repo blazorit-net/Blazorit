@@ -1,11 +1,17 @@
 ﻿@using AntDesign
+@using Blazorit.Client.Services.Abstract.ECommerce.Domain;
 @implements IBlazoritComponent
+@inject IDataService dataService
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-header-menu"))">
     <GridRow>
         <GridCol Span=24>
-            <Menu Mode=MenuMode.Horizontal>
-                
+            
+            @foreach (var item in menuItems) {
+                <div>@item</div>
+            }
+
+            <Menu Mode=MenuMode.Horizontal>                
                 <SubMenu TitleTemplate=@sub1Title>
                     <MenuItem Key="setting:0">Test Item</MenuItem>
                     <MenuItemGroup Title="Item 1">

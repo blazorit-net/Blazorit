@@ -18,4 +18,12 @@ builder.Services.AddOptions(); //custom add
 builder.Services.AddAuthorizationCore(); //custom add
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>(); //custom add
 
+//################################################################
+//  ######################--ECOMMERCE--#########################
+//################################################################
+builder.Services.AddScoped<Blazorit.Client.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Client.Services.Concrete.ECommerce.Domain.DataService>();
+//################################################################
+//  ############################################################
+//################################################################
+
 await builder.Build().RunAsync();

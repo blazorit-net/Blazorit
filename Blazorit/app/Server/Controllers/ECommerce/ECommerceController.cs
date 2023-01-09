@@ -13,8 +13,8 @@ namespace Blazorit.Server.Controllers.ECommerce {
         }
 
 
-        [HttpPost("header-menu")]
-        public async Task<ActionResult<IEnumerable<string>>> Register() {
+        [HttpGet("header-menu")]
+        public async Task<ActionResult<IEnumerable<string>>> HeaderMenu() {
             var response = await _dataService.GetHeaderMenu();
 
             if (response == null) {

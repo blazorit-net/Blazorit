@@ -7,5 +7,11 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderMenus {
 
         //[Parameter]
         //public IList<SubMenu> MenuList { get; set; } = new List<SubMenu>();
+
+        protected override async Task OnInitializedAsync() {
+            menuItems = await dataService.GetHeaderMenu(); 
+        }
+
+        private IEnumerable<string> menuItems = new List<string>();
     }
 }
