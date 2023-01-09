@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,5 +65,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce {
         Task<bool> AddProductToWishlistByWishlistIdAsync(long wishlistId, string productSKU);
 
         Task<bool> CreateOrderFromCart(long cartId);
+
+        Task<IEnumerable<VwProdProduct>> GetProducts();
     }
 }

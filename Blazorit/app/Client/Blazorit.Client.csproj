@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Support\Helpers\" />
+    <Folder Include="wwwroot\data\ECommerce\pics\" />
     <Folder Include="wwwroot\images\logo\" />
   </ItemGroup>
 </Project>

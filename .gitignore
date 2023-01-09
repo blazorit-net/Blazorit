@@ -365,3 +365,4 @@ FodyWeavers.xsd
 ##### Custom hidden files #####
 /Blazorit/app/Server/appsettings.json
 /tests/Blazorit.ConsoleApp/appsettings.json
+/Blazorit/kernel/Infrastructure/Models1/PsqlContext.cs

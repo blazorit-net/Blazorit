@@ -303,5 +303,18 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce {
 
             return false;
         }
+
+
+        public async Task<IEnumerable<VwProdProduct>> GetProducts() {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                return context.VwProdProducts.ToList();
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProducts)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return new List<VwProdProduct>();
+        }
     }
 }

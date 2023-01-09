@@ -257,6 +257,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasNoKey()
                     .ToView("vw_prod_products", "dom");
 
+                entity.Property(e => e.Category)
+                    .HasMaxLength(100)
+                    .HasColumnName("category");
                 entity.Property(e => e.Curr)
                     .HasMaxLength(3)
                     .HasColumnName("curr");

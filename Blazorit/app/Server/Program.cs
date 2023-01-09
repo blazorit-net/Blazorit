@@ -43,6 +43,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddHttpContextAccessor();
 /***custom add - end***/
 
+
+//################################################################
+//  ######################--ECOMMERCE--#########################
+//################################################################
+builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
+builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.DataService>();
+builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.DataService>();
+//################################################################
+//  ############################################################
+//################################################################
+
+
 var app = builder.Build();
 
 ////app.UseSwaggerUI(); //custom add

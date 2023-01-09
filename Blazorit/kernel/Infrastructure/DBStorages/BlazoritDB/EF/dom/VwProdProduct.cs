@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
 
-public partial class VwProdProduct
-{
+public partial class VwProdProduct {
     public long? Id { get; set; }
 
     public string? Name { get; set; }
@@ -22,4 +21,6 @@ public partial class VwProdProduct
     public DateTime? DateTimeCreate { get; set; }
 
     public DateTime? DateTimeModified { get; set; }
+
+    public string? Category { get; set; }
 }

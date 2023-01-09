@@ -17,6 +17,7 @@ namespace Blazorit.Server.Controllers.Identity
             _authService = authService;
         }
 
+
         [HttpPost("register")]
         public async Task<ActionResult<Response<int>>> Register(UserRegister request)
         {
@@ -30,6 +31,7 @@ namespace Blazorit.Server.Controllers.Identity
             return Ok(response);
         }
 
+
         [HttpPost("login")]
         public async Task<ActionResult<Response<string>>> Login(UserLogin request)
         {
@@ -41,6 +43,7 @@ namespace Blazorit.Server.Controllers.Identity
 
             return Ok(response);
         }
+
 
         [HttpPost("change-password"), Authorize]
         public async Task<ActionResult<Response<bool>>> ChangePassword([FromBody] string newPassword)
