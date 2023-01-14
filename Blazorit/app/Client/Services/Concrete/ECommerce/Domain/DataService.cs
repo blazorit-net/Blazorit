@@ -1,4 +1,5 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
 using System.Net.Http.Json;
 
 
@@ -10,9 +11,9 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain {
             _http = http;
         }
 
-        public async Task<IEnumerable<string>> GetHeaderMenu() {
-            var result = await _http.GetFromJsonAsync<IEnumerable<string>>("api/ecommerce/header-menu");
-            return result ?? new List<string>(); //result.Content.ReadFromJsonAsync<Response<bool>>() ?? new Response<bool> { Success = false, Message = "Error response" };
+        public async Task<IEnumerable<SubMenu>> GetHeaderMenu() {
+            var result = await _http.GetFromJsonAsync<IEnumerable<SubMenu>>("api/ecommerce/domain/data/header-menu");
+            return result ?? new List<SubMenu>(); 
         }
     }
 }

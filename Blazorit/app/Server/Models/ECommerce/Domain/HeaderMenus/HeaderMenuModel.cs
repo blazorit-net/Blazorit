@@ -1,4 +1,4 @@
-﻿using Blazorit.Shared.Models.ECommerce.Domain.HeaderMenus;
+﻿//using Blazorit.Shared.Models.ECommerce.Domain.HeaderMenus;
 
 namespace Blazorit.Server.Models.ECommerce.Domain.HeaderMenus
 {
@@ -6,14 +6,14 @@ namespace Blazorit.Server.Models.ECommerce.Domain.HeaderMenus
     {
         public HeaderMenuModel()
         {
-            InitModel();
+            //InitModel();
         }
 
-        public IList<SubMenu> Menu { get; set; } = new List<SubMenu>();
+        //public IList<SubMenu> Menu { get; set; } = new List<SubMenu>();
 
-        private void InitModel()
-        {
-            throw new NotImplementedException();
-        }
+        //private void InitModel()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\kernel\SharedKernel\Blazorit.SharedKernel.csproj" />
     <ProjectReference Include="..\Shared\Blazorit.Shared.csproj" />
   </ItemGroup>
 

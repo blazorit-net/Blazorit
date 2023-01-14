@@ -1,4 +1,5 @@
 ﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Domain {
     public class DataService : IDataService {
@@ -8,8 +9,36 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain {
             _dataService = dataService;
         }
 
-        public async Task<IEnumerable<string>> GetHeaderMenu() {
-            return await _dataService.GetHeaderMenu();
+        /// <summary>
+        /// Method returns the constructed menu
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<SubMenu>> GetMainHeaderMenu() {
+            return  await _dataService.GetMainHeaderMenu();            
         }
     }
+
+        //    /// <summary>
+        ///// Method returns the constructed menu
+        ///// </summary>
+        ///// <returns></returns>
+        //public async Task<IEnumerable<SubMenu>> GetMainHeaderMenu() {
+        //    var coreMainMenu =  await _dataService.GetMainHeaderMenu();
+
+        //    //List<SubMenu> resultMenu = new();
+
+        //    var result = coreMainMenu
+        //        .Select(x => new SubMenu(
+        //                x.Title, 
+        //                new List<MenuItem>(x.MenuItems.Select(y => new MenuItem(y.Title, y.Link)))
+        //            )
+        //        )
+        //        .ToList();
+            
+        //    //var result = ((IEnumerable<SubMenu>)res).ToList();
+            
+            
+        //    return result;
+        //}
+  
 }

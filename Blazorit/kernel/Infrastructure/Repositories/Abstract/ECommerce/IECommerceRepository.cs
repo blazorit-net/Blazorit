@@ -1,11 +1,13 @@
 ﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce {
+namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
+{
     public interface IECommerceRepository {
         /// <summary>
         /// Method adds product to products repository. This method assigns unique SKU for the product
@@ -64,8 +66,17 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce {
         /// <returns></returns>
         Task<bool> AddProductToWishlistByWishlistIdAsync(long wishlistId, string productSKU);
 
-        Task<bool> CreateOrderFromCart(long cartId);
+        /// <summary>
+        /// Method create order from cart for User by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<bool> CreateOrderFromCart(long userId);
 
-        Task<IEnumerable<VwProdProduct>> GetProducts();
+        /// <summary>
+        /// Method returns all products from product's view
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<VwProduct>> GetProducts();
     }
 }

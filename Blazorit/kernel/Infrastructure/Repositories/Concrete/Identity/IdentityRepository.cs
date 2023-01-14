@@ -1,9 +1,10 @@
 ﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
-using Blazorit.SharedKernel.Services.Models.Identity;
+using Blazorit.SharedKernel.Core.Services.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blazorit.Infrastructure.Repositories.Concrete.Identity {
+namespace Blazorit.Infrastructure.Repositories.Concrete.Identity
+{
     public class IdentityRepository : IIdentityRepository {
 
         private readonly IDbContextFactory<BlazoritContext> _contextFactory;

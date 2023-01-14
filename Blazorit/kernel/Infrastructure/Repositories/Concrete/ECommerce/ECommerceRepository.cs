@@ -8,8 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
 using Microsoft.Extensions.Logging;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 
-namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce {
+namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
+{
     public class ECommerceRepository : IECommerceRepository {
         private readonly IDbContextFactory<BlazoritContext> _contextFactory;
         private readonly ILogger? _logger;
@@ -305,16 +307,33 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce {
         }
 
 
-        public async Task<IEnumerable<VwProdProduct>> GetProducts() {
+        /// <summary>
+        /// Method returns all products from product's view
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<VwProduct>> GetProducts() {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                return context.VwProdProducts.ToList();
+                return context.VwProdProducts.ToList()
+                    .Select(x => new VwProduct {
+                            Category = x.Category,
+                            Curr = x.Curr ?? string.Empty,
+                            DateCreate = x.DateCreate.GetValueOrDefault(),
+                            DateModified = x.DateModified.GetValueOrDefault(),
+                            DateTimeCreate = x.DateTimeCreate.GetValueOrDefault(),
+                            DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
+                            Id = x.Id.GetValueOrDefault(),
+                            Name= x.Name ?? string.Empty,
+                            Price = x.Price.GetValueOrDefault(),
+                            Sku = x.Sku  ?? string.Empty
+                    })
+                    .ToList();
             } catch (Exception ex) {
                 _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProducts)} of the {nameof(ECommerceRepository)} repository");
             }
 
-            return new List<VwProdProduct>();
+            return new List<VwProduct>();
         }
     }
 }

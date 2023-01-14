@@ -1,7 +1,9 @@
-﻿namespace Blazorit.Shared.Models.ECommerce.Domain.HeaderMenus
+﻿namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus
 {
     public class MenuItemGroup
     {
+        public MenuItemGroup() { }
+
         public MenuItemGroup(string title, IList<MenuItem> menuItems, IList<SubMenu> subMenus)
         {
             Title = title;
@@ -22,10 +24,10 @@
         }
 
 
-        public string Title { get; private set; }
+        public string Title { get; set; } = string.Empty;
 
-        public IList<MenuItem> MenuItems { get; private set; } = new List<MenuItem>();
+        public IList<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
 
-        public IList<SubMenu> SubMenus { get; private set; } = new List<SubMenu>();
+        public IList<SubMenu> SubMenus { get; set; } = new List<SubMenu>();
     }
 }

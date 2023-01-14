@@ -6,11 +6,17 @@
 <div class="@(((IBlazoritComponent)this).GetClass("bit-header-menu"))">
     <GridRow>
         <GridCol Span=24>
+            <Menu Mode=MenuMode.Horizontal> 
+                @foreach (var subMenu in mainMenu) {
+                    <SubMenu Title=@subMenu.Title>
+                        @foreach (var menuItem in subMenu.MenuItems) {
+                            <MenuItem Key=@Guid.NewGuid().ToString()>@menuItem.Title</MenuItem>
+                        }
+                    </SubMenu>
+                }
+            </Menu>
             
-            @foreach (var item in menuItems) {
-                <div>@item</div>
-            }
-
+            @*
             <Menu Mode=MenuMode.Horizontal>                
                 <SubMenu TitleTemplate=@sub1Title>
                     <MenuItem Key="setting:0">Test Item</MenuItem>
@@ -118,6 +124,7 @@
                     </MenuItemGroup>
                 </SubMenu>
             </Menu>
+            *@
         </GridCol>
     </GridRow>
 </div>

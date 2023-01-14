@@ -31,7 +31,16 @@ try {
             services.AddHostedService<ConsoleHostedService>();
             services.AddDbContextFactory<BlazoritContext>(options =>
                 options.UseNpgsql(hostContext.Configuration.GetConnectionString("DefaultConnection")));
+
+            //################################################################
+            //  ######################--ECOMMERCE--#########################
+            //################################################################
             services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
+            services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.DataService>();
+            services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.DataService>();
+            //################################################################
+            //  ############################################################
+            //################################################################
         })
         .RunConsoleAsync();
     return 0;
