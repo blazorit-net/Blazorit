@@ -29,6 +29,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<ProdCategory> ProdCategories { get; set; }
 
+        public virtual DbSet<ProdPicture> ProdPictures { get; set; }
+
         public virtual DbSet<ProdProduct> ProdProducts { get; set; }
 
         public virtual DbSet<VwCartShopcart> VwCartShopcarts { get; set; }
@@ -183,11 +185,45 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasColumnName("prefix_sku");
             });
 
+            modelBuilder.Entity<ProdPicture>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("prod_pictures_pkey");
+
+                entity.ToTable("prod_pictures", "dom");
+
+                entity.HasIndex(e => new { e.ProductId, e.PicSize, e.SiteLocation }, "IX__prod_pictures__include");
+
+                entity.HasIndex(e => e.LinkPart, "UQIX__prod_pictures").IsUnique();
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.LinkPart)
+                    .HasMaxLength(100)
+                    .HasColumnName("link_part");
+                entity.Property(e => e.OrderNum).HasColumnName("order_num");
+                entity.Property(e => e.PicSize)
+                    .HasMaxLength(10)
+                    .HasColumnName("pic_size");
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+                entity.Property(e => e.SiteLocation)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("'site'::character varying")
+                    .HasColumnName("site_location");
+
+                entity.HasOne(d => d.Product).WithMany(p => p.ProdPictures)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk__prod_pictures__prod_products");
+            });
+
             modelBuilder.Entity<ProdProduct>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("prod_products_pkey");
 
                 entity.ToTable("prod_products", "dom");
+
+                entity.HasIndex(e => new { e.LinkPart, e.CategoryId }, "UQIX__prod_products__include").IsUnique();
 
                 entity.HasIndex(e => e.Sku, "UQIX__prod_products__sku").IsUnique();
 
@@ -207,6 +243,10 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_modified");
                 entity.Property(e => e.Description).HasColumnName("description");
+                entity.Property(e => e.LinkPart)
+                    .HasMaxLength(200)
+                    .HasDefaultValueSql("'empty'::character varying")
+                    .HasColumnName("link_part");
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .HasColumnName("name");
@@ -295,6 +335,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.DateTimeCreate).HasColumnName("date_time_create");
                 entity.Property(e => e.DateTimeModified).HasColumnName("date_time_modified");
                 entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.LinkPart)
+                    .HasMaxLength(200)
+                    .HasColumnName("link_part");
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .HasColumnName("name");

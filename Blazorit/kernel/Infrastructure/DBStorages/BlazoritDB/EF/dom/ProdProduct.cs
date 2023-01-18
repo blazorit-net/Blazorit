@@ -26,11 +26,15 @@ public partial class ProdProduct
 
     public long? CategoryId { get; set; }
 
+    public string LinkPart { get; set; } = null!;
+
     public virtual ICollection<CartShopcartList> CartShopcartLists { get; } = new List<CartShopcartList>();
 
     public virtual ProdCategory? Category { get; set; }
 
     public virtual ICollection<OrdOrderList> OrdOrderLists { get; } = new List<OrdOrderList>();
+
+    public virtual ICollection<ProdPicture> ProdPictures { get; } = new List<ProdPicture>();
 
     public virtual ICollection<WishWishList> WishWishLists { get; } = new List<WishWishList>();
 }

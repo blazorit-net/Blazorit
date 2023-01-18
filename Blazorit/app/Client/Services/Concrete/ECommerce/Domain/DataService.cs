@@ -15,5 +15,17 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain {
             var result = await _http.GetFromJsonAsync<IEnumerable<SubMenu>>("api/ecommerce/domain/data/header-menu");
             return result ?? new List<SubMenu>(); 
         }
+
+        /// <summary>
+        /// Method returns One product
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="linkPart"></param>
+        /// <returns></returns>
+        public async Task<string> GetProductData(string category, string linkPart) {
+            
+            var result = await _http.GetFromJsonAsync<string>($"api/ecommerce/domain/data/product/{category}/{linkPart}");
+            return string.Empty;
+        }
     }
 }

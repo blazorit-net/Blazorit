@@ -9,8 +9,21 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderMenus {
         public string? Class { get; set; }
 
 
-        protected override async Task OnInitializedAsync() {
-            mainMenu = await dataService.GetHeaderMenu(); 
+        [Parameter]
+        public IEnumerable<SubMenu>? MainMenu { get; set; }
+
+
+        protected override async Task OnInitializedAsync() {           
+            if (MainMenu != null) {
+                mainMenu = MainMenu;
+            } else {
+                mainMenu = await dataService.GetHeaderMenu();
+            }
+            
+            
+            
+
+            //mainMenu = await dataService.GetHeaderMenu(); 
         }      
     }
 }

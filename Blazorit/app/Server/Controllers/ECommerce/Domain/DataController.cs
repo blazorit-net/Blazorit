@@ -29,5 +29,16 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
 
             return Ok(response);
         }
+
+        /// <summary>
+        /// Get One product
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="linkPart"></param>
+        /// <returns></returns>
+        [HttpGet("product/{category}/{linkPart}")]
+        public async Task<string> Get(string category, string linkPart) {
+            return string.Empty;
+        }
     }
 }

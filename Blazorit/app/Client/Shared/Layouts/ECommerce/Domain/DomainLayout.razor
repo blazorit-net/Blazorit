@@ -44,3 +44,30 @@
         </GridRow>
     </footer>
 </div>
+
+
+@code {
+    List<Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.SubMenu> subMenus;
+
+    protected override void OnInitialized() {
+        
+        subMenus = new List<Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.SubMenu>();
+
+        var sub1 = new Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.SubMenu("Test1", 
+        new List<Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.MenuItem> {
+        new Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.MenuItem("prod", ""),
+        new Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.MenuItem("prod2", "")
+        });
+
+        var sub2 = new Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.SubMenu("Test2",
+        new List<Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.MenuItem> {
+        new Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.MenuItem("prod", ""),
+        new Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus.MenuItem("prod2", "")
+    });
+
+        subMenus.Add(sub1);
+        subMenus.Add(sub2);
+
+
+    }
+}
