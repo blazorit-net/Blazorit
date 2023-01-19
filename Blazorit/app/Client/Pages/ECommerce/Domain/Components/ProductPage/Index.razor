@@ -1,13 +1,13 @@
 ﻿@page "/product/{Category}/{LinkPart}"
 
-@using Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps
+@using Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
 @using Blazorit.Client.Services.Abstract.ECommerce.Domain;
 @inject IDataService dataService;
 
 <div class="bit-product-page">
     <GridRow>
         <GridCol Span="24">
-            <ProductCard />
+            <ProductCard Name="@productName" />
         </GridCol>    
     </GridRow>
     @*Product features*@

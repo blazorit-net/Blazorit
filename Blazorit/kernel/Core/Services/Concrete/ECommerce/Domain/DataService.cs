@@ -43,7 +43,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain {
             //designing the menu
             foreach (string category in categories) {
                 var catProducts = products.Where(x => x.Category == category)
-                    .Select(x => new MenuItem(x.Name, string.Empty))                    
+                    .Select(x => new MenuItem(x.Name, $"{category}/{x.LinkPart}".ToLower()))                    
                     .ToList();
 
                 var subMenu = new SubMenu(category, catProducts);
@@ -52,6 +52,17 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain {
             }
 
             return mainMenu;
+        }
+
+
+        /// <summary>
+        /// Method return data of one product
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="linkPart"></param>
+        /// <returns></returns>
+        public async Task<string> GetProductData(string category, string linkPart) {
+            return await _dataRepo.GetProductData(category, linkPart);
         }
     }
 }

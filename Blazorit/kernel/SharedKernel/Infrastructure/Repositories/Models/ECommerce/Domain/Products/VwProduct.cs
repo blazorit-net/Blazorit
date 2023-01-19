@@ -28,5 +28,6 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
         public DateTime DateTimeModified { get; set; }
 
         public string? Category { get; set; }
+        public string LinkPart { get; set; }
     }
 }

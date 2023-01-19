@@ -22,10 +22,9 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        public async Task<string> GetProductData(string category, string linkPart) {
-            
-            var result = await _http.GetFromJsonAsync<string>($"api/ecommerce/domain/data/product/{category}/{linkPart}");
-            return string.Empty;
+        public async Task<string> GetProductData(string category, string linkPart) {            
+            var result = await _http.GetStringAsync($"api/ecommerce/domain/data/product/{category}/{linkPart}");
+            return result ?? string.Empty;
         }
     }
 }

@@ -27,6 +27,12 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
                 return BadRequest(response);
             }
 
+            foreach(var subMenu in response) {
+                foreach(var item in subMenu.MenuItems) {
+                    item.Link = $"/product/{item.Link}";
+                }
+            }
+
             return Ok(response);
         }
 
@@ -37,8 +43,9 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
         /// <param name="linkPart"></param>
         /// <returns></returns>
         [HttpGet("product/{category}/{linkPart}")]
-        public async Task<string> Get(string category, string linkPart) {
-            return string.Empty;
+        public async Task<ActionResult<string>> Get(string category, string linkPart) {
+            var result = await _dataService.GetProductData(category, linkPart);
+            return Ok(result);
         }
     }
 }

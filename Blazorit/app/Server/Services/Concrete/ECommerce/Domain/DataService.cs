@@ -16,6 +16,17 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain {
         public async Task<IEnumerable<SubMenu>> GetMainHeaderMenu() {
             return  await _dataService.GetMainHeaderMenu();            
         }
+
+
+        /// <summary>
+        /// Method return data of one product
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="linkPart"></param>
+        /// <returns></returns>
+        public async Task<string> GetProductData(string category, string linkPart) {
+            return await _dataService.GetProductData(category, linkPart);
+        }
     }
 
         //    /// <summary>

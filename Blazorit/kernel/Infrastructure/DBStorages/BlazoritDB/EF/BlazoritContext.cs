@@ -176,7 +176,11 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
+                    .HasIdentityOptions(null, null, 0L, null, null, null)
                     .HasColumnName("id");
+                entity.Property(e => e.FullName)
+                    .HasMaxLength(200)
+                    .HasColumnName("full_name");
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
                     .HasColumnName("name");
@@ -260,6 +264,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.HasOne(d => d.Category).WithMany(p => p.ProdProducts)
                     .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk__prod_products__prod_categories");
             });
 
@@ -327,6 +332,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.Category)
                     .HasMaxLength(100)
                     .HasColumnName("category");
+                entity.Property(e => e.CategoryFullName)
+                    .HasMaxLength(200)
+                    .HasColumnName("category_full_name");
                 entity.Property(e => e.Curr)
                     .HasMaxLength(3)
                     .HasColumnName("curr");

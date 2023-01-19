@@ -24,13 +24,13 @@ public partial class ProdProduct
 
     public string? Description { get; set; }
 
-    public long? CategoryId { get; set; }
+    public long CategoryId { get; set; }
 
     public string LinkPart { get; set; } = null!;
 
     public virtual ICollection<CartShopcartList> CartShopcartLists { get; } = new List<CartShopcartList>();
 
-    public virtual ProdCategory? Category { get; set; }
+    public virtual ProdCategory Category { get; set; } = null!;
 
     public virtual ICollection<OrdOrderList> OrdOrderLists { get; } = new List<OrdOrderList>();
 

@@ -78,5 +78,14 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<VwProduct>> GetProducts();
+
+
+        /// <summary>
+        /// Method return data of one product
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="linkPart"></param>
+        /// <returns></returns>
+        Task<string> GetProductData(string category, string linkPart);
     }
 }

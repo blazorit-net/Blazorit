@@ -11,5 +11,7 @@ public partial class ProdCategory
 
     public string? PrefixSku { get; set; }
 
+    public string FullName { get; set; } = null!;
+
     public virtual ICollection<ProdProduct> ProdProducts { get; } = new List<ProdProduct>();
 }

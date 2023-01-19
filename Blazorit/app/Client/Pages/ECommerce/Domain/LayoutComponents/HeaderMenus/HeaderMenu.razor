@@ -6,11 +6,11 @@
 <div class="@(((IBlazoritComponent)this).GetClass("bit-header-menu"))">
     <GridRow>
         <GridCol Span=24>
-            <Menu Mode=MenuMode.Horizontal> 
+            <Menu Mode=MenuMode.Horizontal > 
                 @foreach (var subMenu in mainMenu) {
                     <SubMenu Title=@subMenu.Title>
                         @foreach (var menuItem in subMenu.MenuItems) {
-                            <MenuItem Key=@Guid.NewGuid().ToString()>@menuItem.Title</MenuItem>
+                            <MenuItem RouterLink="@menuItem.Link" RouterMatch="NavLinkMatch.All">@menuItem.Title</MenuItem>
                         }
                     </SubMenu>
                 }

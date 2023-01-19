@@ -326,7 +326,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                             Id = x.Id.GetValueOrDefault(),
                             Name= x.Name ?? string.Empty,
                             Price = x.Price.GetValueOrDefault(),
-                            Sku = x.Sku  ?? string.Empty
+                            Sku = x.Sku  ?? string.Empty,
+                            LinkPart = x.LinkPart ?? string.Empty
                     })
                     .ToList();
             } catch (Exception ex) {
@@ -334,6 +335,28 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
 
             return new List<VwProduct>();
+        }
+
+
+        /// <summary>
+        /// Method return data of one product
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="linkPart"></param>
+        /// <returns></returns>
+        public async Task<string> GetProductData(string category, string linkPart) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                return context.VwProdProducts
+                    .Where(x => x.Category == category && x.LinkPart == linkPart)
+                    .Select(x => x.Name).FirstOrDefault() ?? string.Empty;
+
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProductData)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return string.Empty;
         }
     }
 }
