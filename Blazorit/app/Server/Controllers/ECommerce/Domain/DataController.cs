@@ -4,10 +4,12 @@ using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 using Blazorit.Shared.Models.Universal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
 
 namespace Blazorit.Server.Controllers.ECommerce.Domain
 {
-    [Route("api/ecommerce/domain/[controller]")]
+    //[Route("api/ecommerce/domain/[controller]")]
+    [Route(DataApi.CONTROLLER)]
     [ApiController]
     public class DataController : ControllerBase
     {
@@ -27,11 +29,11 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
                 return BadRequest();
             }
 
-            foreach(var subMenu in menus) {
-                foreach(var item in subMenu.MenuItems) {
-                    item.Link = $"/product/{item.Link}"; //add prefix link '/product/'
-                }
-            }
+            //foreach(var subMenu in menus) {
+            //    foreach(var item in subMenu.MenuItems) {
+            //        item.Link = $"/{DataApi.PRODUCT}/{item.Link}"; //add prefix link '/product/'
+            //    }
+            //}
 
             return Ok(menus);
         }
@@ -43,7 +45,8 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        [HttpGet("product/{category}/{linkPart}")]
+       // [HttpGet("product/{category}/{linkPart}")]
+        [HttpGet($"{DataApi.PRODUCT}/{{category}}/{{linkPart}}")]
         public async Task<ActionResult<ProductCard>> Get(string category, string linkPart) {
             var prodCard = await _dataService.GetProductDataAsync(category, linkPart);
             if (prodCard == null) {

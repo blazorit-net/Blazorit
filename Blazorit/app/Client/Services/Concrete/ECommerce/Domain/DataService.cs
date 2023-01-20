@@ -1,11 +1,13 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain;
 using Blazorit.Shared.Models.Universal;
+using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 using System.Net.Http.Json;
 
 
-namespace Blazorit.Client.Services.Concrete.ECommerce.Domain {
+namespace Blazorit.Client.Services.Concrete.ECommerce.Domain
+{
     public class DataService : IDataService {
         private readonly HttpClient _http;
 
@@ -25,7 +27,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain {
         /// <param name="linkPart"></param>
         /// <returns></returns>
         public async Task<ProductCard> GetProductDataAsync(string category, string linkPart) {            
-            var result = await _http.GetFromJsonAsync<ProductCard>($"api/ecommerce/domain/data/product/{category}/{linkPart}");  
+            var result = await _http.GetFromJsonAsync<ProductCard>($"{DataApi.CONTROLLER}/{DataApi.PRODUCT}/{category}/{linkPart}");
             return result ?? new ProductCard();
         }
     }

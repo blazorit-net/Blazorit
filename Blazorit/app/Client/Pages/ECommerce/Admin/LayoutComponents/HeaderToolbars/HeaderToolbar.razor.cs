@@ -1,8 +1,9 @@
-﻿using Blazorit.Client.Shared.Routes.ECommerce;
-using Blazorit.Client.Providers.Concrete.Identity;
+﻿using Blazorit.Client.Providers.Concrete.Identity;
 using Microsoft.AspNetCore.Components;
+using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 
-namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.HeaderToolbars {
+namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.HeaderToolbars
+{
     public partial class HeaderToolbar {
         [Parameter]
         public string? Class { get; set; }

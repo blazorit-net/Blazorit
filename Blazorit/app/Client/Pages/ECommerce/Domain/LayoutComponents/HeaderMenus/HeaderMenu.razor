@@ -1,5 +1,7 @@
 ﻿@using AntDesign
 @using Blazorit.Client.Services.Abstract.ECommerce.Domain;
+@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+
 @implements IBlazoritComponent
 @inject IDataService dataService
 
@@ -10,7 +12,7 @@
                 @foreach (var subMenu in mainMenu) {
                     <SubMenu Title=@subMenu.Title>
                         @foreach (var menuItem in subMenu.MenuItems) {
-                            <MenuItem RouterLink="@menuItem.Link" RouterMatch="NavLinkMatch.All">@menuItem.Title</MenuItem>
+                            <MenuItem RouterLink=@($"{ConstPage.PRODUCT}/{menuItem.Link}") RouterMatch="NavLinkMatch.All">@menuItem.Title</MenuItem>
                         }
                     </SubMenu>
                 }
