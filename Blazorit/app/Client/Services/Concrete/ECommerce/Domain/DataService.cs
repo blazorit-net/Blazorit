@@ -1,5 +1,7 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain;
+using Blazorit.Shared.Models.Universal;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 using System.Net.Http.Json;
 
 
@@ -22,9 +24,9 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        public async Task<string> GetProductData(string category, string linkPart) {            
-            var result = await _http.GetStringAsync($"api/ecommerce/domain/data/product/{category}/{linkPart}");
-            return result ?? string.Empty;
+        public async Task<ProductCard> GetProductDataAsync(string category, string linkPart) {            
+            var result = await _http.GetFromJsonAsync<ProductCard>($"api/ecommerce/domain/data/product/{category}/{linkPart}");  
+            return result ?? new ProductCard();
         }
     }
 }

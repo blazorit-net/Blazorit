@@ -1,4 +1,5 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 
 namespace Blazorit.Server.Services.Abstract.ECommerce.Domain {
     public interface IDataService {
@@ -11,6 +12,6 @@ namespace Blazorit.Server.Services.Abstract.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        Task<string> GetProductData(string category, string linkPart);
+        Task<ProductCard?> GetProductDataAsync(string category, string linkPart);
     }
 }

@@ -87,7 +87,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                ProdCategory? category = null;
+                ProdCategory category = null!;
 
                 ProdProduct product = new() {
                     Name = name,
@@ -317,17 +317,18 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                 return context.VwProdProducts.ToList()
                     .Select(x => new VwProduct {
-                            Category = x.Category,
-                            Curr = x.Curr ?? string.Empty,
+                            Category = x.Category!,
+                            CategoryFullName = x.CategoryFullName!,
+                            Curr = x.Curr!,
                             DateCreate = x.DateCreate.GetValueOrDefault(),
                             DateModified = x.DateModified.GetValueOrDefault(),
                             DateTimeCreate = x.DateTimeCreate.GetValueOrDefault(),
                             DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
                             Id = x.Id.GetValueOrDefault(),
-                            Name= x.Name ?? string.Empty,
+                            Name= x.Name!,
                             Price = x.Price.GetValueOrDefault(),
-                            Sku = x.Sku  ?? string.Empty,
-                            LinkPart = x.LinkPart ?? string.Empty
+                            Sku = x.Sku!,
+                            LinkPart = x.LinkPart!
                     })
                     .ToList();
             } catch (Exception ex) {
@@ -344,19 +345,33 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        public async Task<string> GetProductData(string category, string linkPart) {
+        public async Task<VwProduct?> GetProductDataAsync(string category, string linkPart) {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
                 return context.VwProdProducts
                     .Where(x => x.Category == category && x.LinkPart == linkPart)
-                    .Select(x => x.Name).FirstOrDefault() ?? string.Empty;
+                    .Select(x => new VwProduct {
+                        Category = x.Category!,
+                        CategoryFullName = x.CategoryFullName!,
+                        Curr = x.Curr!,
+                        DateCreate = x.DateCreate.GetValueOrDefault(),
+                        DateModified = x.DateModified.GetValueOrDefault(),
+                        DateTimeCreate = x.DateTimeCreate.GetValueOrDefault(),
+                        DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
+                        Id = x.Id.GetValueOrDefault(),
+                        Name = x.Name!,
+                        Price = x.Price.GetValueOrDefault(),
+                        Sku = x.Sku!,
+                        LinkPart = x.LinkPart!
+                    })
+                    .FirstOrDefault();
 
             } catch (Exception ex) {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProductData)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProductDataAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 
-            return string.Empty;
+            return null;
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain;
+﻿
+using Blazorit.Server.Services.Abstract.ECommerce.Domain;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Domain {
     public class DataService : IDataService {
@@ -14,7 +16,8 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain {
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<SubMenu>> GetMainHeaderMenu() {
-            return  await _dataService.GetMainHeaderMenu();            
+            var result = await _dataService.GetMainHeaderMenu();
+            return result;
         }
 
 
@@ -24,8 +27,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        public async Task<string> GetProductData(string category, string linkPart) {
-            return await _dataService.GetProductData(category, linkPart);
+        public async Task<ProductCard?> GetProductDataAsync(string category, string linkPart) {
+            var result = await _dataService.GetProductDataAsync(category, linkPart);
+            return result;
         }
     }
 

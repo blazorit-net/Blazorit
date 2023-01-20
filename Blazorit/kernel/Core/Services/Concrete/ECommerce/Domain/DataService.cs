@@ -1,6 +1,7 @@
 ﻿using Blazorit.Core.Services.Abstract.ECommerce.Domain;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,8 +62,22 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        public async Task<string> GetProductData(string category, string linkPart) {
-            return await _dataRepo.GetProductData(category, linkPart);
+        public async Task<ProductCard?> GetProductDataAsync(string category, string linkPart) {
+            var card = await _dataRepo.GetProductDataAsync(category, linkPart);
+
+            if (card == null) {
+                return null;
+            }
+
+            return new ProductCard {
+                Category = card.Category,
+                CategoryFullName = card.CategoryFullName,
+                Id = card.Id,
+                LinkPart = card.LinkPart ,
+                Name = card.Name,
+                Price = card.Price,
+                Sku = card.Sku
+            };
         }
     }
 }

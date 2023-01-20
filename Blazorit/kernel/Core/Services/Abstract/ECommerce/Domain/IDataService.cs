@@ -1,4 +1,5 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,6 @@ namespace Blazorit.Core.Services.Abstract.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        Task<string> GetProductData(string category, string linkPart);
+        Task<ProductCard?> GetProductDataAsync(string category, string linkPart);
     }
 }

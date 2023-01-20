@@ -1,5 +1,4 @@
-﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,6 +85,6 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        Task<string> GetProductData(string category, string linkPart);
+        Task<VwProduct?> GetProductDataAsync(string category, string linkPart);
     }
 }

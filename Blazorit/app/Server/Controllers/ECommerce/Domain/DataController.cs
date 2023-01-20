@@ -1,5 +1,7 @@
 ﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
+using Blazorit.Shared.Models.Universal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,23 +20,22 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
 
 
         [HttpGet("header-menu")]
-        public async Task<ActionResult<IEnumerable<SubMenu>>> HeaderMenu()
-        {
-            var response = await _dataService.GetMainHeaderMenu();
+        public async Task<ActionResult<IEnumerable<SubMenu>>> HeaderMenu() {
+            var menus = await _dataService.GetMainHeaderMenu();
 
-            if (response == null)
-            {
-                return BadRequest(response);
+            if (menus == null) {
+                return BadRequest();
             }
 
-            foreach(var subMenu in response) {
+            foreach(var subMenu in menus) {
                 foreach(var item in subMenu.MenuItems) {
-                    item.Link = $"/product/{item.Link}";
+                    item.Link = $"/product/{item.Link}"; //add prefix link '/product/'
                 }
             }
 
-            return Ok(response);
+            return Ok(menus);
         }
+
 
         /// <summary>
         /// Get One product
@@ -43,9 +44,13 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
         /// <param name="linkPart"></param>
         /// <returns></returns>
         [HttpGet("product/{category}/{linkPart}")]
-        public async Task<ActionResult<string>> Get(string category, string linkPart) {
-            var result = await _dataService.GetProductData(category, linkPart);
-            return Ok(result);
+        public async Task<ActionResult<ProductCard>> Get(string category, string linkPart) {
+            var prodCard = await _dataService.GetProductDataAsync(category, linkPart);
+            if (prodCard == null) {
+                return BadRequest(); // { Success = false, Message = "No product data available." });
+            }
+
+            return Ok(prodCard); // { Success = true, Data = prodCard });
         }
     }
 }
