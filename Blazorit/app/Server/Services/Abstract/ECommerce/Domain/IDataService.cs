@@ -12,6 +12,6 @@ namespace Blazorit.Server.Services.Abstract.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        Task<ProductCard?> GetProductDataAsync(string category, string linkPart);
+        Task<ProductCardData?> GetProductDataAsync(string category, string linkPart);
     }
 }

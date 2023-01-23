@@ -47,7 +47,7 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
         /// <returns></returns>
        // [HttpGet("product/{category}/{linkPart}")]
         [HttpGet($"{DataApi.PRODUCT}/{{category}}/{{linkPart}}")]
-        public async Task<ActionResult<ProductCard>> Get(string category, string linkPart) {
+        public async Task<ActionResult<ProductCardData>> Get(string category, string linkPart) {
             var prodCard = await _dataService.GetProductDataAsync(category, linkPart);
             if (prodCard == null) {
                 return BadRequest(); // { Success = false, Message = "No product data available." });

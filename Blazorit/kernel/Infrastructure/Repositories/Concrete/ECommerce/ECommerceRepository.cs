@@ -315,7 +315,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                return context.VwProdProducts.ToList()
+                return context.VwProdProducts ////.ToList()
                     .Select(x => new VwProduct {
                             Category = x.Category!,
                             CategoryFullName = x.CategoryFullName!,
@@ -349,7 +349,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                return context.VwProdProducts
+                var product = context.VwProdProducts
                     .Where(x => x.Category == category && x.LinkPart == linkPart)
                     .Select(x => new VwProduct {
                         Category = x.Category!,
@@ -359,6 +359,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         DateModified = x.DateModified.GetValueOrDefault(),
                         DateTimeCreate = x.DateTimeCreate.GetValueOrDefault(),
                         DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
+                        Description = x.Description,
                         Id = x.Id.GetValueOrDefault(),
                         Name = x.Name!,
                         Price = x.Price.GetValueOrDefault(),
@@ -366,6 +367,12 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         LinkPart = x.LinkPart!
                     })
                     .FirstOrDefault();
+
+                //if (product is not null) {
+                //    product.Description = context.ProdProducts.Where(x => x.Id == product.Id).FirstOrDefault().Description!;
+                //}
+                
+                return product;
 
             } catch (Exception ex) {
                 _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProductDataAsync)} of the {nameof(ECommerceRepository)} repository");

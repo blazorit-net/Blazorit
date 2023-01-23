@@ -31,13 +31,13 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain {
 
             List<SubMenu> mainMenu = new();
 
-            foreach(var item in products) {                
-                item.Category ??= "Others"; //Others category for others products                
-            }
+            //foreach(var item in products) {                
+            //    item.Category ??= "Others"; //Others category for others products                
+            //}
 
             //get all categories
             IEnumerable<string> categories = products
-                .GroupBy(x => x.Category).Select(x => new { Category = x.Key ?? string.Empty })
+                .GroupBy(x => x.Category).Select(x => new { Category = x.Key }) // ?? string.Empty })
                 .Select(x => x.Category)
                 .ToList();
 
@@ -62,21 +62,22 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain {
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        public async Task<ProductCard?> GetProductDataAsync(string category, string linkPart) {
-            var card = await _dataRepo.GetProductDataAsync(category, linkPart);
+        public async Task<ProductCardData?> GetProductDataAsync(string category, string linkPart) {
+            var product = await _dataRepo.GetProductDataAsync(category, linkPart);
 
-            if (card == null) {
+            if (product == null) {
                 return null;
             }
 
-            return new ProductCard {
-                Category = card.Category,
-                CategoryFullName = card.CategoryFullName,
-                Id = card.Id,
-                LinkPart = card.LinkPart ,
-                Name = card.Name,
-                Price = card.Price,
-                Sku = card.Sku
+            return new ProductCardData {
+                Category = product.Category,
+                CategoryFullName = product.CategoryFullName,
+                Description = product.Description ?? string.Empty,
+                Id = product.Id,
+                LinkPart = product.LinkPart ,
+                Name = product.Name,
+                Price = product.Price,
+                Sku = product.Sku
             };
         }
     }

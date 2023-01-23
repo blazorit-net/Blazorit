@@ -5,13 +5,20 @@
     @*Main image of product*@
     <GridCol>
         <Card>
-            <p>Hello from product: @Name</p>
-
+            <h2>@Data.Name</h2>
+            <h3>Description</h3>
+            <p>@Data.Description</p>
+            <div>
+                <span>@Data.Sku</span>
+            </div>
         </Card>
     </GridCol>
     @*Price and buttons*@
     <GridCol>
-
+        <Card>
+            <label>Цена</label>
+            <p>@Data.Price.ToString("N")</p>
+        </Card>       
     </GridCol>
 </GridRow>
 

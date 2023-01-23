@@ -26,9 +26,9 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-        public async Task<ProductCard> GetProductDataAsync(string category, string linkPart) {            
-            var result = await _http.GetFromJsonAsync<ProductCard>($"{DataApi.CONTROLLER}/{DataApi.PRODUCT}/{category}/{linkPart}");
-            return result ?? new ProductCard();
+        public async Task<ProductCardData> GetProductDataAsync(string category, string linkPart) {            
+            var result = await _http.GetFromJsonAsync<ProductCardData>($"{DataApi.CONTROLLER}/{DataApi.PRODUCT}/{category}/{linkPart}");
+            return result ?? new ProductCardData();
         }
     }
 }

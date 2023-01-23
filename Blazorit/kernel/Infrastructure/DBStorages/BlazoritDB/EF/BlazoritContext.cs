@@ -342,6 +342,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.DateModified).HasColumnName("date_modified");
                 entity.Property(e => e.DateTimeCreate).HasColumnName("date_time_create");
                 entity.Property(e => e.DateTimeModified).HasColumnName("date_time_modified");
+                entity.Property(e => e.Description).HasColumnName("description");
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.LinkPart)
                     .HasMaxLength(200)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
+using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
 {
@@ -6,10 +7,8 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
     {
         [Parameter] public string? Class { get; set; }
 
-        [Parameter] public string Name { get; set; } = string.Empty;
+        [Parameter] public ProductCardData Data { get; set; } = new();
 
-        protected override async Task OnInitializedAsync() {
-            await base.OnInitializedAsync();
-        }
+
     }
 }

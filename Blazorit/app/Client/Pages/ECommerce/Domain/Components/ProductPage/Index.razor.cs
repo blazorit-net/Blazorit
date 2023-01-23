@@ -1,10 +1,10 @@
-﻿using CoreProductCards = Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
+﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
 using Microsoft.AspNetCore.Components;
 
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage {
     public partial class Index {
-        private CoreProductCards.ProductCard productCard = new();
+        private ProductCardData productCard = new();
 
         public Index() { }
 

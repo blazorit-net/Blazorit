@@ -23,6 +23,8 @@ public partial class VwProdProduct
 
     public DateTime? DateTimeModified { get; set; }
 
+    public string? Description { get; set; }
+
     public string? LinkPart { get; set; }
 
     public string? Category { get; set; }

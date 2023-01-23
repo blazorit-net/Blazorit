@@ -1,7 +1,5 @@
 ﻿@attribute [Route($"{ConstPage.PRODUCT}/{{Category}}/{{LinkPart}}")] 
 
-@*"/product/{Category}/{LinkPart}"*@
-
 @using Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
 @using Blazorit.Client.Services.Abstract.ECommerce.Domain;
 @using Blazorit.Client.Shared.Routes.ECommerce.Domain;
@@ -11,7 +9,7 @@
 <div class="bit-product-page">
     <GridRow>
         <GridCol Span="24">
-            <ProductCard Name="@productCard.Name" />
+            <ProductCard Data="@productCard" />
         </GridCol>    
     </GridRow>
     @*Product features*@

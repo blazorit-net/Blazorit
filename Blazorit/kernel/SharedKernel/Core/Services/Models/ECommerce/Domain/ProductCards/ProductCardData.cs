@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards {
-    public class ProductCard {
+    public class ProductCardData {
         public long Id { get; set; }
 
         public string Name { get; set; } = null!;
@@ -13,6 +13,8 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCar
         public string Sku { get; set; } = null!;
 
         public decimal Price { get; set; }
+
+        public string Description { get; set; } = null!;
 
         public string LinkPart { get; set; } = null!;
 
