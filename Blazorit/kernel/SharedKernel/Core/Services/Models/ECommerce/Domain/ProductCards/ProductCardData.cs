@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,8 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCar
         public string Category { get; set; } = null!;
 
         public string CategoryFullName { get; set; } = null!;
+
+        public IEnumerable<PictureLinkPart> PicturesLinkParts { get; set; } = Enumerable.Empty<PictureLinkPart>();
+        public string MainPictureLinkPart { get; set; } = null!;
     }
 }

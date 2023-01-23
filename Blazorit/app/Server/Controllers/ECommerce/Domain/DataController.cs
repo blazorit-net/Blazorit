@@ -5,6 +5,7 @@ using Blazorit.Shared.Models.Universal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 
 namespace Blazorit.Server.Controllers.ECommerce.Domain
 {
@@ -45,7 +46,7 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
         /// <param name="category"></param>
         /// <param name="linkPart"></param>
         /// <returns></returns>
-       // [HttpGet("product/{category}/{linkPart}")]
+        //// [HttpGet("product/{category}/{linkPart}")]
         [HttpGet($"{DataApi.PRODUCT}/{{category}}/{{linkPart}}")]
         public async Task<ActionResult<ProductCardData>> Get(string category, string linkPart) {
             var prodCard = await _dataService.GetProductDataAsync(category, linkPart);
@@ -55,5 +56,12 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain
 
             return Ok(prodCard); // { Success = true, Data = prodCard });
         }
+
+
+        //[HttpGet($"{DataApi.PICTURES_LINK_PARTS}/{{productId}}")]
+        //public async Task<ActionResult<IEnumerable<ProductCardData>>> GetPicturesLinkPartsForProductCardAsync(long productId) {
+        //    var prodCard = await _dataService.GetPicturesLinkPartsForProductCardAsync(productId);
+        //    return Ok(prodCard);
+        //}
     }
 }

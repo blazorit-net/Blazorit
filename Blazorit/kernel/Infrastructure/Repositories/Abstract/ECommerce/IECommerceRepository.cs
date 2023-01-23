@@ -86,5 +86,15 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="linkPart"></param>
         /// <returns></returns>
         Task<VwProduct?> GetProductDataAsync(string category, string linkPart);
+
+
+        /// <summary>
+        /// Method returns picture's link parts of one product
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="pic_size"></param>
+        /// <param name="site_location"></param>
+        /// <returns></returns>
+        Task<IEnumerable<PictureLinkPart>> GetProductPictureLinkPartsAsync(long productId, string pic_size, string site_location);
     }
 }

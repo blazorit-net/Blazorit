@@ -3,6 +3,7 @@ using Blazorit.Shared.Models.Universal;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System.Net.Http.Json;
 
 
@@ -30,5 +31,16 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain
             var result = await _http.GetFromJsonAsync<ProductCardData>($"{DataApi.CONTROLLER}/{DataApi.PRODUCT}/{category}/{linkPart}");
             return result ?? new ProductCardData();
         }
+
+
+        ///// <summary>
+        ///// Method returns picture's link parts for product card
+        ///// </summary>
+        ///// <param name="productId"></param>
+        ///// <returns></returns>
+        //public async Task<IEnumerable<PictureLinkPart>> GetPicturesLinkPartsForProductCardAsync(long productId) {
+        //    var result = await _http.GetFromJsonAsync<IEnumerable<PictureLinkPart>>($"{DataApi.CONTROLLER}/{DataApi.PICTURES_LINK_PARTS}/{productId}");
+        //    return result ?? new List<PictureLinkPart>();
+        //}
     }
 }

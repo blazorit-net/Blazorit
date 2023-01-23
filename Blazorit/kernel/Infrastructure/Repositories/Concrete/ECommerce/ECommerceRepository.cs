@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
 using Microsoft.Extensions.Logging;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+using System.Collections;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 {
@@ -379,6 +380,29 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
 
             return null;
+        }
+
+
+        public async Task<IEnumerable<PictureLinkPart>> GetProductPictureLinkPartsAsync(long productId, string pic_size, string site_location) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var linkParts = await context.ProdPictures
+                    .Where(x => x.ProductId == productId && x.PicSize == pic_size && x.SiteLocation == site_location)
+                    .Select(x => new PictureLinkPart {
+                        LinkPart = x.LinkPart,
+                        OrderNum = x.OrderNum,
+                        PicSize = x.PicSize
+                    })
+                    .ToListAsync();
+
+                return linkParts;
+
+            } catch (Exception ex) { 
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProductPictureLinkPartsAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+            
+            return new List<PictureLinkPart>();
         }
     }
 }

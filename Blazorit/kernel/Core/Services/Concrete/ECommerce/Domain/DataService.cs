@@ -2,6 +2,7 @@
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,16 +70,32 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain {
                 return null;
             }
 
-            return new ProductCardData {
+            var card = new ProductCardData {
                 Category = product.Category,
                 CategoryFullName = product.CategoryFullName,
                 Description = product.Description ?? string.Empty,
                 Id = product.Id,
-                LinkPart = product.LinkPart ,
+                LinkPart = product.LinkPart.Trim(),
                 Name = product.Name,
                 Price = product.Price,
-                Sku = product.Sku
+                Sku = product.Sku,
+                PicturesLinkParts = (await _dataRepo.GetProductPictureLinkPartsAsync(product.Id, "medium", "site"))
+                    .Select(x => new PictureLinkPart {
+                        LinkPart = x.LinkPart.Trim(),
+                        OrderNum = x.OrderNum,
+                        PicSize = x.PicSize
+                    })
+                .OrderBy(x => x.OrderNum).ToList()
             };
+
+            card.MainPictureLinkPart = card.PicturesLinkParts.FirstOrDefault()?.LinkPart ?? string.Empty; //you can get main picture using another code here
+
+            return card;
         }
+
+
+        ////public async Task<IEnumerable<PictureLinkPart>> GetPicturesLinkPartsForProductCardAsync(long productId) {
+        ////    return await _dataRepo.GetProductPictureLinkPartsAsync(productId, "medium", "site");
+        ////}
     }
 }
