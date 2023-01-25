@@ -16,20 +16,41 @@
                     <img src="@Data.MainPictureLinkPart" />
             </div>
             <div>
-                    @foreach (var item in Data.PicturesLinkParts) {
-                        <img src="@item.LinkPart" />
-                    }
-                    
+                @foreach (var item in Data.PicturesLinkParts) {
+                    <img src="@item.LinkPart" />
+                }                    
             </div>
         </Card>
     </GridCol>
     @*Price and buttons*@
     <GridCol>
         <Card>
-            <label>Цена</label>
-            <p>@Data.Price.ToString("N")</p>
+            <div>
+                <Badge Count="@count">
+                    <Button>test</Button>
+                </Badge>
+                <ButtonGroup>
+                    <Button OnClick="@(() => count--)">
+                        <Icon Type="minus"></Icon>
+                    </Button>
+                    <Button OnClick="@(() => count++)">
+                        <Icon Type="plus"></Icon>
+                    </Button>
+                </ButtonGroup>
+            </div>
+            <div>
+                <label>Цена</label>
+                <p>@Data.Price.ToString("N")</p>
+                <Button OnClick="AddToCartButtonClickHandlerAsync">В корзину</Button>
+            </div>
+
         </Card>       
     </GridCol>
 </GridRow>
 
 </div>
+
+@code {
+    int count = 0;
+
+}

@@ -5,7 +5,7 @@ namespace Blazorit.Client.Base.Components {
         [Parameter] string? Class { get; set; }
 
         string GetClass(string? classes) {
-            return Support.Comp.Methods.GetClass(this.Class, classes);
+            return Support.Comps.Methods.GetClass(this.Class, classes);
         }
     }
 

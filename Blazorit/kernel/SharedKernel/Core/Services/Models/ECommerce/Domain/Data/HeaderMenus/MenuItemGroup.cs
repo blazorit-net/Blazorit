@@ -1,4 +1,4 @@
-﻿namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus
+﻿namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus
 {
     public class MenuItemGroup
     {

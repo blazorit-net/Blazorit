@@ -1,8 +1,9 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
+﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
 using Microsoft.AspNetCore.Components;
 
 
-namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage {
+namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage
+{
     public partial class Index {
         private ProductCardData productCard = new();
 
@@ -13,7 +14,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage {
 
 
         protected override async Task OnParametersSetAsync() {
-            productCard = await dataService.GetProductDataAsync(Category, LinkPart);
+            productCard = await DataService.GetProductDataAsync(Category, LinkPart);
         }
     }
 }

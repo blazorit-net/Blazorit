@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards {
-    public class ProductCardData {
+namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards
+{
+    public class ProductCardData
+    {
         public long Id { get; set; }
 
         public string Name { get; set; } = null!;

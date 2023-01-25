@@ -1,7 +1,8 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
+﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
 using Microsoft.AspNetCore.Components;
 
-namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderMenus {
+namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderMenus
+{
     public partial class HeaderMenu {
         private IEnumerable<SubMenu> mainMenu = new List<SubMenu>();
 

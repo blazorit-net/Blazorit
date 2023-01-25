@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog;
 
+
 //################################################################
 //  ##################--Logging Wrapper--#######################
 //      https://github.com/serilog/serilog-extensions-hosting
@@ -36,8 +37,8 @@ try {
             //  ######################--ECOMMERCE--#########################
             //################################################################
             services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
-            services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.DataService>();
-            services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.DataService>();
+            services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Data.DataService>();
+            services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService>();
             //################################################################
             //  ############################################################
             //################################################################

@@ -49,7 +49,7 @@ namespace Blazorit.Server.Controllers.Identity
         public async Task<ActionResult<Response<bool>>> ChangePassword([FromBody] string newPassword)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-            var response = await _authService.ChangePassword(int.Parse(userId), newPassword);
+            var response = await _authService.ChangePassword(long.Parse(userId), newPassword);
 
             if (!response.Success || string.IsNullOrEmpty(userId))
             {

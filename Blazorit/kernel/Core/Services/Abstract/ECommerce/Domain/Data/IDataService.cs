@@ -1,5 +1,5 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.HeaderMenus;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
+﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blazorit.Core.Services.Abstract.ECommerce.Domain {
-    public interface IDataService {
+namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Data
+{
+    public interface IDataService
+    {
         /// <summary>
         /// Method returns the constructed menu
         /// </summary>

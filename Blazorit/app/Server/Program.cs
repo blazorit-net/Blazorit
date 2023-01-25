@@ -1,5 +1,8 @@
 
+using Blazorit.Core.Services.Abstract.ECommerce.Domain.Data;
+using Blazorit.Core.Services.Concrete.ECommerce.Domain.Data;
 using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
+
 using Blazorit.Server.Services.Abstract.Identity;
 using Blazorit.Server.Services.Concrete.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -48,8 +51,10 @@ builder.Services.AddHttpContextAccessor();
 //  ######################--ECOMMERCE--#########################
 //################################################################
 builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.DataService>();
-builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.DataService>();
+builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Data.DataService>();
+builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService>();
+builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Cart.ICartService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Cart.CartService>();
+builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Cart.ICartService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Cart.CartService>();
 //################################################################
 //  ############################################################
 //################################################################

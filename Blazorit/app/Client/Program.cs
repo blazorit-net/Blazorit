@@ -6,6 +6,10 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Blazorit.Client.Services.Abstract.ECommerce.Domain.Cart;
+using Blazorit.Client.Services.Abstract.ECommerce.Domain.Data;
+using Blazorit.Client.Services.Concrete.ECommerce.Domain.Data;
+using Blazorit.Client.Services.Concrete.ECommerce.Domain.Cart;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -21,7 +25,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 //################################################################
 //  ######################--ECOMMERCE--#########################
 //################################################################
-builder.Services.AddScoped<Blazorit.Client.Services.Abstract.ECommerce.Domain.IDataService, Blazorit.Client.Services.Concrete.ECommerce.Domain.DataService>();
+builder.Services.AddScoped<IDataService, DataService>();
+builder.Services.AddScoped<ICartService, CartService>();
 //################################################################
 //  ############################################################
 //################################################################

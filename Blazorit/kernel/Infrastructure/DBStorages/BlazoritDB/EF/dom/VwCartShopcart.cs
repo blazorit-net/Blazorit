@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
 
-public partial class VwCartShopcart
-{
+public partial class VwCartShopcart {
     public long? CartId { get; set; }
 
     public long? UserId { get; set; }
@@ -22,6 +21,8 @@ public partial class VwCartShopcart
     public string? Curr { get; set; }
 
     public decimal? ProductPrice { get; set; }
+
+    public string? PicLinkPart { get; set; }
 
     public int? Quantity { get; set; }
 

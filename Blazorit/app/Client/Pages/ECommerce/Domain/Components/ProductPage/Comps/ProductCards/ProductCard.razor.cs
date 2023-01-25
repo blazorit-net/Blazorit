@@ -1,5 +1,6 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.ProductCards;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Blazorit.Client.Services.Abstract.ECommerce.Domain.Cart;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
 {
@@ -9,6 +10,12 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
 
         [Parameter] public ProductCardData Data { get; set; } = new();
 
+        [Inject]
+        private ICartService CartService { get; set; } = null!;
 
+
+        private async Task AddToCartButtonClickHandlerAsync() {
+            var result = await CartService.AddProductToCartAsync(Data.Sku, 1);
+        }
     }
 }

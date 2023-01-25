@@ -1,4 +1,5 @@
-﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,5 +97,13 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="site_location"></param>
         /// <returns></returns>
         Task<IEnumerable<PictureLinkPart>> GetProductPictureLinkPartsAsync(long productId, string pic_size, string site_location);
+
+
+        /// <summary>
+        /// Method returns all user's items from shop cart 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<VwShopcart>> GetShopCartListAsync(long userId);
     }
 }

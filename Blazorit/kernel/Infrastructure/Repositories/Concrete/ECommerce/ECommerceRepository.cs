@@ -10,6 +10,7 @@ using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
 using Microsoft.Extensions.Logging;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System.Collections;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 {
@@ -134,18 +135,34 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                 CartShopcart? cart = await context.CartShopcarts.Where(x => x.UserId == userId).FirstOrDefaultAsync();
 
-                if (cart is null) {
+                if (cart is null) { //create cart and insert new product for the cart
                     cart = new CartShopcart { UserId = userId };
                     await context.CartShopcarts.AddAsync(cart);
-                }
 
-                CartShopcartList cartList = new() {
-                    Cart = cart,
-                    Product = product,
-                    Quantity = quantity
-                };
+                    CartShopcartList cartList = new() {
+                        Cart = cart,
+                        Product = product,
+                        Quantity = quantity
+                    };
 
-                await context.CartShopcartLists.AddAsync(cartList);
+                    await context.CartShopcartLists.AddAsync(cartList);
+                } else {
+                    CartShopcartList? cartList = await context.CartShopcartLists.Where(x => x.CartId == cart.Id && x.ProductId == product.Id).FirstOrDefaultAsync();
+
+                    //insert new product for the cart
+                    if (cartList is null) {
+                        cartList = new CartShopcartList() {
+                            Cart = cart,
+                            Product = product,
+                            Quantity = quantity
+                        };
+
+                        await context.CartShopcartLists.AddAsync(cartList);
+                    } else { //update quantity
+                        cartList.Quantity = quantity;
+                    }
+                }       
+               
                 await context.SaveChangesAsync();
                 return (true, cart.Id);
             
@@ -383,6 +400,13 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         }
 
 
+        /// <summary>
+        /// Method returns picture's link parts of one product
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="pic_size"></param>
+        /// <param name="site_location"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<PictureLinkPart>> GetProductPictureLinkPartsAsync(long productId, string pic_size, string site_location) {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
@@ -403,6 +427,39 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
             
             return new List<PictureLinkPart>();
+        }
+
+
+        /// <summary>
+        /// Method returns all user's items from shop cart 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<VwShopcart>> GetShopCartListAsync(long userId) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var list = await context.VwCartShopcarts
+                    .Where(x => x.UserId == userId)
+                    .Select(x => new VwShopcart {
+                        CartId = x.CartId,
+                        Curr = x.Curr,
+                        DateTimeModified = x.DateTimeModified,
+                        Name = x.Name, 
+                        PicLinkPart = x.PicLinkPart, 
+                        ProductId = x.ProductId,
+                        ProductPrice = x.ProductPrice,
+                        Quantity = x.Quantity,
+                        Sku = x.Sku                                  
+                    })
+                    .ToListAsync();
+
+                return list;
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetShopCartListAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return new List<VwShopcart>();
         }
     }
 }

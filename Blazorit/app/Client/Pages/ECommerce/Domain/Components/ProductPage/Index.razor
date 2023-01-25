@@ -1,10 +1,11 @@
 ﻿@attribute [Route($"{ConstPage.PRODUCT}/{{Category}}/{{LinkPart}}")] 
 
 @using Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
-@using Blazorit.Client.Services.Abstract.ECommerce.Domain;
+@using Blazorit.Client.Services.Abstract.ECommerce.Domain.Data;
 @using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 
-@inject IDataService dataService;
+
+@inject IDataService DataService;
 
 <div class="bit-product-page">
     <GridRow>

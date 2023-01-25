@@ -197,7 +197,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.HasIndex(e => new { e.ProductId, e.PicSize, e.SiteLocation }, "IX__prod_pictures__include");
 
-                entity.HasIndex(e => e.LinkPart, "UQIX__prod_pictures").IsUnique();
+                entity.HasIndex(e => new { e.ProductId, e.PicSize, e.SiteLocation, e.OrderNum }, "UQ__prod_pictures").IsUnique();
 
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
@@ -208,6 +208,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.OrderNum).HasColumnName("order_num");
                 entity.Property(e => e.PicSize)
                     .HasMaxLength(10)
+                    .HasDefaultValueSql("'medium'::character varying")
                     .HasColumnName("pic_size");
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
                 entity.Property(e => e.SiteLocation)
@@ -284,6 +285,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .HasColumnName("name");
+                entity.Property(e => e.PicLinkPart)
+                    .HasMaxLength(100)
+                    .HasColumnName("pic_link_part");
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
                 entity.Property(e => e.ProductPrice)
                     .HasPrecision(16, 4)
