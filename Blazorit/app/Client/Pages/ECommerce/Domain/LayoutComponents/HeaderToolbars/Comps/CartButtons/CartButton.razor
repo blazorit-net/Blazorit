@@ -1,0 +1,18 @@
+﻿
+@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-cart-button"))">
+    <Badge Count="@Count">
+        <Button Ghost Type="@ButtonType.Text">
+            <Icon Type="shopping-cart" Theme="outline" /> Cart 
+        </Button>
+    </Badge>
+</div>
+
+
+@code {
+    public string? Class { get; set; }
+
+    [Parameter]
+    public int Count { get; set; }
+}

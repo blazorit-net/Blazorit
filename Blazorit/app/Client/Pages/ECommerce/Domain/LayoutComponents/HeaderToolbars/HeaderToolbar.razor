@@ -1,7 +1,4 @@
-﻿@using Blazorit.Client.Providers.Concrete.Identity
-@using Blazorit.Client.Shared.Routes.ECommerce.Domain
-@inject NavigationManager Navigation
-@inject AuthenticationStateProvider AuthenticationStateProvider
+﻿@using Blazorit.Client.Shared.Routes.ECommerce.Domain
 @implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-header-toolbar"))">
@@ -62,9 +59,7 @@
                         </Button>
                     </SpaceItem>
                     <SpaceItem>
-                         <Button Ghost Type="@ButtonType.Text">
-                            <Icon Type="shopping-cart" Theme="outline" /> Cart
-                         </Button>
+                        <Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.CartButtons.CartButton Count="@(CartState.State.CartList.Sum(x => x.Quantity))" />
                     </SpaceItem>
                 </ChildContent>
             </Space>

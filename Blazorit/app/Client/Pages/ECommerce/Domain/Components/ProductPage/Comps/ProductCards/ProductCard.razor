@@ -41,16 +41,13 @@
             <div>
                 <label>Цена</label>
                 <p>@Data.Price.ToString("N")</p>
-                <Button OnClick="AddToCartButtonClickHandlerAsync">В корзину</Button>
+                <Button OnClick=@(async () => await AddToCart_ButtonClickHandlerAsync())>В корзину</Button>
             </div>
-
         </Card>       
     </GridCol>
 </GridRow>
-
 </div>
 
 @code {
     int count = 0;
-
 }

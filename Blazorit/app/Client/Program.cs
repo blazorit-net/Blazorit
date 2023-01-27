@@ -6,10 +6,10 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Blazorit.Client.Services.Abstract.ECommerce.Domain.Cart;
+using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Data;
 using Blazorit.Client.Services.Concrete.ECommerce.Domain.Data;
-using Blazorit.Client.Services.Concrete.ECommerce.Domain.Cart;
+using Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -27,6 +27,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 //################################################################
 builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddSingleton<Blazorit.Client.States.ECommerce.Domain.Carts.CartState>(); //Global state for shopcart components
 //################################################################
 //  ############################################################
 //################################################################

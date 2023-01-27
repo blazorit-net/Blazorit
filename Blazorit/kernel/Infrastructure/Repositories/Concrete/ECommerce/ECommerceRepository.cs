@@ -159,7 +159,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                         await context.CartShopcartLists.AddAsync(cartList);
                     } else { //update quantity
-                        cartList.Quantity = quantity;
+                        cartList.Quantity += quantity;
                     }
                 }       
                
@@ -442,15 +442,15 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 var list = await context.VwCartShopcarts
                     .Where(x => x.UserId == userId)
                     .Select(x => new VwShopcart {
-                        CartId = x.CartId,
-                        Curr = x.Curr,
-                        DateTimeModified = x.DateTimeModified,
-                        Name = x.Name, 
-                        PicLinkPart = x.PicLinkPart, 
-                        ProductId = x.ProductId,
-                        ProductPrice = x.ProductPrice,
-                        Quantity = x.Quantity,
-                        Sku = x.Sku                                  
+                        CartId = x.CartId.GetValueOrDefault(),
+                        Curr = x.Curr!,
+                        DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
+                        Name = x.Name!, 
+                        PicLinkPart = x.PicLinkPart!, 
+                        ProductId = x.ProductId.GetValueOrDefault(),
+                        ProductPrice = x.ProductPrice.GetValueOrDefault(),
+                        Quantity = x.Quantity.GetValueOrDefault(),
+                        Sku = x.Sku!                                  
                     })
                     .ToListAsync();
 

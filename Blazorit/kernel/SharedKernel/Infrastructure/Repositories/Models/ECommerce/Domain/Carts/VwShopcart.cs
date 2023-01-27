@@ -8,22 +8,22 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
 {
     public class VwShopcart
     {
-        public long? CartId { get; set; }
+        public long CartId { get; set; }
 
-        public long? ProductId { get; set; }
+        public long ProductId { get; set; }
 
-        public string? Sku { get; set; }
+        public string Sku { get; set; } = null!;
 
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public string? Curr { get; set; }
+        public string Curr { get; set; } = null!;
 
-        public decimal? ProductPrice { get; set; }
+        public decimal ProductPrice { get; set; }
 
-        public string? PicLinkPart { get; set; }
+        public string PicLinkPart { get; set; } = null!;
 
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
 
-        public DateTime? DateTimeModified { get; set; }
+        public DateTime DateTimeModified { get; set; }
     }
 }

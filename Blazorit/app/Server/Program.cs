@@ -53,8 +53,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Data.DataService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService>();
-builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Cart.ICartService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Cart.CartService>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Cart.ICartService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Cart.CartService>();
+builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Carts.CartService>();
+builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts.CartService>();
 //################################################################
 //  ############################################################
 //################################################################
