@@ -12,13 +12,18 @@
                 <label>SKU</label>    
                 <span>@Data.Sku</span>
             </div>
-            <div>
-                    <img src="@Data.MainPictureLinkPart" />
-            </div>
-            <div>
-                @foreach (var item in Data.PicturesLinkParts) {
-                    <img src="@item.LinkPart" />
-                }                    
+             <div>
+                <Image PreviewVisible="false"
+                        Width="200"
+                        Src="@Data.MainPictureLinkPart"
+                        OnClick="@(() => { visible = true; })" />
+                <div style="display:none;">
+                    <ImagePreviewGroup @bind-PreviewVisible="visible">
+                        @foreach (var item in Data.PicturesLinkParts) {
+                            <Image src="@item.LinkPart" />
+                        }
+                    </ImagePreviewGroup>
+                </div>
             </div>
         </Card>
     </GridCol>
@@ -50,4 +55,5 @@
 
 @code {
     int count = 0;
+    bool visible = false;
 }

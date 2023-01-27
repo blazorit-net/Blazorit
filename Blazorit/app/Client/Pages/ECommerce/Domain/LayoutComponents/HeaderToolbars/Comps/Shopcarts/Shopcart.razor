@@ -1,0 +1,75 @@
+﻿@implements IBlazoritComponent
+
+<style>
+    .bit-shopcart-in-drawer {
+        height:100%;
+  /*      display: flex;
+        flex-direction: column;
+        justify-content: space-between;*/
+    }
+</style>
+
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-in-drawer"))">
+    <div style="height:75%; overflow-x:auto;">
+        <AntList DataSource="@CartState.State.CartList">
+            <ChildContent Context="item">
+                <ListItem NoFlex>
+                    <GridRow>
+                        <GridCol Span="8">
+                            <Image Src="@item.PicLinkPart" />
+                        </GridCol>
+                        <GridCol Span="16">
+                            <GridRow>
+                                <GridCol Span="24">
+                                    <b>@item.Name</b>
+                                </GridCol>
+                            </GridRow>
+                            <GridRow>
+                                <GridCol Span="24">
+                                    sku: @item.Sku
+                                </GridCol>
+                            </GridRow>
+                            <GridRow>
+                                <GridCol Span="24">
+                                    Quantity: @item.Quantity
+                                </GridCol>
+                            </GridRow>
+                            <GridRow>
+                                <GridCol Span="24">
+                                    Price: @item.ProductPrice
+                                </GridCol>
+                            </GridRow>
+                        </GridCol>
+                    </GridRow>
+                </ListItem>
+            </ChildContent>
+        </AntList>
+    </div>
+  
+    <div style="height:25%;">
+        <Divider />
+        <GridRow Gutter="20">
+
+            <GridCol Span="12">
+                    <span style="font-weight:bold; font-size:2em;">Итого:</span>
+                </GridCol>
+                <GridCol Span="12">
+                    <span style="font-size:2em;">@CartState.State.TotalPrice.ToString("N0")</span>
+                </GridCol>
+           
+        </GridRow>
+        <GridRow Gutter="20">
+            <GridCol Span="12">
+                 <Button Style="width:100%">CART</Button>
+            </GridCol>
+            <GridCol Span="12">
+                <Button>ORDER</Button>
+            </GridCol>
+        </GridRow>     
+    </div>
+</div>
+
+@code {
+    public string? Class { get; set; }
+}

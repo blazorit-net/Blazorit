@@ -3,16 +3,17 @@
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-cart-button"))">
     <Badge Count="@Count">
-        <Button Ghost Type="@ButtonType.Text">
+        <Button Ghost Type="@ButtonType.Text" @onclick="_ => OpenCartDrawer()">
             <Icon Type="shopping-cart" Theme="outline" /> Cart 
         </Button>
     </Badge>
+
+    <Drawer Visible="@isVisibleCartDrawer" Placement="right" Title='("Shopcart")' OnClose="_ => CloseCartDrawer()" Width="400">
+        <Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts.Shopcart />
+    </Drawer>
 </div>
 
 
 @code {
-    public string? Class { get; set; }
 
-    [Parameter]
-    public int Count { get; set; }
 }

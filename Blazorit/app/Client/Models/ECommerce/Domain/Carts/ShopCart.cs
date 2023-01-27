@@ -16,5 +16,11 @@ namespace Blazorit.Client.Models.ECommerce.Domain.Carts {
                 return CartList.Sum(x => x.Quantity);
             }
         }
+
+        public decimal TotalPrice {
+            get {
+                return CartList.Sum(x => x.ProductPrice * x.Quantity);
+            }
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Blazorit.Client.Providers.Concrete.Identity;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Microsoft.AspNetCore.Components;
-using Blazorit.Client.Providers.Concrete.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars {
