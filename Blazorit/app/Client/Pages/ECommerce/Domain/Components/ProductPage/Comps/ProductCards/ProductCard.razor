@@ -18,7 +18,7 @@
                         Src="@Data.MainPictureLinkPart"
                         OnClick="@(() => { visible = true; })" />
                 <div style="display:none;">
-                    <ImagePreviewGroup @bind-PreviewVisible="visible" @bind-PreviewVisible:event="oninput">
+                    <ImagePreviewGroup @bind-PreviewVisible="visible">
                         @foreach (var item in Data.PicturesLinkParts) {
                             <Image src="@item.LinkPart" />
                         }
