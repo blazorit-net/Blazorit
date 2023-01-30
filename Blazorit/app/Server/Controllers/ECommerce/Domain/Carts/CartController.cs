@@ -21,14 +21,26 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Carts
             _cartService = cartService;
         }
 
-        [HttpPost($"{CartApi.ADD_ITEM}")]
-        public async Task<ActionResult<IEnumerable<VwShopcart>>> AddProductToCartAsync(CartItem cartItem)
-        {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? long.MinValue.ToString();
-            var result = await _cartService.AddProductToCartAsync(long.Parse(userId), cartItem.productSKU, cartItem.Quantity);
 
-            if (result.Count() == 0)
-            {
+        [HttpPost($"{CartApi.ADD_ITEM}")]
+        public async Task<ActionResult<IEnumerable<VwShopcart>>> AddProductToCartAsync(CartItem cartItem) {
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _cartService.AddProductToCartAsync(long.TryParse(userId, out long id) ? id : long.MinValue, cartItem.productSKU, cartItem.Quantity);
+
+            if (result.Count() == 0) {
+                return BadRequest(Enumerable.Empty<VwShopcart>());
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpGet($"{CartApi.GET_SHOPCART}")]
+        public async Task<ActionResult<IEnumerable<VwShopcart>>> GetShopCartListAsync() {
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _cartService.GetShopCartListAsync(long.TryParse(userId, out long id) ? id : long.MinValue);
+
+            if (result.Count() == 0) {
                 return BadRequest(Enumerable.Empty<VwShopcart>());
             }
 

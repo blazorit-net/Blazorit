@@ -1,4 +1,7 @@
 ﻿@page "/login"
+@using Blazorit.Client.Models.ECommerce.Domain.Carts;
+@using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
+@using Blazorit.Client.States.ECommerce.Domain.Carts;
 @using Blazorit.Shared.Models.Identity
 @using Blazorit.Client.Services.Abstract.Identity
 @using Blazored.LocalStorage
@@ -8,6 +11,9 @@
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+
+@inject ICartService CartService
+@inject CartState CartState
 
 <PageTitle>Sign in</PageTitle>
 
@@ -75,33 +81,28 @@
     private string returnUrl = string.Empty;
 
 
-    protected override void OnInitialized()
-    {
+    protected override void OnInitialized() {
         var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url))
-        {
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var url)) {
             returnUrl = url.ToString();
         }
     }
 
 
-    private async Task HandleLogin()
-    {
+    private async Task HandleLogin() {
         message = string.Empty;
         loading = true;
 
         var result = await IdentityService.Login(userModel);
 
-        if (result.Success)
-        {
+        if (result.Success) {
             message = string.Empty;
 
             await LocalStorage.SetItemAsync("identityToken", result.Data);
-            await AuthenticationStateProvider.GetAuthenticationStateAsync();            
+            await AuthenticationStateProvider.GetAuthenticationStateAsync();          
             NavigationManager.NavigateTo(returnUrl);
-        }
-        else
-        {
+            CartState.State = new ShopCart(await CartService.GetShopCartListAsync()); //init shopcart state
+        } else {
             messageCssClass = PresetColor.Red.ToString();
             message = result.Message;
         }

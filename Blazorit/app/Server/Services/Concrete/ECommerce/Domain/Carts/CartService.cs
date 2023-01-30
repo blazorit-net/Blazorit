@@ -28,5 +28,16 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Carts
             var result = await _cartService.AddProductToCartAsync(userId, productSKU, quantity);
             return result;
         }
+
+
+        /// <summary>
+        /// Method receives shopcart
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<VwShopcart>> GetShopCartListAsync(long userId) {
+            var result = await _cartService.GetShopCartListAsync(userId);
+            return result;
+        }
     }
 }

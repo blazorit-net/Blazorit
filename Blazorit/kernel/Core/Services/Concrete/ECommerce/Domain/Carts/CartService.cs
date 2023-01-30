@@ -34,5 +34,15 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
 
             return Enumerable.Empty<VwShopcart>();
         }
+
+
+        /// <summary>
+        /// Method receives shopcart
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<VwShopcart>> GetShopCartListAsync(long userId) {
+            return await _dataRepo.GetShopCartListAsync(userId);
+        }
     }
 }

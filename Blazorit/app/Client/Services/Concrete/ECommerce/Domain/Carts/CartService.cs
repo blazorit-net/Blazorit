@@ -8,7 +8,7 @@ using System.Net.Http.Json;
 namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
 {
     /// <summary>
-    /// Server service for shop carts
+    /// Client service for shop carts
     /// </summary>
     public class CartService : ICartService
     {
@@ -41,12 +41,31 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
                 CartItem cartItem = new() { productSKU = productSKU, Quantity = quantity };                
                 var response = await _http.PostAsJsonAsync($"{CartApi.CONTROLLER}/{CartApi.ADD_ITEM}", cartItem);
                 var result = await response.Content.ReadFromJsonAsync<IEnumerable<VwShopcart>>();
-                return result ?? Enumerable.Empty<VwShopcart>();
+                return result?.OrderBy(x => x.Sku) ?? Enumerable.Empty<VwShopcart>();
             } else {
                 //TODO: add product to local storage
+                //TODO: return from local storage
             }
 
-            return Enumerable.Empty<VwShopcart>(); ;
+            return Enumerable.Empty<VwShopcart>();
+        }
+
+
+        /// <summary>
+        /// Method receives shopcart
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<VwShopcart>> GetShopCartListAsync() {
+            bool isAuth = await _ident.IsUserAuthenticated();
+
+            if (isAuth) {
+                var result = await _http.GetFromJsonAsync<IEnumerable<VwShopcart>>($"{CartApi.CONTROLLER}/{CartApi.GET_SHOPCART}");
+                return result?.OrderBy(x => x.Sku) ?? Enumerable.Empty<VwShopcart>();
+            } else {
+                //TODO: return from local storage
+            }
+
+            return Enumerable.Empty<VwShopcart>();
         }
     }
 }

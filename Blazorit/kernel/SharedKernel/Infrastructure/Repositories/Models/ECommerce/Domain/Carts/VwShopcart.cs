@@ -25,5 +25,6 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
         public int Quantity { get; set; }
 
         public DateTime DateTimeModified { get; set; }
+
     }
 }

@@ -26,6 +26,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.Produ
         public string CategoryFullName { get; set; } = null!;
 
         public IEnumerable<PictureLinkPart> PicturesLinkParts { get; set; } = Enumerable.Empty<PictureLinkPart>();
+
         public string MainPictureLinkPart { get; set; } = null!;
     }
 }

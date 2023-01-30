@@ -3,7 +3,7 @@
 namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
 {
     /// <summary>
-    /// Server service for shop carts
+    /// Client service for shop carts
     /// </summary>
     public interface ICartService
     {
@@ -14,5 +14,11 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         /// <param name="quantity"></param>
         /// <returns>shopcart lis</returns>
         Task<IEnumerable<VwShopcart>> AddProductToCartAsync(string productSKU, int quantity);
+
+        /// <summary>
+        /// Method receives shopcart
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<VwShopcart>> GetShopCartListAsync();
     }
 }

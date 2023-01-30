@@ -15,5 +15,12 @@ namespace Blazorit.Server.Services.Abstract.ECommerce.Domain.Carts
         /// <param name="quantity"></param>
         /// <returns>shopcart list</returns>
         Task<IEnumerable<VwShopcart>> AddProductToCartAsync(long userId, string productSKU, int quantity);
+
+        /// <summary>
+        /// Method receives shopcart
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<VwShopcart>> GetShopCartListAsync(long userId);
     }
 }
