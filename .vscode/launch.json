@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        // if your OS Linux you need trust HTTPS certificate: https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-7.0&tabs=visual-studio#trust-https-certificate-on-linux-using-edge-or-chrome
+        "type": "blazorwasm",
+        "name": "Launch and Debug Blazor WebAssembly Hosted Application",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/Blazorit/app/Server",
+        "hosted": true,
+        // you can change target framework here. So if your OS is Windows then file ending on: 'Blazorit.Server.dll', if Linux: 'Blazorit.Server'.
+        // so, if you change your OS, you need (delete 'bin' and 'obj' folders) rebuild your app with command: 'dotnet build'.
+        "program": "${workspaceFolder}/Blazorit/app/Server/bin/Debug/net7.0/Blazorit.Server.dll",
+        "url": "https://localhost:5001",
+        "browser": "chrome"
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // More about tooling for debugging: https://learn.microsoft.com/en-us/aspnet/core/blazor/tooling?view=aspnetcore-7.0&pivots=linux
+        // https://learn.microsoft.com/en-us/aspnet/core/blazor/debug?view=aspnetcore-7.0&tabs=visual-studio-code
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+      }
+    ]
+  }
+  
