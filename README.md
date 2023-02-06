@@ -1,5 +1,5 @@
 # Blazorit
-## The Blazor Framework for Web Artisans
+## The Blazor Framework for Web Artisans (fullstack or command)
 
 ##### At the beginning, you need add file "appsettings.json" in this template solution in folder /Blazorit/Server/appsettings.json.
 You have to add this code to the file /Blazorit/Server/appsettings.json:
