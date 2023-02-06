@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Support\Helpers\" />
+    <Folder Include="Models\ECommerce\Domain\Carts\" />
     <Folder Include="wwwroot\images\logo\" />
   </ItemGroup>
 </Project>

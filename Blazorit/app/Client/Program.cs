@@ -27,7 +27,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 //################################################################
 builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddSingleton<Blazorit.Client.States.ECommerce.Domain.Carts.CartState>(); //Global state for shopcart components
+builder.Services.AddScoped<Blazorit.Client.States.ECommerce.Domain.Carts.CartState>(); //Scoped state for shopcart components
 //################################################################
 //  ############################################################
 //################################################################

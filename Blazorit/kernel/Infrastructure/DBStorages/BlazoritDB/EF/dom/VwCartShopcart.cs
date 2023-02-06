@@ -22,9 +22,11 @@ public partial class VwCartShopcart {
 
     public decimal? ProductPrice { get; set; }
 
-    public string? PicLinkPart { get; set; }
+    public string? Category { get; set; }
+
+    public string? ProductLinkPart { get; set; }
 
     public int? Quantity { get; set; }
 
-    public DateTime? DateTimeModified { get; set; }
+    public DateTime? DateTimeCreated { get; set; }
 }

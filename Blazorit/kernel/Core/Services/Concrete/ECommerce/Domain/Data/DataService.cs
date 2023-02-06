@@ -95,7 +95,8 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Data
                         OrderNum = x.OrderNum,
                         PicSize = x.PicSize
                     })
-                .OrderBy(x => x.OrderNum).ToList()
+                    .OrderBy(x => x.OrderNum)
+                    .ToList()
             };
 
             card.MainPictureLinkPart = card.PicturesLinkParts.FirstOrDefault()?.LinkPart ?? string.Empty; //you can get main picture using another code here

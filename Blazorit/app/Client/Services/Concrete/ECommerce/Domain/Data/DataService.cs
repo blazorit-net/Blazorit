@@ -1,6 +1,5 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain.Data;
 using Blazorit.Client.Services.Abstract.Identity;
-using Blazorit.Shared.Models.ECommerce.Domain.Cart;
 using Blazorit.Shared.Models.Universal;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;

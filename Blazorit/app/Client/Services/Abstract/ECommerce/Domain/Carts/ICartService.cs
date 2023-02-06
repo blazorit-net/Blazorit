@@ -1,4 +1,5 @@
-﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
+﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 
 namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
 {
@@ -11,14 +12,21 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         /// Method adds product (quantity of product) to shopcart
         /// </summary>
         /// <param name="productSKU"></param>
-        /// <param name="quantity"></param>
+        /// <param name="product"></param>
         /// <returns>shopcart lis</returns>
-        Task<IEnumerable<VwShopcart>> AddProductToCartAsync(string productSKU, int quantity);
+        Task<ShopCart> AddProductToCartAsync(CartItem cartItem);
 
         /// <summary>
         /// Method receives shopcart
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<VwShopcart>> GetShopCartListAsync();
+        Task<ShopCart> GetShopCartListAsync();
+
+        
+        /// <summary>
+        /// Method merges shopcarts from local cart to server cart
+        /// </summary>
+        /// <returns></returns>
+        Task<ShopCart> MergeLocalShopCartToServerShopCart();
     }
 }

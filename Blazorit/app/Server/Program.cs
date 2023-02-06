@@ -1,10 +1,4 @@
-
-using Blazorit.Core.Services.Abstract.ECommerce.Domain.Data;
-using Blazorit.Core.Services.Concrete.ECommerce.Domain.Data;
 using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
-
-using Blazorit.Server.Services.Abstract.Identity;
-using Blazorit.Server.Services.Concrete.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 ////using Microsoft.AspNetCore.Cors.Infrastructure;
 ////using Microsoft.AspNetCore.ResponseCompression;
@@ -31,7 +25,7 @@ builder.Services.AddRazorPages();
 /***custom add - start***/
 builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.Identity.IIdentityRepository, Blazorit.Infrastructure.Repositories.Concrete.Identity.IdentityRepository>();
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.Identity.IIdentityService, Blazorit.Core.Services.Concrete.Identity.IdentityService>();
-builder.Services.AddScoped<IIdentityService, IdentityService>();
+builder.Services.AddScoped<Blazorit.Server.Services.Abstract.Identity.IIdentityService, Blazorit.Server.Services.Concrete.Identity.IdentityService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new TokenValidationParameters {

@@ -1,6 +1,4 @@
-﻿using Blazorit.Client.Models.ECommerce.Domain.Carts;
-
-namespace Blazorit.Client.Base.States {
+﻿namespace Blazorit.Client.Base.States {
     /// <summary>
     /// Base class for state containers
     /// some description here about state containers: https://learn.microsoft.com/en-us/aspnet/core/blazor/state-management?view=aspnetcore-7.0&pivots=server

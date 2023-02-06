@@ -9,5 +9,6 @@ namespace Blazorit.Shared.Routes.WebAPI.ECommerce.Domain {
         public const string CONTROLLER = "api/ecommerce/domain/cart";
         public const string ADD_ITEM = "add-item";
         public const string GET_SHOPCART = "get-shopcart";
+        public const string MERGE_SHOPCARTS = "merge-shopcarts";
     }
 }

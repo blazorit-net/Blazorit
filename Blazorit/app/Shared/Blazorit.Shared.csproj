@@ -12,5 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Models\ECommerce\Admin\" />
+    <Folder Include="Models\ECommerce\Domain\" />
   </ItemGroup>
 </Project>

@@ -20,11 +20,13 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
 
         public decimal ProductPrice { get; set; }
 
-        public string PicLinkPart { get; set; } = null!;
+        public string Category { get; set; } = null!;
+
+        public string ProductLinkPart { get; set; } = null!;
 
         public int Quantity { get; set; }
 
-        public DateTime DateTimeModified { get; set; }
+        public DateTimeOffset DateTimeCreated { get; set; }
 
     }
 }

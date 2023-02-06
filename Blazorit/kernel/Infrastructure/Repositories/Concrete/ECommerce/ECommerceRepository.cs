@@ -160,6 +160,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         await context.CartShopcartLists.AddAsync(cartList);
                     } else { //update quantity
                         cartList.Quantity += quantity;
+                        ////cartList.DateTimeCreated = DateTime.UtcNow;
                     }
                 }       
                
@@ -444,13 +445,14 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     .Select(x => new VwShopcart {
                         CartId = x.CartId.GetValueOrDefault(),
                         Curr = x.Curr!,
-                        DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
+                        DateTimeCreated = x.DateTimeCreated.GetValueOrDefault(),
                         Name = x.Name!, 
-                        PicLinkPart = x.PicLinkPart!, 
                         ProductId = x.ProductId.GetValueOrDefault(),
                         ProductPrice = x.ProductPrice.GetValueOrDefault(),
                         Quantity = x.Quantity.GetValueOrDefault(),
-                        Sku = x.Sku!                                  
+                        Sku = x.Sku!,
+                        ProductLinkPart = x.ProductLinkPart!,
+                        Category = x.Category!                        
                     })
                     .ToListAsync();
 
@@ -460,6 +462,48 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
 
             return new List<VwShopcart>();
+        }
+
+
+        /// <summary>
+        /// Method merges client shopcart with kernel cart
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="clientCart"></param>
+        /// <returns>Result cart</returns>
+        public async Task<IEnumerable<VwShopcart>> UpdateShopCart(long userId, IEnumerable<VwShopcart> sourceCart) {
+            try {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                CartShopcart? repoCart = context.CartShopcarts.FirstOrDefault(x => x.UserId == userId);
+                
+                if (repoCart is null) {
+                    repoCart = new CartShopcart { UserId = userId };
+                    await context.CartShopcarts.AddAsync(repoCart);
+                }
+
+                foreach(var item in sourceCart) {
+                    CartShopcartList? row = context.CartShopcartLists.FirstOrDefault(x => x.CartId == repoCart.Id && x.ProductId == item.ProductId);
+                    if (row is not null) {
+                        row.Quantity = item.Quantity;
+                        //row.DateTimeModified = DateTime.Now;
+                    } else {
+                        row = new CartShopcartList {
+                            CartId = repoCart.Id,
+                            ProductId = item.ProductId,
+                            Quantity = item.Quantity,
+                            DateTimeCreated = item.DateTimeCreated.UtcDateTime
+                        };
+                        await context.CartShopcartLists.AddAsync(row);
+                    }                    
+                }
+
+                await context.SaveChangesAsync();              
+            } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(UpdateShopCart)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return await GetShopCartListAsync(userId);
         }
     }
 }

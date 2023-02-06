@@ -11,7 +11,7 @@ public partial class CartShopcartList
 
     public int Quantity { get; set; }
 
-    public DateTime DateTimeModified { get; set; }
+    public DateTime DateTimeCreated { get; set; }
 
     public virtual CartShopcart Cart { get; set; } = null!;
 

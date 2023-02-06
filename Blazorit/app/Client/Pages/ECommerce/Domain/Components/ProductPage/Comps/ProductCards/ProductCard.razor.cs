@@ -2,7 +2,7 @@
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
-using Blazorit.Client.Models.ECommerce.Domain.Carts;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
 {
@@ -21,8 +21,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
 
 
         private async Task AddToCart_ButtonClickHandlerAsync() {
-            var result = await CartService.AddProductToCartAsync(Data.Sku, 1);
-            CartState.State = new ShopCart(result);
+            CartState.State = await CartService.AddProductToCartAsync(new CartItem(Data) { Quantity = 1});
             /*
             //CartState.State.CartList = result.ToList();
             //CartState.NotifyStateChanged();  
