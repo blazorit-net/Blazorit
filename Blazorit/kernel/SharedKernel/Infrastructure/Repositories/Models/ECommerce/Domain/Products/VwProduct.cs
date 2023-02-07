@@ -22,9 +22,9 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
 
         public DateOnly DateModified { get; set; }
 
-        public DateTime DateTimeCreate { get; set; }
+        public DateTimeOffset DateTimeCreate { get; set; }
 
-        public DateTime DateTimeModified { get; set; }
+        public DateTimeOffset DateTimeModified { get; set; }
 
         public string? Description { get; set; }
 
