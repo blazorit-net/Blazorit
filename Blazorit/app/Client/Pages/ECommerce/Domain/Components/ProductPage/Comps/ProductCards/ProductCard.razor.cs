@@ -23,8 +23,8 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
         private async Task AddToCart_ButtonClickHandlerAsync() {
             CartState.State = await CartService.AddProductToCartAsync(new CartItem(Data) { Quantity = 1});
             /*
-            //CartState.State.CartList = result.ToList();
-            //CartState.NotifyStateChanged();  
+                //CartState.State.CartList = result.ToList();
+                //CartState.NotifyStateChanged();  
             */
         }
     }

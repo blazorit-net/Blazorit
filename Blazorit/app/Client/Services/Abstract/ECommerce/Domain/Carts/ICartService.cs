@@ -9,11 +9,16 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
     public interface ICartService
     {
         /// <summary>
+        /// In order not to once again update the state when logging in
+        /// </summary>
+        bool IsLoginingNow { get; set; }
+
+
+        /// <summary>
         /// Method adds product (quantity of product) to shopcart
         /// </summary>
-        /// <param name="productSKU"></param>
-        /// <param name="product"></param>
-        /// <returns>shopcart lis</returns>
+        /// <param name="cartItem"></param>
+        /// <returns></returns>
         Task<ShopCart> AddProductToCartAsync(CartItem cartItem);
 
         /// <summary>
@@ -21,12 +26,23 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         /// </summary>
         /// <returns></returns>
         Task<ShopCart> GetShopCartListAsync();
-
         
         /// <summary>
         /// Method merges shopcarts from local cart to server cart
         /// </summary>
         /// <returns></returns>
-        Task<ShopCart> MergeLocalShopCartToServerShopCart();
+        Task<ShopCart> MergeLocalShopCartToServerShopCartAsync();
+
+        /// <summary>
+        /// Method clears local storage shopcart
+        /// </summary>
+        /// <returns></returns>
+        Task ClearLocalShopcartAsync();
+
+        /// <summary>
+        /// Method sets local shopcart from server shopcart
+        /// </summary>
+        /// <returns></returns>
+        Task<ShopCart> SetLocalShopcartFromServerShopCart();
     }
 }

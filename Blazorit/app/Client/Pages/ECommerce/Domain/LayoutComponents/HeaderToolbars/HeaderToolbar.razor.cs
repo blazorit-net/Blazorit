@@ -1,4 +1,5 @@
 ﻿using Blazorit.Client.Providers.Concrete.Identity;
+using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,21 +17,30 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars
         [Inject]
         private CartState CartState { get; set; } = null!;
 
+        [Inject]
+        private ICartService CartService { get; set; } = null!;
+
 
         [Parameter]
         public string? Class { get; set; }
 
 
 
-        protected override void OnInitialized() {
+        protected override async Task OnInitializedAsync() {
             CartState.OnChange += StateHasChanged;
+            if (!CartService.IsLoginingNow)
+            {
+                CartState.State = await CartService.GetShopCartListAsync(); //update shopcart state
+            }
         }
 
 
         private async Task Logout() {
             var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
             if (authProvider == null) return;
+            await CartService.SetLocalShopcartFromServerShopCart();
             await authProvider.LogoutAuthenticationStateAsync();
+            
             Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
         }
 

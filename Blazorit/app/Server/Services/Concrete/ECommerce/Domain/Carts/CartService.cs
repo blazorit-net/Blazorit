@@ -33,12 +33,11 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Carts
         /// Method adds product (quantity of product) to shopcart
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="productSKU"></param>
-        /// <param name="quantity"></param>
-        /// <returns>shopcart list</returns>
+        /// <param name="cartItem"></param>
+        /// <returns></returns>
         public async Task<ShopCart?> AddProductToCartAsync(long userId, CartItem cartItem)
         {
-            var result = await _cartService.AddProductToCartAsync(userId, cartItem.Sku, cartItem.Quantity);
+            var result = await _cartService.AddProductToCartAsync(userId, cartItem.ProductId, cartItem.Quantity);
             return result;
         }
 

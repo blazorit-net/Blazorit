@@ -12,9 +12,8 @@ namespace Blazorit.Server.Services.Abstract.ECommerce.Domain.Carts
         /// Method adds product (quantity of product) to shopcart
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="productSKU"></param>
-        /// <param name="quantity"></param>
-        /// <returns>shopcart list</returns>
+        /// <param name="cartItem"></param>
+        /// <returns></returns>
         Task<ShopCart?> AddProductToCartAsync(long userId, CartItem cartItem);
 
         /// <summary>

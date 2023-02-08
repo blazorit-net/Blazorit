@@ -94,20 +94,20 @@
 
         var result = await IdentityService.Login(userModel);
 
-        if (result.Success) {
+        if (result.Success) 
+        {
             message = string.Empty;
 
             await LocalStorage.SetItemAsync("identityToken", result.Data);
+            CartService.IsLoginingNow = true; // inform other components to know about it. Befor we call AuthenticationStateProvider.GetAuthenticationStateAsync
             await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            await CartService.MergeLocalShopCartToServerShopCart();
-
+            CartService.IsLoginingNow = false;
             NavigationManager.NavigateTo(returnUrl);
-
-            //TODO: check local storage for shopcart,
-            //then to add shopcart from local storage to server-core storage,
-            //then remove local storage
-            CartState.State = await CartService.GetShopCartListAsync(); //init shopcart state            
-        } else {
+            await CartService.MergeLocalShopCartToServerShopCartAsync();
+            await CartService.ClearLocalShopcartAsync();                      
+        } 
+        else 
+        {
             messageCssClass = PresetColor.Red.ToString();
             message = result.Message;
         }

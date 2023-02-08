@@ -117,7 +117,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
 
         /// <summary>
-        /// Method adds product to user's cart
+        /// Method adds product to user's cart by SKU
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="productSKU"></param>
@@ -168,6 +168,71 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 return (true, cart.Id);
             
             } catch (Exception ex) {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToCartAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return (false, 0);
+        }
+
+
+        /// <summary>
+        /// Method adds product to user's cart by productId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="productId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        public async Task<(bool ok, long cartId)> AddProductToCartAsync(long userId, long productId, int quantity)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                CartShopcart? cart = await context.CartShopcarts.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+                if (cart is null)
+                { //create cart and insert new product for the cart
+                    cart = new CartShopcart { UserId = userId };
+                    await context.CartShopcarts.AddAsync(cart);
+
+                    CartShopcartList cartList = new()
+                    {
+                        Cart = cart,
+                        ProductId = productId,
+                        Quantity = quantity
+                    };
+
+                    await context.CartShopcartLists.AddAsync(cartList);
+                }
+                else
+                {
+                    CartShopcartList? cartList = await context.CartShopcartLists.Where(x => x.CartId == cart.Id && x.ProductId == productId).FirstOrDefaultAsync();
+
+                    //insert new product for the cart
+                    if (cartList is null)
+                    {
+                        cartList = new CartShopcartList()
+                        {
+                            Cart = cart,
+                            ProductId = productId,
+                            Quantity = quantity
+                        };
+
+                        await context.CartShopcartLists.AddAsync(cartList);
+                    }
+                    else
+                    { //update quantity
+                        cartList.Quantity += quantity;
+                        ////cartList.DateTimeCreated = DateTime.UtcNow;
+                    }
+                }
+
+                await context.SaveChangesAsync();
+                return (true, cart.Id);
+
+            }
+            catch (Exception ex)
+            {
                 _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToCartAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 

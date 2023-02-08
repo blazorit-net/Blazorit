@@ -59,7 +59,7 @@
                         </Button>
                     </SpaceItem>
                     <SpaceItem>
-                        <Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.CartButtons.CartButton Count="@(CartState.State.CartList.Sum(x => x.Quantity))" />
+                        <Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.CartButtons.CartButton Count="@(CartState.State.TotalQuantity)" />
                     </SpaceItem>
                 </ChildContent>
             </Space>

@@ -34,7 +34,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
 
 
         /// <summary>
-        /// Method adds product (quantity of product) to shopcart
+        /// Method adds product (quantity of product) to shopcart by SKU
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="productSKU"></param>
@@ -42,6 +42,20 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
         /// <returns>shopcart list</returns>
         public async Task<ShopCart?> AddProductToCartAsync(long userId, string productSKU, int quantity) {
             var response = await _dataRepo.AddProductToCartAsync(userId, productSKU, quantity);
+            return await GetShopCartListAsync(userId);
+        }
+
+
+        /// <summary>
+        /// Method adds product (quantity of product) to shopcart by productId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="productId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        public async Task<ShopCart?> AddProductToCartAsync(long userId, long productId, int quantity)
+        {
+            var response = await _dataRepo.AddProductToCartAsync(userId, productId, quantity);
             return await GetShopCartListAsync(userId);
         }
 
@@ -90,6 +104,11 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
         }
 
 
+        /// <summary>
+        /// Method converts IEnumerable<VwShopcart> to IEnumerable<CartItem> and adds additional data from repository (picture's link parts)
+        /// </summary>
+        /// <param name="shopcartList"></param>
+        /// <returns></returns>
         private async Task<IEnumerable<CartItem>> GetCartItemsFromShopcartsAsync(IEnumerable<VwShopcart> shopcartList) {
 
             IEnumerable<CartItem> result = shopcartList.Select(x => new CartItem {

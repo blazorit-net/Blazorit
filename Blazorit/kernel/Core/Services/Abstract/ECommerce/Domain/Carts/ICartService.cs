@@ -18,13 +18,22 @@ namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Carts {
         Task<ShopCart?> GetShopCartListAsync(long userId);
 
         /// <summary>
-        /// Method adds product (quantity of product) to shopcart
+        /// Method adds product (quantity of product) to shopcart by SKU
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="productSKU"></param>
         /// <param name="quantity"></param>
         /// <returns>shopcart list</returns>
         Task<ShopCart?> AddProductToCartAsync(long userId, string productSKU, int quantity);
+
+        /// <summary>
+        /// Method adds product (quantity of product) to shopcart by productId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="productId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        Task<ShopCart?> AddProductToCartAsync(long userId, long productId, int quantity);
 
         /// <summary>
         /// Method merges client shopcart with kernel cart
