@@ -37,7 +37,7 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         /// Method clears local storage shopcart
         /// </summary>
         /// <returns></returns>
-        Task ClearLocalShopcartAsync();
+        ////Task ClearLocalShopcartAsync();
 
         /// <summary>
         /// Method sets local shopcart from server shopcart

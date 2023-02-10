@@ -50,8 +50,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
 
             if (isAuth) // add proudct to server shopcart
             {
-                HttpResponseMessage response = await _http.PostAsJsonAsync($"{CartApi.CONTROLLER}/{CartApi.ADD_ITEM}", cartItem);
-                var result = await response.Content.ReadFromJsonAsync<ShopCart>();
+                var result = await _http.PostAndReadAsJsonOrDefaultAsync<CartItem, ShopCart>($"{CartApi.CONTROLLER}/{CartApi.ADD_ITEM}", cartItem);
                 return result ?? new ShopCart();
             } 
             else //add product to local storage
@@ -128,10 +127,10 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
             HttpResponseMessage response = await _http.PostAsJsonAsync($"{CartApi.CONTROLLER}/{CartApi.MERGE_SHOPCARTS}", localCart);
             var result = await response.Content.ReadFromJsonAsync<ShopCart>();
 
-            if (result != null) // remove local cart after merging on server 
-            {
+            ////if (result != null) // remove local cart after merging on server 
+            ////{
                 await _localStorage.RemoveItemAsync(LOCAL_SHOPCART);
-            }
+            ////}
             
             _cartState.State = result ?? new ShopCart();
             return _cartState.State;
@@ -142,10 +141,10 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
         /// Method clears local storage shopcart
         /// </summary>
         /// <returns></returns>
-        public async Task ClearLocalShopcartAsync()
-        {
-            await _localStorage.RemoveItemAsync(LOCAL_SHOPCART);
-        }
+        ////public async Task ClearLocalShopcartAsync()
+        ////{
+        ////    await _localStorage.RemoveItemAsync(LOCAL_SHOPCART);
+        ////}
 
 
         /// <summary>

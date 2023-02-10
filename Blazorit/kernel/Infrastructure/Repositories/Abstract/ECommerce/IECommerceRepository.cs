@@ -115,7 +115,12 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <returns></returns>
         Task<IEnumerable<VwShopcart>> GetShopCartListAsync(long userId);
 
-
+        /// <summary>
+        /// Method merges (sourceCart) shopcart with storage cart
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="sourceCart"></param>
+        /// <returns>Result cart</returns>
         Task<IEnumerable<VwShopcart>> UpdateShopCart(long userId, IEnumerable<VwShopcart> sourceCart);
     }
 }

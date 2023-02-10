@@ -104,7 +104,7 @@
             CartService.IsLoginingNow = false;
             NavigationManager.NavigateTo(returnUrl);
             await CartService.MergeLocalShopCartToServerShopCartAsync();
-            await CartService.ClearLocalShopcartAsync();                      
+            ////await CartService.ClearLocalShopcartAsync();                      
         } 
         else 
         {

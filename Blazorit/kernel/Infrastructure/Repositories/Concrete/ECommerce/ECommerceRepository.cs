@@ -531,10 +531,10 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
 
         /// <summary>
-        /// Method merges client shopcart with kernel cart
+        /// Method merges (sourceCart) shopcart with storage cart
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="clientCart"></param>
+        /// <param name="sourceCart"></param>
         /// <returns>Result cart</returns>
         public async Task<IEnumerable<VwShopcart>> UpdateShopCart(long userId, IEnumerable<VwShopcart> sourceCart) {
             try {
@@ -554,10 +554,10 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         //row.DateTimeModified = DateTime.Now;
                     } else {
                         row = new CartShopcartList {
-                            CartId = repoCart.Id,
+                            Cart = repoCart,
                             ProductId = item.ProductId,
-                            Quantity = item.Quantity,
-                            DateTimeCreated = item.DateTimeCreated.UtcDateTime
+                            Quantity = item.Quantity
+                            ////DateTimeCreated = item.DateTimeCreated.UtcDateTime
                         };
                         await context.CartShopcartLists.AddAsync(row);
                     }                    

@@ -11,6 +11,7 @@
         public const string USER_ACCOUNT        = "account";
         public const string USER_LOGIN          = "login";
         public const string USER_REGISTR        = "signup";
+        public const string SHOPCART            = "shopcart";
 
         
         public const string PRODUCT             = "product";

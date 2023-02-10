@@ -1,15 +1,5 @@
 ﻿@implements IBlazoritComponent
 
-<style>
-    .bit-shopcart-in-drawer {
-        height:100%;
-  /*      display: flex;
-        flex-direction: column;
-        justify-content: space-between;*/
-    }
-</style>
-
-
 <div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-in-drawer"))">
     <div style="height:75%; overflow-x:auto;">
         <AntList DataSource="@CartState.State.CartList">
@@ -61,7 +51,7 @@
         </GridRow>
         <GridRow Gutter="20">
             <GridCol Span="12">
-                 <Button Style="width:100%">CART</Button>
+                <Button OnClick="@(async () => await ShopcartButton_ClickHandler())" Style="width:100%">CART</Button>
             </GridCol>
             <GridCol Span="12">
                 <Button Style="width:100%">ORDER</Button>
@@ -69,7 +59,3 @@
         </GridRow>     
     </div>
 </div>
-
-@code {
-    public string? Class { get; set; }
-}
