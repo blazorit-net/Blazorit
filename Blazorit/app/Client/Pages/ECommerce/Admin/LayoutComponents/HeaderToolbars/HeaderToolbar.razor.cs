@@ -13,10 +13,10 @@ namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.HeaderToolbars
         }
 
         private async Task Logout() {
-            var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
-            if (authProvider == null) return;
-            await authProvider.LogoutAuthenticationStateAsync();
-            Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
+            ////var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
+            ////if (authProvider == null) return;
+            ////await authProvider.LogoutAuthenticationStateAsync();
+            ////Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
         }
 
         ////CssBuilder classHeaderToolboar = BlazorComponentUtilities.CssBuilder.Default("header-toolbar").AddClass("");

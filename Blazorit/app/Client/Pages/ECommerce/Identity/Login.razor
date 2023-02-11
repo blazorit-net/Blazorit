@@ -7,10 +7,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.WebUtilities
 @inject IIdentityService IdentityService
-@inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthenticationStateProvider
-
 @inject ICartService CartService
 @inject CartState CartState
 
@@ -92,19 +89,17 @@
         message = string.Empty;
         loading = true;
 
-        var result = await IdentityService.Login(userModel);
+        var result = await IdentityService.LoginAtServer(userModel);
 
         if (result.Success) 
         {
             message = string.Empty;
 
-            await LocalStorage.SetItemAsync("identityToken", result.Data);
             CartService.IsLoginingNow = true; // inform other components to know about it. Befor we call AuthenticationStateProvider.GetAuthenticationStateAsync
-            await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            await IdentityService.LoginAtClient(result.Data);
             CartService.IsLoginingNow = false;
             NavigationManager.NavigateTo(returnUrl);
-            await CartService.MergeLocalShopCartToServerShopCartAsync();
-            ////await CartService.ClearLocalShopcartAsync();                      
+            await CartService.MergeLocalShopCartToServerShopCartAsync();                
         } 
         else 
         {

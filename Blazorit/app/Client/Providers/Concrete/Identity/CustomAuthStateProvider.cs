@@ -48,17 +48,6 @@ namespace Blazorit.Client.Providers.Concrete.Identity
         }
 
 
-        public async Task LogoutAuthenticationStateAsync()
-        {
-            await _localStorageService.RemoveItemAsync("identityToken");
-            var identity = new ClaimsIdentity();
-            var anonymous = new ClaimsPrincipal(identity);
-            var state = new AuthenticationState(anonymous);
-
-            NotifyAuthenticationStateChanged(Task.FromResult(state));
-        }
-
-
         private byte[] ParseBase64WithoutPadding(string base64)
         {
             switch (base64.Length % 4)

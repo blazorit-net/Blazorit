@@ -51,6 +51,12 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
             if (isAuth) // add proudct to server shopcart
             {
                 var result = await _http.PostAndReadAsJsonOrDefaultAsync<CartItem, ShopCart>($"{CartApi.CONTROLLER}/{CartApi.ADD_ITEM}", cartItem);
+
+                if (result == null) // if after adding item in cart -> cart is null
+                {
+                    await _ident.LogoutAsync(); // we need logout (server or core error, possible server unathorized user)
+                }
+
                 return result ?? new ShopCart();
             } 
             else //add product to local storage
