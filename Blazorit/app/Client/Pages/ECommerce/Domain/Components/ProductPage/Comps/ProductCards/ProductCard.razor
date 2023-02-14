@@ -30,23 +30,23 @@
     @*Price and buttons*@
     <GridCol>
         <Card>
-            <div>
-                <Badge Count="@count">
-                    <Button>test</Button>
-                </Badge>
-                <ButtonGroup>
-                    <Button OnClick="@(() => count--)">
-                        <Icon Type="minus"></Icon>
-                    </Button>
-                    <Button OnClick="@(() => count++)">
-                        <Icon Type="plus"></Icon>
-                    </Button>
-                </ButtonGroup>
-            </div>
+@*            <div>
+                <GridCol Span="4">
+                    <Blazorit.Client.Pages.ECommerce.Domain.Components.AddingCartButtons.AddingCartButtonsComp ProductId="@Data.Id" />
+                </GridCol>
+            </div>*@
             <div>
                 <label>Цена</label>
                 <p>@Data.Price.ToString("N")</p>
-                <Button OnClick=@(async () => await AddToCart_ButtonClickHandlerAsync())>В корзину</Button>
+                    @if (IsProductToCartEnabled)
+                    {
+                        <Button OnClick=@(async () => await AddToCartButton_ClickHandlerAsync())>Add to cart</Button>
+                    }
+                    else
+                    {
+                        <Button OnClick=@(async () => await ShopcartButton_ClickHandler())>Cart</Button>
+                    }
+
             </div>
         </Card>       
     </GridCol>

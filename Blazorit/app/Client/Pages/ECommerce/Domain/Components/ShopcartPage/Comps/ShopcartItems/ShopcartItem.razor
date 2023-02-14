@@ -1,0 +1,43 @@
+﻿@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-item"))">
+    <GridRow>
+        <GridCol Span="4">
+                <Image Src="@Item.ProductPictureLinkPart" />
+        </GridCol>
+        <GridCol Span="12">
+            <GridRow>
+                <GridCol Span="24">
+                    <b><a href="@(PageRouter.RefToProductPage(Item))">@Item.Name</a> </b>
+                </GridCol>
+            </GridRow>
+            <GridRow>
+                <GridCol Span="24">
+                        sku: @Item.Sku
+                </GridCol>
+            </GridRow>
+            <GridRow>
+                <GridCol Span="24">
+                    per one: @Item.StrPrice
+                </GridCol>
+            </GridRow>
+        </GridCol>
+        @*@uantity*@
+        <GridCol Span="4">
+            <ButtonGroup>
+                <Button OnClick="@(async () => await SubtractQuantity())" Disabled="@isMinusButtonDisabled">
+                    <Icon Type="minus"></Icon>
+                </Button>
+                <Button Type="@ButtonType.Text">@Item.Quantity</Button>
+                <Button OnClick="@(async () => await IncrementQuantity())">
+                    <Icon Type="plus"></Icon>
+                </Button>
+            </ButtonGroup>
+        </GridCol>
+        @*Price*@
+        <GridCol Span="4">
+            @Item.StrTotalPrice
+        </GridCol>
+    </GridRow>
+</div>

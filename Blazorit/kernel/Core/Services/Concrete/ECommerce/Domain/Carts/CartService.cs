@@ -113,6 +113,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
 
             IEnumerable<CartItem> result = shopcartList.Select(x => new CartItem {
                 ProductId = x.ProductId,
+                Category = x.Category.Trim(),
                 ProductLinkPart = x.ProductLinkPart.Trim(),
                 Name = x.Name,
                 Price = x.ProductPrice,

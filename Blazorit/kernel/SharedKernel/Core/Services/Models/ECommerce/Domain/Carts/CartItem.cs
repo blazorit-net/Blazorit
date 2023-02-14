@@ -32,6 +32,8 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts {
 
         public int Quantity { get; set; }
 
+        public string Category { get; set; } = string.Empty;
+
         public string ProductLinkPart { get; set; } = string.Empty;
 
         public IEnumerable<PictureLinkPart> PicturesLinkParts { get; set; } = Enumerable.Empty<PictureLinkPart>();
@@ -39,5 +41,39 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts {
         public string ProductPictureLinkPart { get; set; } = string.Empty;
 
         public DateTimeOffset DateTimeCreated { get; set; }
+
+        /// <summary>
+        /// Total price (Price * Quantity)
+        /// </summary>
+        public decimal TotalPrice
+        {
+            get
+            {
+                return Price * Quantity;
+            }
+        }
+
+        /// <summary>
+        /// Price for user view
+        /// </summary>
+        public string StrPrice
+        {
+            get
+            {
+                return Price.ToString("N0");
+            }
+        }
+
+        /// <summary>
+        /// Total price (Price * Quantity) for user view
+        /// </summary>
+        public string StrTotalPrice
+        {
+            get
+            {
+                return TotalPrice.ToString("N0");
+            }
+        }
+
     }
 }

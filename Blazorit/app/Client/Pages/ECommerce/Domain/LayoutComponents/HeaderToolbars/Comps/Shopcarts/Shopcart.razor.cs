@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts {
-    public partial class Shopcart {
+    public partial class Shopcart : IDisposable {
         [Inject]
         private CartState CartState { get; set; } = null!;
 
@@ -27,6 +27,11 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars
         {
             NavigationManager.NavigateTo(ConstPage.SHOPCART);
             await IsVisibleShopcartDrawerChanged.InvokeAsync(false);
+        }
+
+        public void Dispose()
+        {
+            CartState.OnChange -= StateHasChanged;
         }
     }
 }

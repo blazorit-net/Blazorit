@@ -1,6 +1,24 @@
 ﻿@attribute [Route(ConstPage.SHOPCART)]
-@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+@implements IBlazoritComponent
+@using Blazorit.Client.Shared.Routes.ECommerce.Domain
+@using Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage.Comps.ShopcartItems
 
 <PageTitle>Shopcart</PageTitle>
 
-<h1>ShopCart</h1>
+<div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-page"))">
+    <h1>ShopCart</h1>
+    <GridRow>
+        <GridCol Span="16">
+            <AntList DataSource="@CartState.State.CartList">
+                <ChildContent Context="item">
+                    <ListItem NoFlex>
+                        <ShopcartItem Item="@item" />
+                    </ListItem>
+                </ChildContent>
+            </AntList>
+        </GridCol>
+        <GridCol Span="8">
+            <h2>Оформление заказа</h2>
+        </GridCol>
+    </GridRow>  
+ </div>

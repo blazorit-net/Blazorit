@@ -8,6 +8,7 @@ using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using Blazorit.Client.Support.Helpers;
 using AntDesign.Core.Helpers.MemberPath;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
+using Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts;
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
 {
@@ -16,7 +17,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
     /// </summary>
     public class CartService : ICartService
     {
-        private const string LOCAL_SHOPCART = "shopcart";
+        private const string LOCAL_SHOPCART = "shopcart"; // local storage shopcart name
 
         private readonly HttpClient _http;
         private readonly IIdentityService _ident;
@@ -46,18 +47,20 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
         /// <returns></returns>
         public async Task<ShopCart> AddProductToCartAsync(CartItem cartItem)
         {
+            ShopCart resultCart = new();
+
             bool isAuth = await _ident.IsUserAuthenticated();
 
             if (isAuth) // add proudct to server shopcart
             {
-                var result = await _http.PostAndReadAsJsonOrDefaultAsync<CartItem, ShopCart>($"{CartApi.CONTROLLER}/{CartApi.ADD_ITEM}", cartItem);
+                var serverCart = await _http.PostAndReadAsJsonOrDefaultAsync<CartItem, ShopCart>($"{CartApi.CONTROLLER}/{CartApi.ADD_ITEM}", cartItem);
 
-                if (result == null) // if after adding item in cart -> cart is null
+                if (serverCart == null) // if after adding item in cart -> cart is null
                 {
                     await _ident.LogoutAsync(); // we need logout (server or core error, possible server unathorized user)
                 }
 
-                return result ?? new ShopCart();
+                resultCart = serverCart ?? new ShopCart();
             } 
             else //add product to local storage
             {
@@ -70,12 +73,19 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
                 } 
                 else 
                 {
-                    item.Quantity += cartItem.Quantity;
+                    // check cart item for logic (zero or negative number) quantity 
+                    if ((item.Quantity + cartItem.Quantity) > 0)
+                    {
+                        item.Quantity += cartItem.Quantity;
+                    }
                 }              
                 
-                await _localStorage.SetItemAsync(LOCAL_SHOPCART, localCart);
-                return localCart; //return from local storage
+                await _localStorage.SetItemAsync(LOCAL_SHOPCART, localCart);                
+                resultCart = localCart; //local storage
             }
+
+            _cartState.State = resultCart;
+            return resultCart;
         }
 
 
@@ -101,7 +111,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
                 }
                 catch
                 {
-                    await Console.Error.WriteAsync($"Local storage shopcart error. Shopcart name '{nameof(LOCAL_SHOPCART)}'.");
+                    Console.WriteLine($"Blazorit: Local storage shopcart error. Shopcart name '{nameof(LOCAL_SHOPCART)}'. Shopcart will be removed.");
                     await _localStorage.RemoveItemAsync(LOCAL_SHOPCART);
                     localCart = new ShopCart();
                 }
@@ -124,33 +134,17 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
             }
             catch
             {
-                await Console.Error.WriteAsync($"Local storage shopcart error. Shopcart name '{nameof(LOCAL_SHOPCART)}'.");
+                Console.WriteLine($"Blazorit: Local storage shopcart error. Shopcart name '{nameof(LOCAL_SHOPCART)}'. Shopcart will be removed.");
                 await _localStorage.RemoveItemAsync(LOCAL_SHOPCART);
                 localCart = new ShopCart();
             }
 
             // merging on server
-            HttpResponseMessage response = await _http.PostAsJsonAsync($"{CartApi.CONTROLLER}/{CartApi.MERGE_SHOPCARTS}", localCart);
-            var result = await response.Content.ReadFromJsonAsync<ShopCart>();
-
-            ////if (result != null) // remove local cart after merging on server 
-            ////{
-                await _localStorage.RemoveItemAsync(LOCAL_SHOPCART);
-            ////}
-            
+            var result = await _http.PostAndReadAsJsonOrDefaultAsync<ShopCart, ShopCart>($"{CartApi.CONTROLLER}/{CartApi.MERGE_SHOPCARTS}", localCart);
+            await _localStorage.RemoveItemAsync(LOCAL_SHOPCART); //remove local shopcart            
             _cartState.State = result ?? new ShopCart();
             return _cartState.State;
         }
-
-
-        /// <summary>
-        /// Method clears local storage shopcart
-        /// </summary>
-        /// <returns></returns>
-        ////public async Task ClearLocalShopcartAsync()
-        ////{
-        ////    await _localStorage.RemoveItemAsync(LOCAL_SHOPCART);
-        ////}
 
 
         /// <summary>

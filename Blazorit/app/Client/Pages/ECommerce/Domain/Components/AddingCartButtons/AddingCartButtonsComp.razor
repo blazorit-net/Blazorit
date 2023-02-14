@@ -1,0 +1,13 @@
+﻿@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-adding-cartbuttons"))">
+    <ButtonGroup>
+        <Button OnClick="@(async () => await SubtractQuantity())" Disabled="@isMinusButtonDisabled">
+            <Icon Type="minus"></Icon>
+        </Button>
+        <Button Type="@ButtonType.Text">@CartItem.Quantity</Button>
+        <Button OnClick="@(async () => await IncrementQuantity())">
+            <Icon Type="plus"></Icon>
+        </Button>
+    </ButtonGroup>
+</div>

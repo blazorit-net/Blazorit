@@ -159,8 +159,14 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                         await context.CartShopcartLists.AddAsync(cartList);
                     } else { //update quantity
-                        cartList.Quantity += quantity;
-                        ////cartList.DateTimeCreated = DateTime.UtcNow;
+                        // check cart item for logic (zero or negative number) quantity 
+                        if ((cartList.Quantity + quantity) > 0)
+                        {
+                            cartList.Quantity += quantity;
+                        } else
+                        {
+                            return (false, 0);
+                        }                
                     }
                 }       
                
@@ -222,8 +228,15 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     }
                     else
                     { //update quantity
-                        cartList.Quantity += quantity;
-                        ////cartList.DateTimeCreated = DateTime.UtcNow;
+                      // check cart item for logic (zero or negative number) quantity 
+                        if ((cartList.Quantity + quantity) > 0)
+                        {
+                            cartList.Quantity += quantity;
+                        }
+                        else
+                        {
+                            return (false, 0);
+                        }
                     }
                 }
 
