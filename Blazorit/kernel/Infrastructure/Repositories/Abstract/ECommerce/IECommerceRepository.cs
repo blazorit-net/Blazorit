@@ -50,14 +50,14 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <returns></returns>
         Task<(bool ok, long cartId)> AddProductToCartAsync(long userId, long productId, int quantity);
 
-        /// <summary>
-        /// Method adds product to user's cart by cartId (this method is a bit faster than AddProductToCartAsync method)
-        /// </summary>
-        /// <param name="cartId"></param>
-        /// <param name="productSKU"></param>
-        /// <param name="quantity"></param>
-        /// <returns>Success</returns>
-        Task<bool> AddProductToCartByCartIdAsync(long cartId, string productSKU, int quantity);
+        ///// <summary>
+        ///// Method adds product to user's cart by cartId (this method is a bit faster than AddProductToCartAsync method)
+        ///// </summary>
+        ///// <param name="cartId"></param>
+        ///// <param name="productSKU"></param>
+        ///// <param name="quantity"></param>
+        ///// <returns>Success</returns>
+        //Task<bool> AddProductToCartByCartIdAsync(long cartId, string productSKU, int quantity);
 
         /// <summary>
         /// Method adds product to user's wishlist

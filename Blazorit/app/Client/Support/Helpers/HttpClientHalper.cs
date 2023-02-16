@@ -43,7 +43,7 @@ namespace Blazorit.Client.Support.Helpers {
         {
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(requestUri, value);
+                HttpResponseMessage response = await client.PostAsJsonAsync(requestUri, value, options, cancellationToken);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return await response.Content.ReadFromJsonAsync<TOut>();
@@ -51,6 +51,30 @@ namespace Blazorit.Client.Support.Helpers {
                 ////else
                 ////{                    
                     
+                ////    //Console.WriteLine($"Blazorit: Request error: Unauthorized at Server. Request: '{requestUri ?? string.Empty}'. default returned.");
+                ////}
+            }
+            catch
+            {
+                //Console.WriteLine($"Blazorit: Request error: '{requestUri ?? string.Empty}'. default returned.");
+            }
+
+            return default(TOut);
+        }
+
+
+        public static async Task<TOut?> PostAndReadAsJsonOrDefaultAsync<TOut>(this HttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync(requestUri, null, cancellationToken);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    return await response.Content.ReadFromJsonAsync<TOut>();
+                }
+                ////else
+                ////{                    
+
                 ////    //Console.WriteLine($"Blazorit: Request error: Unauthorized at Server. Request: '{requestUri ?? string.Empty}'. default returned.");
                 ////}
             }

@@ -49,6 +49,8 @@ builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Data
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Carts.CartService>();
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts.CartService>();
+builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders.IOrderService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders.OrderService>();
+builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Orders.IOrderService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Orders.OrderService>();
 //################################################################
 //  ############################################################
 //################################################################

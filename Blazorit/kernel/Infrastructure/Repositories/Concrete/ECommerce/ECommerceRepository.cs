@@ -253,39 +253,39 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         }
 
 
-        /// <summary>
-        /// Method adds product to user's cart by cartId (this method is a bit faster than AddProductToCartAsync method)
-        /// </summary>
-        /// <param name="cartId"></param>
-        /// <param name="productSKU"></param>
-        /// <param name="quantity"></param>
-        /// <returns>Success</returns>
-        public async Task<bool> AddProductToCartByCartIdAsync(long cartId, string productSKU, int quantity) {
-            try {
-                using var context = await _contextFactory.CreateDbContextAsync();
+        /////// <summary>
+        /////// Method adds product to user's cart by cartId (this method is a bit faster than AddProductToCartAsync method)
+        /////// </summary>
+        /////// <param name="cartId"></param>
+        /////// <param name="productSKU"></param>
+        /////// <param name="quantity"></param>
+        /////// <returns>Success</returns>
+        ////public async Task<bool> AddProductToCartByCartIdAsync(long cartId, string productSKU, int quantity) {
+        ////    try {
+        ////        using var context = await _contextFactory.CreateDbContextAsync();
 
-                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+        ////        ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
 
-                if (product == null) {
-                    return false;
-                }
+        ////        if (product == null) {
+        ////            return false;
+        ////        }
 
-                CartShopcartList cartList = new() {
-                    CartId = cartId,
-                    Product = product,
-                    Quantity = quantity
-                };
+        ////        CartShopcartList cartList = new() {
+        ////            CartId = cartId,
+        ////            Product = product,
+        ////            Quantity = quantity
+        ////        };
 
-                await context.CartShopcartLists.AddAsync(cartList);
-                await context.SaveChangesAsync();
-                return true;
+        ////        await context.CartShopcartLists.AddAsync(cartList);
+        ////        await context.SaveChangesAsync();
+        ////        return true;
 
-            } catch (Exception ex) {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToCartByCartIdAsync)} of the {nameof(ECommerceRepository)} repository");
-            }
+        ////    } catch (Exception ex) {
+        ////        _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductToCartByCartIdAsync)} of the {nameof(ECommerceRepository)} repository");
+        ////    }
 
-            return false;
-        }
+        ////    return false;
+        ////}
 
 
         /// <summary>
@@ -363,6 +363,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
         /// <summary>
         /// Method create order from cart for User by userId
+        /// And this method removes all items from user's shopcart
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
@@ -392,7 +393,12 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     await context.OrdOrderLists.AddAsync(orderListItem);
                 }
 
-                await context.OrdOrders.AddAsync(order); 
+                await context.OrdOrders.AddAsync(order);
+
+                // remove all items from user's shopcart
+                context.RemoveRange(context.CartShopcartLists.Where(x => x.Cart.UserId == userId));
+                context.RemoveRange(context.CartShopcarts.Where(x => x.UserId == userId));
+
                 await context.SaveChangesAsync();
                 return true;
 

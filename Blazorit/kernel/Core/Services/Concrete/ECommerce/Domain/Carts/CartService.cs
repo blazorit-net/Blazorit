@@ -118,7 +118,8 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
                 Name = x.Name,
                 Price = x.ProductPrice,
                 Sku = x.Sku,
-                Quantity = x.Quantity
+                Quantity = x.Quantity,
+                DateTimeCreated = x.DateTimeCreated
             }).ToList();
 
             foreach (var item in result) {

@@ -10,8 +10,8 @@
     <GridRow>
         <GridCol Span="16">
             <Card>
-                <AntList DataSource="@CartState.State.CartList">
-                    <ChildContent Context="item">
+                <AntList DataSource="@CartState.State.CartList" >
+                    <ChildContent Context="item" >
                         <ListItem NoFlex>
                             <ShopcartItem Item="@item" />
                         </ListItem>
@@ -42,7 +42,7 @@
                     <Divider  Dashed />
                     <GridRow>
                         <GridCol Span="24">
-                            <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block>Order</Button>
+                            <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block OnClick="@(async () => await OrderButton_ClickHandlerAsync())">Order</Button>
                         </GridCol>
                     </GridRow>
                 </Card>

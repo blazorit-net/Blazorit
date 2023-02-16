@@ -2,13 +2,26 @@
 namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts {
     public class ShopCart {
 
+        private List<CartItem> cartList = new List<CartItem>();
+
         public ShopCart() { }
 
         public ShopCart(IEnumerable<CartItem> cartList) {
             CartList = cartList.ToList();
         }
 
-        public List<CartItem> CartList { get; set; } = new List<CartItem>();
+        //public List<CartItem> CartList { get; set; } = new List<CartItem>();
+
+        public List<CartItem> CartList { 
+            get
+            {
+                return cartList.OrderBy(x => x.DateTimeCreated).ToList();
+            }
+            set
+            {
+                cartList = value;
+            }
+        }
 
         public int TotalQuantity {
             get {
