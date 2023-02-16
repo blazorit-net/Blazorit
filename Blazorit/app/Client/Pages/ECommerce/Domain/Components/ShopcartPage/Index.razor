@@ -9,16 +9,46 @@
     <h1>ShopCart</h1>
     <GridRow>
         <GridCol Span="16">
-            <AntList DataSource="@CartState.State.CartList">
-                <ChildContent Context="item">
-                    <ListItem NoFlex>
-                        <ShopcartItem Item="@item" />
-                    </ListItem>
-                </ChildContent>
-            </AntList>
+            <Card>
+                <AntList DataSource="@CartState.State.CartList">
+                    <ChildContent Context="item">
+                        <ListItem NoFlex>
+                            <ShopcartItem Item="@item" />
+                        </ListItem>
+                    </ChildContent>
+                </AntList>
+            </Card>
         </GridCol>
-        <GridCol Span="8">
-            <h2>Оформление заказа</h2>
+        <GridCol Offset="1" Span="7">
+            <Affix OffsetTop="10">
+                <Card>
+                    <GridRow Justify="space-between">
+                        <GridCol Flex=@("none")>
+                            <span class="total-quantity">Items: @CartState.State.StrTotalQuantity</span>                                              
+                        </GridCol>
+                        <GridCol Flex=@("none")>
+                            <span class="total-quantity">@CartState.State.StrTotalPrice</span>
+                        </GridCol>
+                    </GridRow>
+                    <Divider />
+                    <GridRow Justify="space-between">
+                        <GridCol Flex=@("none")>
+                            <span class="total-price">Subtotal</span>
+                        </GridCol>
+                        <GridCol Flex=@("none")>
+                            <span class="total-price">@CartState.State.StrTotalPrice</span>
+                        </GridCol>
+                    </GridRow>
+                    <Divider  Dashed />
+                    <GridRow>
+                        <GridCol Span="24">
+                            <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block>Order</Button>
+                        </GridCol>
+                    </GridRow>
+                </Card>
+
+            </Affix>
+
         </GridCol>
     </GridRow>  
  </div>

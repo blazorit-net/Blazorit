@@ -8,11 +8,12 @@ using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
 {
     public partial class ProductCard : IDisposable
-    {
-        private CartItem cartItem = new();
+    {   
+        bool isImagePreviewVisible = false;
 
         [Inject]
         private NavigationManager Navigation { get; set; } = null!;
+
         [Inject]
         private ICartService CartService { get; set; } = null!;
 
@@ -20,9 +21,11 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
         private CartState CartState { get; set; } = null!;
 
 
-        [Parameter] public string? Class { get; set; }
+        [Parameter] 
+        public string? Class { get; set; }
 
-        [Parameter] public ProductCardData Data { get; set; } = new();
+        [Parameter] 
+        public ProductCardData Data { get; set; } = new();
 
 
         protected override void OnInitialized()
@@ -30,7 +33,9 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
             CartState.OnChange += StateHasChanged;
         }
 
-
+        /// <summary>
+        /// Button "Add to Cart" flag
+        /// </summary>
         private bool IsProductToCartEnabled
         {
             get
@@ -44,11 +49,6 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
             }
         }
 
-        //protected override void OnParametersSet()
-        //{
-        //    cartItem = new CartItem(Data) { Quantity = CartState.State.CartList.FirstOrDefault(x => x.ProductId == Data.Id)?.Quantity ?? 0 };
-        //}
-
 
         private async Task AddToCartButton_ClickHandlerAsync() {
             await CartService.AddProductToCartAsync(new CartItem(Data) { Quantity = 1});
@@ -58,13 +58,14 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
             */
         }
 
-        private async Task ShopcartButton_ClickHandler()
+        private async Task ShopcartButton_ClickHandlerAsync()
         {
             await InvokeAsync(() => Navigation.NavigateTo(ConstPage.SHOPCART));            
         }
 
 
-        public void Dispose() {
+        public void Dispose() 
+        {
             CartState.OnChange -= StateHasChanged;
         }
     }

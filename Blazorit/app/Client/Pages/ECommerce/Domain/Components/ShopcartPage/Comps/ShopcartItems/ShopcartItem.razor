@@ -3,13 +3,22 @@
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-item"))">
     <GridRow>
-        <GridCol Span="4">
-                <Image Src="@Item.ProductPictureLinkPart" />
+        <GridCol Span="4">               
+                <Image PreviewVisible="false"
+                   Src="@Item.ProductPictureLinkPart"
+                   OnClick="@(() => { isImagePreviewVisible = true; })" />
+                    <div style="display:none;">
+                        <ImagePreviewGroup @bind-PreviewVisible="isImagePreviewVisible">
+                            @foreach (var item in Item.PicturesLinkParts) {
+                                <Image src="@item.LinkPart" />
+                            }
+                        </ImagePreviewGroup>                
+                    </div>
         </GridCol>
         <GridCol Span="12">
             <GridRow>
                 <GridCol Span="24">
-                    <b><a href="@(PageRouter.RefToProductPage(Item))">@Item.Name</a> </b>
+                    <b><a href="@(PageRouter.RefToProductPage(Item))">@Item.Name</a></b>
                 </GridCol>
             </GridRow>
             <GridRow>
@@ -19,7 +28,7 @@
             </GridRow>
             <GridRow>
                 <GridCol Span="24">
-                    per one: @Item.StrPrice
+                    For one: @Item.StrPrice
                 </GridCol>
             </GridRow>
         </GridCol>
@@ -37,7 +46,7 @@
         </GridCol>
         @*Price*@
         <GridCol Span="4">
-            @Item.StrTotalPrice
+            <span style="float:right">@Item.StrTotalPrice</span>
         </GridCol>
     </GridRow>
 </div>

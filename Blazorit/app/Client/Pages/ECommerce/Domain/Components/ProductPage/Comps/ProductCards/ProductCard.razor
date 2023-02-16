@@ -1,59 +1,56 @@
 ﻿@implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-product-card"))">
-<GridRow>
-    @*Main image of product*@
-    <GridCol>
-        <Card>
-            <h2>@Data.Name</h2>
-            <h3>Description</h3>
-            <p>@Data.Description</p>
-            <div>
-                <label>SKU</label>    
-                <span>@Data.Sku</span>
-            </div>
-             <div>
-                <Image PreviewVisible="false"
-                        Width="200"
-                        Src="@Data.MainPictureLinkPart"
-                        OnClick="@(() => { visible = true; })" />
-                <div style="display:none;">
-                    <ImagePreviewGroup @bind-PreviewVisible="visible">
-                        @foreach (var item in Data.PicturesLinkParts) {
-                            <Image src="@item.LinkPart" />
-                        }
-                    </ImagePreviewGroup>
+    <GridRow>
+        <GridCol Span="24">
+            <h1>@Data.Name</h1>
+        </GridCol>
+    </GridRow>
+    <GridRow>
+        @*Main image of product*@
+        <GridCol Span="8">
+            <Card>
+                <div>
+                    <label>SKU:</label>    
+                    <span>@Data.Sku</span>
                 </div>
-            </div>
-        </Card>
-    </GridCol>
-    @*Price and buttons*@
-    <GridCol>
-        <Card>
-@*            <div>
-                <GridCol Span="4">
-                    <Blazorit.Client.Pages.ECommerce.Domain.Components.AddingCartButtons.AddingCartButtonsComp ProductId="@Data.Id" />
-                </GridCol>
-            </div>*@
-            <div>
-                <label>Цена</label>
-                <p>@Data.Price.ToString("N")</p>
-                    @if (IsProductToCartEnabled)
-                    {
-                        <Button OnClick=@(async () => await AddToCartButton_ClickHandlerAsync())>Add to cart</Button>
-                    }
-                    else
-                    {
-                        <Button OnClick=@(async () => await ShopcartButton_ClickHandler())>Cart</Button>
-                    }
+                 <div>
+                    <Image PreviewVisible="false"
+                            Width="200"
+                            Src="@Data.MainPictureLinkPart"
+                            OnClick="@(() => { isImagePreviewVisible = true; })" />
+                    <div style="display:none;">
+                        <ImagePreviewGroup @bind-PreviewVisible="isImagePreviewVisible">
+                            @foreach (var item in Data.PicturesLinkParts) {
+                                <Image src="@item.LinkPart" />
+                            }
+                        </ImagePreviewGroup>
+                    </div>
+                </div>
+            </Card>
+        </GridCol>
+        @*About short features*@
+        <GridCol Offset="1" Span="7">
+            <h3>About (short)</h3>
+            @Data.Description
+        </GridCol>
+        @*Price and buttons*@
+        <GridCol Offset="1" Span="7">
+            <Card>
+                <div>
+                    <label>Цена</label>
+                    <p>@Data.Price.ToString("N")</p>
+                        @if (IsProductToCartEnabled)
+                        {
+                            <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block OnClick=@(async () => await AddToCartButton_ClickHandlerAsync())>Add to cart</Button>
+                        }
+                        else
+                        {
+                            <Button Size="@ButtonSize.Large" Block OnClick=@(async () => await ShopcartButton_ClickHandlerAsync())>Shopcart</Button>
+                        }
 
-            </div>
-        </Card>       
-    </GridCol>
-</GridRow>
+                </div>
+            </Card>       
+        </GridCol>
+    </GridRow>
 </div>
-
-@code {
-    int count = 0;
-    bool visible = false;
-}

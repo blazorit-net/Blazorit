@@ -21,5 +21,21 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts {
                 return CartList.Sum(x => x.Price * x.Quantity);
             }
         }
+
+        public string StrTotalQuantity
+        {
+            get
+            {
+                return TotalQuantity.ToString("N0");
+            }
+        }
+
+        public string StrTotalPrice
+        {
+            get
+            {
+                return TotalPrice.ToString("N0");
+            }
+        }
     }
 }

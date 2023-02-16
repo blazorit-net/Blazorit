@@ -1,18 +1,21 @@
-﻿@implements IBlazoritComponent
+﻿@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+@implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-in-drawer"))">
     <div style="height:75%; overflow-x:auto;">
         <AntList DataSource="@CartState.State.CartList">
             <ChildContent Context="item">
                 <ListItem NoFlex>
-                    <GridRow>
+                    <ShopcartItem Item="@item" IsVisibleShopcartDrawer="@IsVisibleShopcartDrawer" IsVisibleShopcartDrawerChanged="@IsVisibleShopcartDrawerChanged" />
+@*                    <GridRow>
                         <GridCol Span="8">
                             <Image Src="@item.ProductPictureLinkPart" />
                         </GridCol>
                         <GridCol Span="16">
                             <GridRow>
                                 <GridCol Span="24">
-                                    <b>@item.Name</b>
+                                    <b><a href="@(PageRouter.RefToProductPage(item))" onclick="@(async () => await ProductNameButton_ClickHandler(item))">@item.Name</a></b>
+                                    
                                 </GridCol>
                             </GridRow>
                             <GridRow>
@@ -27,16 +30,16 @@
                             </GridRow>
                             <GridRow>
                                 <GridCol Span="24">
-                                    Per one: @item.StrPrice
+                                    For one: @item.StrPrice
                                 </GridCol>
                             </GridRow>
                             <GridRow>
                                 <GridCol Span="24">
-                                    Price: @item.StrTotalPrice
+                                    <b>Price: @item.StrTotalPrice</b>
                                 </GridCol>
                             </GridRow>
                         </GridCol>
-                    </GridRow>
+                    </GridRow>*@
                 </ListItem>
             </ChildContent>
         </AntList>
@@ -44,22 +47,23 @@
   
     <div style="height:25%;">
         <Divider />
-        <GridRow Gutter="20">
-
-            <GridCol Span="12">
-                    <span style="font-weight:bold; font-size:2em;">Total:</span>
-                </GridCol>
-                <GridCol Span="12">
+        <GridRow Justify="space-between">
+            <GridCol Flex=@("none")>
+                    <span style="font-weight:bold; font-size:2em;">Subtotal:</span>
+            </GridCol>
+            <GridCol Flex=@("none")>
                     <span style="font-size:2em;">@CartState.State.TotalPrice.ToString("N0")</span>
-                </GridCol>
-           
+            </GridCol>           
         </GridRow>
+
+        <Divider />
+
         <GridRow Gutter="20">
             <GridCol Span="12">
-                <Button OnClick="@(async () => await ShopcartButton_ClickHandler())" Style="width:100%">CART</Button>
+                <Button OnClick="@(async () => await ShopcartButton_ClickHandler())" Block>SHOPCART</Button>
             </GridCol>
             <GridCol Span="12">
-                <Button Style="width:100%">ORDER</Button>
+                <Button Type="@ButtonType.Primary" Block>ORDER</Button>
             </GridCol>
         </GridRow>     
     </div>

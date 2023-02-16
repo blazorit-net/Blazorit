@@ -7,6 +7,8 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage.Comps.S
 {
     public partial class ShopcartItem
     {
+        bool isImagePreviewVisible = false;
+
         [Inject]
         private ICartService CartService { get; set; } = null!;
 

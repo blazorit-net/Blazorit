@@ -122,7 +122,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
             }).ToList();
 
             foreach (var item in result) {
-                item.PicturesLinkParts = (await _dataRepo.GetProductPictureLinkPartsAsync(item.ProductId, "medium", "site"))
+                item.PicturesLinkParts = (await _dataRepo.GetProductPictureLinkPartsAsync(item.ProductId, "medium", "site")) // select images for shopcart item
                     .Select(x => new PictureLinkPart {
                         LinkPart = x.LinkPart.Trim(),
                         OrderNum = x.OrderNum,

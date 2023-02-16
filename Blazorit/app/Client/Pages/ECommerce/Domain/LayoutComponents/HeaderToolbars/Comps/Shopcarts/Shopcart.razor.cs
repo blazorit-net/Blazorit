@@ -1,6 +1,7 @@
 ﻿using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Microsoft.AspNetCore.Components;
 using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts {
     public partial class Shopcart : IDisposable {
@@ -26,6 +27,12 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars
         private async Task ShopcartButton_ClickHandler()
         {
             NavigationManager.NavigateTo(ConstPage.SHOPCART);
+            await IsVisibleShopcartDrawerChanged.InvokeAsync(false);
+        }
+
+        private async Task ProductNameButton_ClickHandler(CartItem item)
+        {
+            ////NavigationManager.NavigateTo(PageRouter.RefToProductPage(item));
             await IsVisibleShopcartDrawerChanged.InvokeAsync(false);
         }
 

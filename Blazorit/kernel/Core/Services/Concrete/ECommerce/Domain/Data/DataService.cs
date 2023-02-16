@@ -88,7 +88,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Data
                 Name = product.Name,
                 Price = product.Price,
                 Sku = product.Sku,
-                PicturesLinkParts = (await _dataRepo.GetProductPictureLinkPartsAsync(product.Id, "medium", "site"))
+                PicturesLinkParts = (await _dataRepo.GetProductPictureLinkPartsAsync(product.Id, "medium", "site")) // select images for product card
                     .Select(x => new PictureLinkPart
                     {
                         LinkPart = x.LinkPart.Trim(),
