@@ -38,16 +38,16 @@
         <GridCol Offset="1" Span="7">
             <Card>
                 <div>
-                    <label>Цена</label>
-                    <p>@Data.Price.ToString("N")</p>
-                        @if (IsProductToCartEnabled)
-                        {
-                            <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block OnClick=@(async () => await AddToCartButton_ClickHandlerAsync())>Add to cart</Button>
-                        }
-                        else
-                        {
-                            <Button Size="@ButtonSize.Large" Block OnClick=@(async () => await ShopcartButton_ClickHandlerAsync())>Shopcart</Button>
-                        }
+                    <span class="product-price">@Data.StrPrice</span>
+                    <Divider />
+                    @if (IsProductToCartEnabled)
+                    {
+                        <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block OnClick=@(async () => await AddToCartButton_ClickHandlerAsync())>Add to cart</Button>
+                    }
+                    else
+                    {
+                        <Button Size="@ButtonSize.Large" Block OnClick=@(async () => await ShopcartButton_ClickHandlerAsync())>Shopcart</Button>
+                    }
 
                 </div>
             </Card>       
