@@ -31,13 +31,14 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars
             CartState.OnChange += StateHasChanged;
             if (!CartService.IsLoginingNow)
             {
-                CartState.State = await CartService.GetShopCartListAsync(); //update shopcart state
+                await CartService.SyncShopCartAsync(); //update shopcart state
+                //CartState.State = await CartService.GetShopCartListAsync(); //update shopcart state
             }
         }
 
 
         private async Task Logout() {
-            await CartService.SetLocalShopcartFromServerShopCart();
+            await CartService.SetLocalShopCartFromServerShopCart();
             await IdentityService.LogoutAsync();
             Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
         }

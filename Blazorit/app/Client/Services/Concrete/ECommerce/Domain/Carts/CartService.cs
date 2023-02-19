@@ -45,7 +45,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
         /// </summary>
         /// <param name="cartItem"></param>
         /// <returns></returns>
-        public async Task<ShopCart> AddProductToCartAsync(CartItem cartItem)
+        public async Task AddProductToCartAsync(CartItem cartItem)
         {
             ShopCart resultCart = new();
 
@@ -85,7 +85,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
             }
 
             _cartState.State = resultCart;
-            return resultCart;
+            //return resultCart;
         }
 
 
@@ -93,14 +93,17 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
         /// Method receives shopcart
         /// </summary>
         /// <returns></returns>
-        public async Task<ShopCart> GetShopCartListAsync() 
+        public async Task SyncShopCartAsync() 
         {
+            ShopCart resultCart = new();
+
             bool isAuth = await _ident.IsUserAuthenticated();
 
             if (isAuth) // return from Server
             {                
                 var result = await _http.GetFromJsonOrDefaultAsync<ShopCart>($"{CartApi.CONTROLLER}/{CartApi.GET_SHOPCART}");
-                return result ?? new ShopCart();
+                resultCart = result ?? new ShopCart();
+                //return result ?? new ShopCart();
             } 
             else // return from local storage
             {
@@ -116,8 +119,11 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
                     localCart = new ShopCart();
                 }
 
-                return localCart ?? new ShopCart();
+                resultCart = localCart ?? new ShopCart();
+                //return localCart ?? new ShopCart();
             }
+
+            _cartState.State = resultCart;
         }
 
 
@@ -125,7 +131,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
         /// Method merges shopcarts from local cart to server cart
         /// </summary>
         /// <returns></returns>
-        public async Task<ShopCart> MergeLocalShopCartToServerShopCartAsync() 
+        public async Task MergeLocalShopCartToServerShopCartAsync() 
         {
             ShopCart localCart;
             try
@@ -143,7 +149,7 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
             var result = await _http.PostAndReadAsJsonOrDefaultAsync<ShopCart, ShopCart>($"{CartApi.CONTROLLER}/{CartApi.MERGE_SHOPCARTS}", localCart);
             await _localStorage.RemoveItemAsync(LOCAL_SHOPCART); //remove local shopcart            
             _cartState.State = result ?? new ShopCart();
-            return _cartState.State;
+            //return _cartState.State;
         }
 
 
@@ -151,13 +157,13 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
         /// Method sets local shopcart from server shopcart
         /// </summary>
         /// <returns></returns>
-        public async Task<ShopCart> SetLocalShopcartFromServerShopCart()
+        public async Task SetLocalShopCartFromServerShopCart()
         {
             var serverCart = await _http.GetFromJsonOrDefaultAsync<ShopCart>($"{CartApi.CONTROLLER}/{CartApi.GET_SHOPCART}");
             ShopCart localCart = serverCart ?? new ShopCart();
             await _localStorage.SetItemAsync(LOCAL_SHOPCART, localCart);
             _cartState.State = localCart;
-            return _cartState.State;
+            //return _cartState.State;
         }
     }
 }

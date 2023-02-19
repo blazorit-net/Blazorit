@@ -19,19 +19,19 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         /// </summary>
         /// <param name="cartItem"></param>
         /// <returns></returns>
-        Task<ShopCart> AddProductToCartAsync(CartItem cartItem);
+        Task AddProductToCartAsync(CartItem cartItem);
 
         /// <summary>
-        /// Method receives shopcart
+        /// Method synchronizes shopcart's view state
         /// </summary>
         /// <returns></returns>
-        Task<ShopCart> GetShopCartListAsync();
+        Task SyncShopCartAsync();
         
         /// <summary>
         /// Method merges shopcarts from local cart to server cart
         /// </summary>
         /// <returns></returns>
-        Task<ShopCart> MergeLocalShopCartToServerShopCartAsync();
+        Task MergeLocalShopCartToServerShopCartAsync();
 
         /// <summary>
         /// Method clears local storage shopcart
@@ -43,6 +43,6 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         /// Method sets local shopcart from server shopcart
         /// </summary>
         /// <returns></returns>
-        Task<ShopCart> SetLocalShopcartFromServerShopCart();
+        Task SetLocalShopCartFromServerShopCart();
     }
 }
