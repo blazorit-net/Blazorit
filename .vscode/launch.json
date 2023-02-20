@@ -11,7 +11,7 @@
         // you can change target framework here. So if your OS is Windows then file ending on: 'Blazorit.Server.dll', if Linux: 'Blazorit.Server'.
         // so, if you change your OS, you need (delete 'bin' and 'obj' folders) rebuild your app with command: 'dotnet build'.
         "program": "${workspaceFolder}/Blazorit/app/Server/bin/Debug/net7.0/Blazorit.Server.dll",
-        "url": "https://localhost:7285;http://localhost:5285",
+        "url": "https://localhost:7285",
         "browser": "chrome"
         
         ///////////////////////////////////////////////////////////////////////////////////////////////

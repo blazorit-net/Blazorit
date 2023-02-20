@@ -14,6 +14,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts {
         {
             ProductId = product.Id;
             Sku = product.Sku;
+            Category = product.Category;
             ProductLinkPart = product.LinkPart;            
             Name = product.Name;
             Price = product.Price;
