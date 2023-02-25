@@ -30,13 +30,14 @@ namespace Blazorit.ConsoleApp.Programs.ECommerce
             //var result = await _ecomRepo.AddProductToWishlistByWishlistIdAsync(3, "1211");
             //var result = await _ecomRepo.CreateOrderFromCart(1);
 
-            var service = new Blazorit.Core.Services.Concrete.ECommerce.Domain.Data.DataService(_ecomRepo);
+            //var service = new Blazorit.Core.Services.Concrete.ECommerce.Domain.Data.DataService(_ecomRepo);
 
             //var result = await service.GetMainHeaderMenu();
 
-            var serverService = new Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService(service);
-            var result = await serverService.GetMainHeaderMenu();
+            //var serverService = new Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService(service);
+            //var result = await serverService.GetMainHeaderMenu();
 
+            var result = await _ecomRepo.GetDeliveryMethods();
         }
     }
 }

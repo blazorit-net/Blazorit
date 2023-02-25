@@ -12,6 +12,8 @@ using Blazorit.Client.Services.Concrete.ECommerce.Domain.Data;
 using Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Client.Services.Concrete.ECommerce.Domain.Orders;
+using Blazorit.Client.Services.Abstract.ECommerce.Domain.Deliveries;
+using Blazorit.Client.Services.Concrete.ECommerce.Domain.Deliveries;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -30,6 +32,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IDeliveryService, DeliveryService>();
 builder.Services.AddScoped<Blazorit.Client.States.ECommerce.Domain.Carts.CartState>(); //Scoped state for shopcart components
 //################################################################
 //  ############################################################

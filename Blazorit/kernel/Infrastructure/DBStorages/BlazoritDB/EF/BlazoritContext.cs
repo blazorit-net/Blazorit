@@ -23,6 +23,12 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<CartShopcartList> CartShopcartLists { get; set; }
 
+        public virtual DbSet<DlyDeliveryAddress> DlyDeliveryAddresses { get; set; }
+
+        public virtual DbSet<DlyDeliveryMethod> DlyDeliveryMethods { get; set; }
+
+        public virtual DbSet<DlyUserDelivery> DlyUserDeliveries { get; set; }
+
         public virtual DbSet<OrdOrder> OrdOrders { get; set; }
 
         public virtual DbSet<OrdOrderList> OrdOrderLists { get; set; }
@@ -34,6 +40,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
         public virtual DbSet<ProdProduct> ProdProducts { get; set; }
 
         public virtual DbSet<VwCartShopcart> VwCartShopcarts { get; set; }
+
+        public virtual DbSet<VwDlyUserDelivery> VwDlyUserDeliveries { get; set; }
 
         public virtual DbSet<VwOrdOrder> VwOrdOrders { get; set; }
 
@@ -121,11 +129,77 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasConstraintName("fk__cart_shopcart_lists__prod_products");
             });
 
+            modelBuilder.Entity<DlyDeliveryAddress>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("dly_delivery_address_pkey");
+
+                entity.ToTable("dly_delivery_addresses", "dom");
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.Comment)
+                    .HasMaxLength(1000)
+                    .HasColumnName("comment");
+            });
+
+            modelBuilder.Entity<DlyDeliveryMethod>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("dly_delivery_methods_pkey");
+
+                entity.ToTable("dly_delivery_methods", "dom");
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.Method)
+                    .HasMaxLength(256)
+                    .HasColumnName("method");
+            });
+
+            modelBuilder.Entity<DlyUserDelivery>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("dly_user_deliveries_pkey");
+
+                entity.ToTable("dly_user_deliveries", "dom");
+
+                entity.HasIndex(e => new { e.UserId, e.MethodId, e.AddressId }, "UQ__dly_user_deliveries").IsUnique();
+
+                entity.HasIndex(e => e.AddressId, "fki_FK__dly_user_deliveries__dly_delivery_addresses");
+
+                entity.HasIndex(e => e.MethodId, "fki_FK__dly_user_deliveries__dly_delivery_methods");
+
+                entity.HasIndex(e => e.UserId, "fki_FK__dly_user_deliveries__ident_users");
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.AddressId).HasColumnName("address_id");
+                entity.Property(e => e.DateTimeCreated)
+                    .HasDefaultValueSql("now()")
+                    .HasColumnName("date_time_created");
+                entity.Property(e => e.MethodId).HasColumnName("method_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.Address).WithMany(p => p.DlyUserDeliveries)
+                    .HasForeignKey(d => d.AddressId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__dly_user_deliveries__dly_delivery_addresses");
+
+                entity.HasOne(d => d.Method).WithMany(p => p.DlyUserDeliveries)
+                    .HasForeignKey(d => d.MethodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__dly_user_deliveries__dly_delivery_methods");
+            });
+
             modelBuilder.Entity<OrdOrder>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("ord_orders_pkey");
 
                 entity.ToTable("ord_orders", "dom");
+
+                entity.HasIndex(e => e.DeliveryId, "fki_fk__ord_orders__dly_user_deliveries");
 
                 entity.HasIndex(e => e.UserId, "fki_fk__ord_orders__users__id");
 
@@ -135,7 +209,13 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.DateTimeCreate)
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_create");
+                entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.Delivery).WithMany(p => p.OrdOrders)
+                    .HasForeignKey(d => d.DeliveryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk__ord_orders__dly_user_deliveries");
             });
 
             modelBuilder.Entity<OrdOrderList>(entity =>
@@ -302,6 +382,24 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
+            modelBuilder.Entity<VwDlyUserDelivery>(entity =>
+            {
+                entity
+                    .HasNoKey()
+                    .ToView("vw_dly_user_deliveries", "dom");
+
+                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.Comment)
+                    .HasMaxLength(1000)
+                    .HasColumnName("comment");
+                entity.Property(e => e.DateTimeCreated).HasColumnName("date_time_created");
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Method)
+                    .HasMaxLength(256)
+                    .HasColumnName("method");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+            });
+
             modelBuilder.Entity<VwOrdOrder>(entity =>
             {
                 entity
@@ -313,6 +411,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasColumnName("curr");
                 entity.Property(e => e.DateCreate).HasColumnName("date_create");
                 entity.Property(e => e.DateTimeCreate).HasColumnName("date_time_create");
+                entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .HasColumnName("name");

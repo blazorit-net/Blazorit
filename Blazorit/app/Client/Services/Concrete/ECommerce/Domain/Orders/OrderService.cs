@@ -12,22 +12,19 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Orders
         private readonly HttpClient _http;
         private readonly IIdentityService _ident;
         private readonly ICartService _cartService;
-        //private readonly CartState _cartState;
 
         public OrderService(HttpClient http, IIdentityService identService, ICartService cartService) 
         {
             _http = http;
             _ident = identService;
-            _cartService = cartService;
-            //_cartState = cartState;            
+            _cartService = cartService;         
         }
 
 
         public async Task CreateOrderFromCart()
         {
             var result = await _http.PostAndReadAsJsonOrDefaultAsync<bool>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER}");
-            await _cartService.SyncShopCartAsync();
-            //_cartState.State = await _cartService.GetShopCartListAsync();
+            await _cartService.SyncShopCartAsync(); // sync shopcart view state from kernel state
         }
 
 

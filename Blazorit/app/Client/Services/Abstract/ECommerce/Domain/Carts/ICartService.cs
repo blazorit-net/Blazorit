@@ -22,7 +22,7 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         Task AddProductToCartAsync(CartItem cartItem);
 
         /// <summary>
-        /// Method synchronizes shopcart's view state
+        /// Method synchronizes shopcart's view state from kernel state
         /// </summary>
         /// <returns></returns>
         Task SyncShopCartAsync();

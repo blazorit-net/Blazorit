@@ -1,0 +1,45 @@
+﻿@attribute [Route($"{ConstPage.DELIVERY}")] 
+
+@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+@using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries
+@using Microsoft.AspNetCore.Components
+
+@implements IBlazoritComponent
+
+<PageTitle>Delivery</PageTitle>
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-delivery-page"))">
+    <h1>Test delivery</h1>
+    <GridRow>
+        <GridCol>
+            <h4>Select delivery method</h4>
+            <Select TItem="DeliveryMethod"
+                    TItemValue="long"
+                    DataSource="@deliveryMethods"
+                    @bind-Value="@selectedMethodId"		            
+                    ValueName="@nameof(DeliveryMethod.Id)"
+                    LabelName="@nameof(DeliveryMethod.Method)"     
+                    Placeholder="Choose delivery method"
+                    OnSelectedItemChanged="@(async (method) => await DeliveryMethod_SelectedItemChangedHandlerAsync(method))">
+            </Select>
+        </GridCol>
+    </GridRow>
+    <GridRow>
+        <GridCol>
+            <h4>Select delivery address</h4>
+            <Select TItem="DeliveryAddress"
+                    TItemValue="long"
+                    DataSource="@deliveryAddresses"
+                    @bind-Value="@selectedAddressId"
+                    ValueName="@nameof(DeliveryAddress.Id)"
+                    LabelName="@nameof(DeliveryAddress.Address)"
+                    Placeholder="Choose delivery address">
+            </Select>
+        </GridCol>
+    </GridRow>
+    <GridRow>
+        <GridCol>
+            <Button>Make the order</Button>
+        </GridCol>
+    </GridRow>
+</div>

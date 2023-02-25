@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System.Collections;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 {
@@ -589,5 +590,62 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
             return await GetShopCartListAsync(userId);
         }
+
+
+        /// <summary>
+        /// Method returns all delivery methods
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods()
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                return await context.DlyDeliveryMethods.Select(x => new DeliveryMethod
+                {
+                     Id = x.Id,
+                     Method = x.Method
+                })
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryMethods)} of the {nameof(ECommerceRepository)} repository");               
+            }
+
+            return new List<DeliveryMethod>();
+        }
+
+
+        /// <summary>
+        /// Method returns DeliveryAddresses for choosen delivery method for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                return await context.DlyUserDeliveries
+                    .Where(x => x.UserId == userId && x.MethodId == methodId)
+                    .Select(x => x.Address)
+                    .Select(x => new DeliveryAddress
+                    {
+                        Address = x.Address,
+                        Id = x.Id,
+                        Comment = x.Comment
+                    })
+                    .ToListAsync();                    
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryAddresses)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return new List<DeliveryAddress>();
+        }
+
     }
 }

@@ -31,8 +31,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars
             CartState.OnChange += StateHasChanged;
             if (!CartService.IsLoginingNow)
             {
-                await CartService.SyncShopCartAsync(); //update shopcart state
-                //CartState.State = await CartService.GetShopCartListAsync(); //update shopcart state
+                await CartService.SyncShopCartAsync(); //update shopcart view state
             }
         }
 

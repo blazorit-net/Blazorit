@@ -9,6 +9,8 @@ public partial class VwOrdOrder
 
     public long? UserId { get; set; }
 
+    public long? DeliveryId { get; set; }
+
     public DateOnly? DateCreate { get; set; }
 
     public DateTime? DateTimeCreate { get; set; }

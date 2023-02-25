@@ -1,4 +1,5 @@
 ﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
@@ -107,7 +108,6 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <returns></returns>
         Task<IEnumerable<PictureLinkPart>> GetProductPictureLinkPartsAsync(long productId, string pic_size, string site_location);
 
-
         /// <summary>
         /// Method returns all user's items from shop cart 
         /// </summary>
@@ -122,5 +122,19 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="sourceCart"></param>
         /// <returns>Result cart</returns>
         Task<IEnumerable<VwShopcart>> UpdateShopCart(long userId, IEnumerable<VwShopcart> sourceCart);
+
+        /// <summary>
+        /// Method returns all delivery methods
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods();
+
+        /// <summary>
+        /// Method returns DeliveryAddresses for choosen delivery method for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId);
     }
 }

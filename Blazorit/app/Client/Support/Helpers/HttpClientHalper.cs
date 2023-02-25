@@ -20,8 +20,13 @@ namespace Blazorit.Client.Support.Helpers {
         {
             try {
                 return await client.GetFromJsonAsync<TValue>(requestUri, cancellationToken);                 
-            } catch {
-                //Console.WriteLine($"Blazorit: Request error: '{requestUri ?? string.Empty}'. default returned.");                
+            } catch (Exception ex) {
+#if DEBUG
+                Console.WriteLine($"Blazorit: Request error: '{requestUri ?? string.Empty}'. default returned.");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.InnerException != null ? ex.InnerException.Message: string.Empty);
+#endif
+                               
             }
 
             return default(TValue);
