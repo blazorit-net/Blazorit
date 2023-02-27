@@ -1,0 +1,60 @@
+﻿@using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-delivery"))">
+    <GridRow>
+        <GridCol>
+            <h4>Select delivery method</h4>
+            <Select TItem="DeliveryMethod"
+                    TItemValue="DeliveryMethod"
+                    DataSource="@deliveryMethods"
+                    @bind-Value="@SelectedMethod"
+                    LabelName="@nameof(DeliveryMethod.Method)"
+                    Placeholder="Choose delivery method"
+                    OnSelectedItemChanged="@(async (method) => await DeliveryMethod_SelectedItemChangedHandlerAsync(method))">
+            </Select>
+        </GridCol>
+    </GridRow>
+
+    @if (SelectedMethod.EnterAddress)
+    {
+        <Divider />
+        <GridRow>
+            <GridCol>
+                <RadioGroup @bind-Value="@choosenDeliveryAddress">
+                    <Radio Value="1">Choose delivery address</Radio>
+                    <Radio Value="2">New delivery address</Radio>
+                </RadioGroup>
+            </GridCol>
+        </GridRow>
+    }
+
+    @if (choosenDeliveryAddress == 1 || !SelectedMethod.EnterAddress)
+    {
+        <Divider />
+        <GridRow>
+            <GridCol>
+                <h4>Select delivery address</h4>
+                <Select TItem="DeliveryAddress"
+                    TItemValue="DeliveryAddress"
+                    DataSource="@deliveryAddresses"
+                    @bind-Value="@SelectedAddress"
+                    LabelName="@nameof(SelectedAddress.Address)"
+                    Placeholder="Choose delivery address">
+                </Select>
+            </GridCol>
+        </GridRow>
+    }
+    else if (choosenDeliveryAddress == 2 && SelectedMethod.EnterAddress)
+    {
+        <Divider />
+        <GridRow>
+            <GridCol Span=12>
+                <TextArea ShowCount MaxLength=200 />
+            </GridCol>
+            <GridCol Span="12">
+                <Button Block OnClick="@(async (_) => await UseNewAddress_ButtonClickAsync())">Use this address</Button>
+            </GridCol>
+        </GridRow>        
+    }
+</div>

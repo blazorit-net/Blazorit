@@ -13,5 +13,14 @@ namespace Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries
         /// <param name="methodId"></param>
         /// <returns></returns>
         Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId);
+
+        /// <summary>
+        /// Method adds new delivery address for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address);
     }
 }

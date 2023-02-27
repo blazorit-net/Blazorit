@@ -121,13 +121,13 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="userId"></param>
         /// <param name="sourceCart"></param>
         /// <returns>Result cart</returns>
-        Task<IEnumerable<VwShopcart>> UpdateShopCart(long userId, IEnumerable<VwShopcart> sourceCart);
+        Task<IEnumerable<VwShopcart>> UpdateShopCartAsync(long userId, IEnumerable<VwShopcart> sourceCart);
 
         /// <summary>
         /// Method returns all delivery methods
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods();
+        Task<IEnumerable<DeliveryMethod>> GetDeliveryMethodsAsync();
 
         /// <summary>
         /// Method returns DeliveryAddresses for choosen delivery method for user
@@ -135,6 +135,15 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
         /// <returns></returns>
-        Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId);
+        Task<IEnumerable<DeliveryAddress>> GetDeliveryAddressesAsync(long userId, long methodId);
+
+        /// <summary>
+        /// Method adds new delivery address for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address);
     }
 }

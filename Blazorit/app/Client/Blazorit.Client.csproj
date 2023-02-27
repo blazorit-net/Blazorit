@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\ECommerce\Domain\Carts\" />
     <Folder Include="wwwroot\images\logo\" />
   </ItemGroup>
 </Project>

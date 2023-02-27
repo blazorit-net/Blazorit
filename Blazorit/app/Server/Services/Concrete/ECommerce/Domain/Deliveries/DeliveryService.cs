@@ -28,5 +28,18 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries
             var result = await _deliveryService.GetDeliveryAddresses(userId, methodId);
             return result;
         }
+
+        /// <summary>
+        /// Method adds new delivery address for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address)
+        {
+            var result = await _deliveryService.AddDeliveryAddressAsync(userId, methodId, address);
+            return result;
+        }
     }
 }

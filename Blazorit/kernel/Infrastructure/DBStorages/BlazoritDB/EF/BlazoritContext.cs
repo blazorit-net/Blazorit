@@ -153,6 +153,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
+                entity.Property(e => e.EnterAddress).HasColumnName("enter_address");
                 entity.Property(e => e.Method)
                     .HasMaxLength(256)
                     .HasColumnName("method");

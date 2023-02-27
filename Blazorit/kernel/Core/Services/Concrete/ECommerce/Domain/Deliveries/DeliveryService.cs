@@ -21,7 +21,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
 
         public async Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods()
         {
-            IEnumerable<DeliveryMethod> result = await _dataRepo.GetDeliveryMethods();
+            IEnumerable<DeliveryMethod> result = await _dataRepo.GetDeliveryMethodsAsync();
             return result;
         }
 
@@ -32,7 +32,27 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
         /// <returns></returns>
         public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId)
         {
-            IEnumerable<DeliveryAddress> result = await _dataRepo.GetDeliveryAddresses(userId, methodId);
+            IEnumerable<DeliveryAddress> result = await _dataRepo.GetDeliveryAddressesAsync(userId, methodId);
+            return result;
+        }
+
+        /// <summary>
+        /// Method adds new delivery address for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address)
+        {
+            address = address.Trim();
+
+            if (address == string.Empty)
+            {
+                return Enumerable.Empty<DeliveryAddress>();
+            }
+
+            IEnumerable<DeliveryAddress> result = await _dataRepo.AddDeliveryAddressAsync(userId, methodId, address);
             return result;
         }
     }

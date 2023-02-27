@@ -37,7 +37,7 @@ namespace Blazorit.ConsoleApp.Programs.ECommerce
             //var serverService = new Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService(service);
             //var result = await serverService.GetMainHeaderMenu();
 
-            var result = await _ecomRepo.GetDeliveryMethods();
+            var result = await _ecomRepo.GetDeliveryMethodsAsync();
         }
     }
 }

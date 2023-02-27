@@ -12,6 +12,6 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
 
         public string Address { get; set; } = string.Empty;
 
-        public string? Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
     }
 }

@@ -98,7 +98,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
                   DateTimeCreated = x.DateTimeCreated
             }).ToList();
 
-            var repoResult = await _dataRepo.UpdateShopCart(userId, fullOuterJoin);
+            var repoResult = await _dataRepo.UpdateShopCartAsync(userId, fullOuterJoin);
             IEnumerable<CartItem> result = await GetCartItemsFromShopcartsAsync(repoResult);
             return result.Count() == 0 ? null : new ShopCart(result);
         }

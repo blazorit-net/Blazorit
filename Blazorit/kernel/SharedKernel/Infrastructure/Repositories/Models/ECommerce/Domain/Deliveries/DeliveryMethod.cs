@@ -13,5 +13,7 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
         public long Id { get; set; }
 
         public string Method { get; set; } = string.Empty;
+
+        public bool EnterAddress { get; set; }
     }
 }

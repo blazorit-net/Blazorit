@@ -556,7 +556,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="userId"></param>
         /// <param name="sourceCart"></param>
         /// <returns>Result cart</returns>
-        public async Task<IEnumerable<VwShopcart>> UpdateShopCart(long userId, IEnumerable<VwShopcart> sourceCart) {
+        public async Task<IEnumerable<VwShopcart>> UpdateShopCartAsync(long userId, IEnumerable<VwShopcart> sourceCart) {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
@@ -585,7 +585,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                 await context.SaveChangesAsync();              
             } catch (Exception ex) {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(UpdateShopCart)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(UpdateShopCartAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 
             return await GetShopCartListAsync(userId);
@@ -596,7 +596,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// Method returns all delivery methods
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods()
+        public async Task<IEnumerable<DeliveryMethod>> GetDeliveryMethodsAsync()
         {
             try
             {
@@ -604,13 +604,14 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 return await context.DlyDeliveryMethods.Select(x => new DeliveryMethod
                 {
                      Id = x.Id,
-                     Method = x.Method
+                     Method = x.Method,
+                     EnterAddress = x.EnterAddress
                 })
                 .ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryMethods)} of the {nameof(ECommerceRepository)} repository");               
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryMethodsAsync)} of the {nameof(ECommerceRepository)} repository");               
             }
 
             return new List<DeliveryMethod>();
@@ -623,7 +624,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId)
+        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddressesAsync(long userId, long methodId)
         {
             try
             {
@@ -641,7 +642,55 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryAddresses)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryAddressesAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return new List<DeliveryAddress>();
+        }
+
+        /// <summary>
+        /// Method adds new delivery address for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                DlyDeliveryAddress newAddress = new()
+                {
+                    Address = address
+                };
+
+                await context.DlyDeliveryAddresses.AddAsync(newAddress);
+                await context.DlyUserDeliveries
+                    .AddAsync(new DlyUserDelivery
+                    {
+                        UserId = userId,
+                        Address = newAddress,
+                        MethodId = methodId
+                    });
+
+                await context.SaveChangesAsync();
+                
+                return await context.DlyUserDeliveries
+                    .Where(x => x.UserId == userId && x.MethodId == methodId)
+                    .Select(x => x.Address)
+                    .Select(x => new DeliveryAddress
+                    {
+                        Address = x.Address,
+                        Id = x.Id,
+                        Comment = x.Comment ?? string.Empty
+                    })
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddDeliveryAddressAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 
             return new List<DeliveryAddress>();

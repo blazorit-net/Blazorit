@@ -9,5 +9,7 @@ public partial class DlyDeliveryMethod
 
     public string Method { get; set; } = null!;
 
+    public bool EnterAddress { get; set; }
+
     public virtual ICollection<DlyUserDelivery> DlyUserDeliveries { get; } = new List<DlyUserDelivery>();
 }

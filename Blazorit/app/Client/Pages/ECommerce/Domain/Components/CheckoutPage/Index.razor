@@ -1,0 +1,39 @@
+﻿@attribute [Route($"{ConstPage.DELIVERY}")] 
+
+@using Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
+@using Blazorit.Client.Pages.ECommerce.Domain.Components.Payments
+@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+@using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries
+@using Microsoft.AspNetCore.Components
+
+@implements IBlazoritComponent
+
+<PageTitle>Delivery</PageTitle>
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-checkout-page"))">
+    <h1>Checkout</h1>
+
+    <GridRow>
+        <GridCol Span="8">
+            <Card Title="Delivery">
+                <Body>
+                    <Delivery @bind-SelectedMethod="@selectedDeliveryMethod" />
+                </Body>                
+            </Card>
+        </GridCol>
+        <GridCol Span="8" Offset="1">
+            <Card Title="Payment">
+                <Body>
+                    <Payment />
+                </Body>
+            </Card>
+        </GridCol>
+        <GridCol Span="6" Offset="1">
+            <GridRow>
+                <GridCol>
+                    <Button Type="@ButtonType.Primary" Block>Make the order</Button>
+                </GridCol>
+            </GridRow>
+        </GridCol>
+    </GridRow>    
+</div>
