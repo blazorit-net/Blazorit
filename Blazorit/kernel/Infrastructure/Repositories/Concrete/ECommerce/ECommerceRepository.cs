@@ -636,7 +636,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     {
                         Address = x.Address,
                         Id = x.Id,
-                        Comment = x.Comment
+                        Comment = x.Comment ?? string.Empty
                     })
                     .ToListAsync();                    
             }
@@ -684,7 +684,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     {
                         Address = x.Address,
                         Id = x.Id,
-                        Comment = x.Comment ?? string.Empty
+                        Comment = x.Comment ?? string.Empty,
+                        DateTimeCreated = x.DateTimeCreated
                     })
                     .ToListAsync();
             }
@@ -696,5 +697,34 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             return new List<DeliveryAddress>();
         }
 
+
+        /// <summary>
+        /// Method returns common DeliveryAddresses for choosen delivery method
+        /// </summary>
+        /// <param name="methodId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<DeliveryAddress>> GetCommonDeliveryAddressesAsync(long methodId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                return await context.DlyMethodsAddresses
+                    .Where(x => x.MethodId == methodId)
+                    .Select(x => x.Address)
+                    .Select(x => new DeliveryAddress
+                    {
+                        Address = x.Address,
+                        Id = x.Id,
+                        Comment = x.Comment ?? string.Empty
+                    })
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetCommonDeliveryAddressesAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return new List<DeliveryAddress>();
+        }
     }
 }

@@ -30,9 +30,19 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId)
+        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, DeliveryMethod method)
         {
-            IEnumerable<DeliveryAddress> result = await _dataRepo.GetDeliveryAddressesAsync(userId, methodId);
+            IEnumerable<DeliveryAddress> result;
+            
+            if (method.EnterAddress)
+            {
+                result = await _dataRepo.GetDeliveryAddressesAsync(userId, method.Id);
+            }
+            else
+            {
+                result = await _dataRepo.GetCommonDeliveryAddressesAsync(method.Id);
+            }
+            
             return result;
         }
 
@@ -45,15 +55,21 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
         /// <returns></returns>
         public async Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address)
         {
-            address = address.Trim();
-
+            address = address.Trim();           
+            
             if (address == string.Empty)
             {
-                return Enumerable.Empty<DeliveryAddress>();
-            }
+                return (await _dataRepo.GetDeliveryAddressesAsync(userId, methodId))
+                    .OrderBy(x => x.DateTimeCreated);
+            } 
+            else if (address.Length > 200)
+            {
+                address = address.Substring(0, 200);
+            }            
 
             IEnumerable<DeliveryAddress> result = await _dataRepo.AddDeliveryAddressAsync(userId, methodId, address);
-            return result;
+                
+            return result.OrderBy(x => x.DateTimeCreated);
         }
     }
 }

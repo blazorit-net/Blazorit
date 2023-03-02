@@ -145,5 +145,12 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="address"></param>
         /// <returns></returns>
         Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address);
+
+        /// <summary>
+        /// Method returns common DeliveryAddresses for choosen delivery method
+        /// </summary>
+        /// <param name="methodId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<DeliveryAddress>> GetCommonDeliveryAddressesAsync(long methodId);
     }
 }

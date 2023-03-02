@@ -1,4 +1,5 @@
-﻿@using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+﻿@using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries
+@using Blazorit.Client.Models.ECommerce.Domain.Deliveries
 @implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-delivery"))">
@@ -16,45 +17,57 @@
         </GridCol>
     </GridRow>
 
-    @if (SelectedMethod.EnterAddress)
+    @if (SelectedMethod.EnterAddress && deliveryAddresses.Count() > 0)
     {
         <Divider />
         <GridRow>
             <GridCol>
-                <RadioGroup @bind-Value="@choosenDeliveryAddress">
-                    <Radio Value="1">Choose delivery address</Radio>
-                    <Radio Value="2">New delivery address</Radio>
+                <RadioGroup @bind-Value="@choosenDeliveryAddressRadio">
+                    <Radio Value="@DeliveryAddressRadio.ExistingDeliveryAddresses">
+                        Your delivery addresses
+                    </Radio>
+                    <Radio Value="@DeliveryAddressRadio.NewDeliveryAddresses">
+                        New delivery address
+                    </Radio>
                 </RadioGroup>
             </GridCol>
         </GridRow>
     }
 
-    @if (choosenDeliveryAddress == 1 || !SelectedMethod.EnterAddress)
+    @if (choosenDeliveryAddressRadio == DeliveryAddressRadio.ExistingDeliveryAddresses || !SelectedMethod.EnterAddress)
     {
         <Divider />
         <GridRow>
             <GridCol>
-                <h4>Select delivery address</h4>
                 <Select TItem="DeliveryAddress"
                     TItemValue="DeliveryAddress"
-                    DataSource="@deliveryAddresses"
+                    DataSource="@deliveryAddresses"                    
                     @bind-Value="@SelectedAddress"
                     LabelName="@nameof(SelectedAddress.Address)"
-                    Placeholder="Choose delivery address">
+                    Placeholder="Choose delivery address"
+                    >
                 </Select>
             </GridCol>
         </GridRow>
+        <GridRow Style="margin-top:2em;">
+            <GridCol Span="24">
+                <h4>Selected address</h4>
+                <TextArea ReadOnly @bind-Value="@SelectedAddress.Address" AutoSize />
+            </GridCol>
+        </GridRow>
     }
-    else if (choosenDeliveryAddress == 2 && SelectedMethod.EnterAddress)
+    else if (choosenDeliveryAddressRadio == DeliveryAddressRadio.NewDeliveryAddresses && SelectedMethod.EnterAddress)
     {
         <Divider />
         <GridRow>
-            <GridCol Span=12>
-                <TextArea ShowCount MaxLength=200 />
+            <GridCol Span=24>
+                <TextArea ShowCount MaxLength="200" @bind-Value="@deliveryTextArea" Placeholder="Enter your new address"/>
             </GridCol>
-            <GridCol Span="12">
+        </GridRow> 
+        <GridRow>
+            <GridCol Span="24">
                 <Button Block OnClick="@(async (_) => await UseNewAddress_ButtonClickAsync())">Use this address</Button>
             </GridCol>
-        </GridRow>        
+        </GridRow>
     }
 </div>

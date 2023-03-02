@@ -24,9 +24,9 @@ namespace Blazorit.Client.Support.Helpers {
 #if DEBUG
                 Console.WriteLine($"Blazorit: Request error: '{requestUri ?? string.Empty}'. default returned.");
                 Console.WriteLine(ex.ToString());
-                Console.WriteLine(ex.InnerException != null ? ex.InnerException.Message: string.Empty);
+                Console.WriteLine(ex.InnerException?.Message ?? string.Empty);
 #endif
-                               
+
             }
 
             return default(TValue);

@@ -23,9 +23,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, long methodId)
+        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long userId, DeliveryMethod method)
         {
-            var result = await _deliveryService.GetDeliveryAddresses(userId, methodId);
+            var result = await _deliveryService.GetDeliveryAddresses(userId, method);
             return result;
         }
 

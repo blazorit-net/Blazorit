@@ -22,6 +22,11 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Deliveries
 
         public async Task<IEnumerable<DeliveryMethod>> GetDeliveryMethods()
         {
+            bool isAuth = await _ident.IsUserAuthenticated();
+            if (!isAuth) {
+                return Enumerable.Empty<DeliveryMethod>();
+            }
+
             var result = await _http.GetFromJsonOrDefaultAsync<IEnumerable<DeliveryMethod>>($"{DeliveryApi.CONTROLLER}/{DeliveryApi.GET_METHODS}");
             return result ?? new List<DeliveryMethod>();
         }
@@ -32,22 +37,33 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Deliveries
         /// </summary>
         /// <param name="methodId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(long methodId)
+        public async Task<IEnumerable<DeliveryAddress>> GetDeliveryAddresses(DeliveryMethod method)
         {
-            var result = await _http.GetFromJsonOrDefaultAsync<IEnumerable<DeliveryAddress>>($"{DeliveryApi.CONTROLLER}/{DeliveryApi.GET_ADDRESSES}/{methodId}");
+            bool isAuth = await _ident.IsUserAuthenticated();
+            if (!isAuth)
+            {
+                return Enumerable.Empty<DeliveryAddress>();
+            }
+
+            var result = await _http.GetFromJsonOrDefaultAsync<IEnumerable<DeliveryAddress>>($"{DeliveryApi.CONTROLLER}/{DeliveryApi.GET_ADDRESSES}/{method.Id}/{method.EnterAddress}");
             return result ?? new List<DeliveryAddress>();
         }
 
         /// <summary>
         /// Method adds new delivery address for user
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="methodId"></param>
+        /// <param name="method"></param>
         /// <param name="address"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(DeliveryMethod method, DeliveryAddress address)
+        public async Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(DeliveryMethod method, string address)
         {
-            var methodAddress = new MethodAddress { MethodId = method.Id, Address = address.Address };
+            bool isAuth = await _ident.IsUserAuthenticated();
+            if (!isAuth)
+            {
+                return Enumerable.Empty<DeliveryAddress>();
+            }
+
+            MethodAddress methodAddress = new() { MethodId = method.Id, Address = address };
 
             var result = await _http.PostAndReadAsJsonOrDefaultAsync<MethodAddress, IEnumerable<DeliveryAddress>>($"{DeliveryApi.CONTROLLER}/{DeliveryApi.ADD_ADDRESS}", methodAddress);
             return result ?? new List<DeliveryAddress>();

@@ -11,5 +11,7 @@ public partial class DlyDeliveryMethod
 
     public bool EnterAddress { get; set; }
 
+    public virtual ICollection<DlyMethodsAddress> DlyMethodsAddresses { get; } = new List<DlyMethodsAddress>();
+
     public virtual ICollection<DlyUserDelivery> DlyUserDeliveries { get; } = new List<DlyUserDelivery>();
 }

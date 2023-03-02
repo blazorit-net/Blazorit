@@ -1,4 +1,4 @@
-﻿namespace Blazorit.Client.Support.Comps {
+﻿namespace Blazorit.Client.Support.Components {
     /// <summary>
     /// Support methods container for components 
     /// </summary>

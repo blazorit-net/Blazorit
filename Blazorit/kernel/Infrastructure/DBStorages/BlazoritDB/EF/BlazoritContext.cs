@@ -27,6 +27,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<DlyDeliveryMethod> DlyDeliveryMethods { get; set; }
 
+        public virtual DbSet<DlyMethodsAddress> DlyMethodsAddresses { get; set; }
+
         public virtual DbSet<DlyUserDelivery> DlyUserDeliveries { get; set; }
 
         public virtual DbSet<OrdOrder> OrdOrders { get; set; }
@@ -138,10 +140,15 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
-                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.Address)
+                    .HasMaxLength(200)
+                    .HasColumnName("address");
                 entity.Property(e => e.Comment)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(300)
                     .HasColumnName("comment");
+                entity.Property(e => e.DateTimeCreated)
+                    .HasDefaultValueSql("now()")
+                    .HasColumnName("date_time_created");
             });
 
             modelBuilder.Entity<DlyDeliveryMethod>(entity =>
@@ -157,6 +164,33 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.Method)
                     .HasMaxLength(256)
                     .HasColumnName("method");
+            });
+
+            modelBuilder.Entity<DlyMethodsAddress>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("dly_methods_addresses_pkey");
+
+                entity.ToTable("dly_methods_addresses", "dom", tb => tb.HasComment("The table is for shipping methods where the address offered by the system is common to all users"));
+
+                entity.HasIndex(e => new { e.MethodId, e.AddressId }, "UK__dly_methods_addresses").IsUnique();
+
+                entity.HasIndex(e => e.AddressId, "fki_FK__dly_methods_addresses__dly_delivery_addresses");
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.AddressId).HasColumnName("address_id");
+                entity.Property(e => e.MethodId).HasColumnName("method_id");
+
+                entity.HasOne(d => d.Address).WithMany(p => p.DlyMethodsAddresses)
+                    .HasForeignKey(d => d.AddressId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__dly_methods_addresses__dly_delivery_addresses");
+
+                entity.HasOne(d => d.Method).WithMany(p => p.DlyMethodsAddresses)
+                    .HasForeignKey(d => d.MethodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__dly_methods_addresses__dly_delivery_methods");
             });
 
             modelBuilder.Entity<DlyUserDelivery>(entity =>
@@ -383,15 +417,37 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
+            modelBuilder.Entity<VwDlyMethodsAddress>(entity =>
+            {
+                entity
+                    .HasNoKey()
+                    .ToView("vw_dly_methods_addresses", "dom");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(200)
+                    .HasColumnName("address");
+                entity.Property(e => e.AddressId).HasColumnName("address_id");
+                entity.Property(e => e.Comment)
+                    .HasMaxLength(300)
+                    .HasColumnName("comment");
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Method)
+                    .HasMaxLength(256)
+                    .HasColumnName("method");
+                entity.Property(e => e.MethodId).HasColumnName("method_id");
+            });
+
             modelBuilder.Entity<VwDlyUserDelivery>(entity =>
             {
                 entity
                     .HasNoKey()
                     .ToView("vw_dly_user_deliveries", "dom");
 
-                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.Address)
+                    .HasMaxLength(200)
+                    .HasColumnName("address");
                 entity.Property(e => e.Comment)
-                    .HasMaxLength(1000)
+                    .HasMaxLength(300)
                     .HasColumnName("comment");
                 entity.Property(e => e.DateTimeCreated).HasColumnName("date_time_created");
                 entity.Property(e => e.Id).HasColumnName("id");

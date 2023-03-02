@@ -26,11 +26,5 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Orders
             var result = await _http.PostAndReadAsJsonOrDefaultAsync<bool>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER}");
             await _cartService.SyncShopCartAsync(); // sync shopcart view state from kernel state
         }
-
-
-        public async Task GetOrders()
-        {
-
-        }
     }
 }

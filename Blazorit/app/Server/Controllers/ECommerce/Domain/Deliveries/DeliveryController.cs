@@ -37,12 +37,12 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Deliveries
         }
 
 
-        [HttpGet($"{DeliveryApi.GET_ADDRESSES}/{{methodId}}")]
-        public async Task<ActionResult<IEnumerable<DeliveryAddress>>> GetDeliveryAddresses(long methodId)
+        [HttpGet($"{DeliveryApi.GET_ADDRESSES}/{{methodId}}/{{enterAddress}}")]
+        public async Task<ActionResult<IEnumerable<DeliveryAddress>>> GetDeliveryAddresses(long methodId, bool enterAddress)
         {
             long userId = long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out long id) ? id : long.MinValue;
 
-            IEnumerable<DeliveryAddress> result = await _deliveryService.GetDeliveryAddresses(userId, methodId);
+            IEnumerable<DeliveryAddress> result = await _deliveryService.GetDeliveryAddresses(userId, new DeliveryMethod { Id = methodId, EnterAddress = enterAddress});
 
             if (result.Count() == 0)
             {
