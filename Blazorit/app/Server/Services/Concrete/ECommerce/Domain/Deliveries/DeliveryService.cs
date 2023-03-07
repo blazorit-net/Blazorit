@@ -1,4 +1,5 @@
 ﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries
@@ -39,6 +40,19 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries
         public async Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address)
         {
             var result = await _deliveryService.AddDeliveryAddressAsync(userId, methodId, address);
+            return result;
+        }
+
+        /// <summary>
+        /// Method returns delivery cost
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public async Task<DeliveryCost> GetDeliveryCost(long userId, long methodId, string address)
+        {
+            var result = await _deliveryService.GetDeliveryCost(userId, methodId, address);
             return result;
         }
     }

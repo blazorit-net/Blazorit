@@ -39,13 +39,14 @@
         <Divider />
         <GridRow>
             <GridCol>
-                <Select TItem="DeliveryAddress"
+                <Select @ref="@SelectDeliveryAddressRef"
+                    TItem="DeliveryAddress"
                     TItemValue="DeliveryAddress"
                     DataSource="@deliveryAddresses"                    
                     @bind-Value="@SelectedAddress"
                     LabelName="@nameof(SelectedAddress.Address)"
                     Placeholder="Choose delivery address"
-                    >
+                    OnSelectedItemChanged="@(async (item) => await DeliveryAddressesSelect_SelectedItemChangedHandler(item))" >
                 </Select>
             </GridCol>
         </GridRow>
@@ -70,4 +71,11 @@
             </GridCol>
         </GridRow>
     }
+
+    <Divider />
+    <GridRow Justify="space-between">
+        <GridCol Flex=@("none")>
+            <Text Mark>Shipping cost: @deliveryCost.StrTotalCost</Text>
+        </GridCol>
+    </GridRow>
 </div>

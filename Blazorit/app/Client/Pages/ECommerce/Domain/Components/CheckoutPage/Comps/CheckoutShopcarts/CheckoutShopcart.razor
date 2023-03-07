@@ -1,0 +1,17 @@
+﻿@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-checkout-shopcart"))">
+</div>
+
+        <AntList DataSource="@CartState.State.CartList">
+            <ChildContent Context="item">
+                <ListItem NoFlex>
+                <CheckoutShopcartItem Item="@item" />
+
+                </ListItem>
+            </ChildContent>
+        </AntList>
+
+@code {
+
+}

@@ -1,6 +1,7 @@
 ﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Shared.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,7 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Deliveries
             return Ok(result);
         }
 
-
+        
         [HttpGet($"{DeliveryApi.GET_ADDRESSES}/{{methodId}}/{{enterAddress}}")]
         public async Task<ActionResult<IEnumerable<DeliveryAddress>>> GetDeliveryAddresses(long methodId, bool enterAddress)
         {
@@ -51,6 +52,24 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Deliveries
 
             return Ok(result);
         }
+
+
+        [HttpGet($"{DeliveryApi.GET_TOTAL_COST}/{{methodId}}/{{address}}")]
+        public async Task<ActionResult<DeliveryCost>> GetDeliveryCost(long methodId, string address)
+        {
+            long userId = long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out long id) ? id : long.MinValue;
+
+            DeliveryCost result = await _deliveryService.GetDeliveryCost(userId, methodId, address);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+
 
 
         [HttpPost($"{DeliveryApi.ADD_ADDRESS}")]

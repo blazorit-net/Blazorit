@@ -26,7 +26,6 @@ namespace Blazorit.Client.Support.Helpers {
                 Console.WriteLine(ex.ToString());
                 Console.WriteLine(ex.InnerException?.Message ?? string.Empty);
 #endif
-
             }
 
             return default(TValue);

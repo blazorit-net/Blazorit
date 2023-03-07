@@ -18,7 +18,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts {
         public List<CartItem> CartList { 
             get
             {
-                cartList = cartList.OrderByDescending(x => x.DateTimeCreated).ToList();
+                cartList = cartList.OrderByDescending(x => x.DateTimeCreated).ThenBy(x => x.Sku).ToList();
                 return cartList;
             }
             set

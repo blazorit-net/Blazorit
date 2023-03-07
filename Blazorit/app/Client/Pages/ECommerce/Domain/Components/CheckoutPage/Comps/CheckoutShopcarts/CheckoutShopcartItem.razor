@@ -1,0 +1,42 @@
+﻿@using Blazorit.Client.Shared.Routes.ECommerce.Domain
+@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-checkout-shopcart-item"))">
+    <GridRow>
+        <GridCol Span="8">
+            <Image PreviewVisible="false"
+                   Src="@Item.ProductPictureLinkPart"
+                   OnClick="@(() => { isImagePreviewVisible = true; })" />
+            <div style="display:none;">
+                <ImagePreviewGroup @bind-PreviewVisible="isImagePreviewVisible">
+                    @foreach (var item in Item.PicturesLinkParts)
+                    {
+                        <Image src="@item.LinkPart" />
+                    }
+                </ImagePreviewGroup>
+            </div>
+        </GridCol>
+        <GridCol Span="16">
+            <GridRow>
+                <GridCol Span="24">
+                    <b><a href="@(PageRouter.RefToProductPage(Item))">@Item.Name</a></b>
+                </GridCol>
+            </GridRow>
+            <GridRow>
+                <GridCol Span="24">
+                    sku: @Item.Sku
+                </GridCol>
+            </GridRow>
+            <GridRow>
+                <GridCol Span="24">
+                    Qty: @Item.Quantity
+                </GridCol>
+            </GridRow>
+            <GridRow>
+                <GridCol Span="24">
+                    <b>Price: @Item.StrTotalPrice</b>
+                </GridCol>
+            </GridRow>
+        </GridCol>
+    </GridRow>
+</div>

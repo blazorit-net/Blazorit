@@ -1,5 +1,6 @@
 ﻿using Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,26 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
             IEnumerable<DeliveryAddress> result = await _dataRepo.AddDeliveryAddressAsync(userId, methodId, address);
                 
             return result.OrderBy(x => x.DateTimeCreated);
+        }
+
+
+        /// <summary>
+        /// Method returns delivery cost
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public async Task<DeliveryCost> GetDeliveryCost(long userId, long methodId, string address)
+        {
+            // TODO!!!
+            // this stub code not for production. you need to implement logic code for address 
+            IEnumerable<DeliveryMethod> methods = await _dataRepo.GetDeliveryMethodsAsync();
+            if (methods.FirstOrDefault(x => x.Id == methodId)?.EnterAddress ?? false)
+            {
+                return new DeliveryCost(2); //stub 2$
+            }            
+            return new DeliveryCost(1); // stub 1$
         }
     }
 }

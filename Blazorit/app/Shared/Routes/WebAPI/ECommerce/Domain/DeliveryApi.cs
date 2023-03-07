@@ -12,5 +12,6 @@ namespace Blazorit.Shared.Routes.WebAPI.ECommerce.Domain
         public const string GET_METHODS = "get-methods";
         public const string GET_ADDRESSES = "get-adresses";
         public const string ADD_ADDRESS = "add-address";
+        public const string GET_TOTAL_COST = "get-total-cost"; // delivery cost
     }
 }

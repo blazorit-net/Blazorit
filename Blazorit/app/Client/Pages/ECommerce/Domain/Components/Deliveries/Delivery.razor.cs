@@ -1,5 +1,7 @@
-﻿using Blazorit.Client.Models.ECommerce.Domain.Deliveries;
+﻿using AntDesign;
+using Blazorit.Client.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Deliveries;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Microsoft.AspNetCore.Components;
 
@@ -10,7 +12,10 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
         private IEnumerable<DeliveryMethod> deliveryMethods = new List<DeliveryMethod>();
         private IEnumerable<DeliveryAddress> deliveryAddresses = new List<DeliveryAddress>();
         private DeliveryAddressRadio choosenDeliveryAddressRadio = DeliveryAddressRadio.ExistingDeliveryAddresses;
-        private string deliveryTextArea = string.Empty;    
+        private string deliveryTextArea = string.Empty;
+        private DeliveryCost deliveryCost = new();        
+
+        private Select<DeliveryAddress, DeliveryAddress>? SelectDeliveryAddressRef = new();
 
         [Inject]
         private IDeliveryService DeliveryService { get; set; } = null!;
@@ -25,6 +30,10 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
         public DeliveryMethod SelectedMethod { get; set; } = new();
         [Parameter]
         public EventCallback<DeliveryMethod> SelectedMethodChanged { get; set; }
+
+
+        [Parameter]
+        public EventCallback<DeliveryCost> DeliveryCostChanged { get; set; } = new();
 
 
 
@@ -50,6 +59,10 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
   
         private async Task DeliveryMethod_SelectedItemChangedHandlerAsync(DeliveryMethod method)
         {
+            // reset delivery cost
+            deliveryCost = new DeliveryCost();
+            await DeliveryCostChanged.InvokeAsync(deliveryCost);
+
             SelectedAddress.Address = string.Empty;
             deliveryAddresses = await DeliveryService.GetDeliveryAddresses(method);            
 
@@ -75,6 +88,13 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
             }
 
             deliveryTextArea = string.Empty;
+        }
+
+
+        private async Task DeliveryAddressesSelect_SelectedItemChangedHandler(DeliveryAddress selectedAddress)
+        {
+            deliveryCost = await DeliveryService.GetDeliveryCost(SelectedMethod, selectedAddress);
+            await DeliveryCostChanged.InvokeAsync(deliveryCost);
         }
     }
 }

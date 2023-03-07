@@ -3,6 +3,7 @@ using Blazorit.Client.Services.Abstract.Identity;
 using Blazorit.Client.Support.Helpers;
 using Blazorit.Shared.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using System.Net.Http.Json;
 
@@ -67,6 +68,19 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Deliveries
 
             var result = await _http.PostAndReadAsJsonOrDefaultAsync<MethodAddress, IEnumerable<DeliveryAddress>>($"{DeliveryApi.CONTROLLER}/{DeliveryApi.ADD_ADDRESS}", methodAddress);
             return result ?? new List<DeliveryAddress>();
+        }
+
+
+        /// <summary>
+        /// Method returns delivery cost
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public async Task<DeliveryCost> GetDeliveryCost(DeliveryMethod method, DeliveryAddress deliveryAddress)
+        {
+            var result = await _http.GetFromJsonOrDefaultAsync<DeliveryCost>($"{DeliveryApi.CONTROLLER}/{DeliveryApi.GET_TOTAL_COST}/{method.Id}/{deliveryAddress.Address}");
+            return result ?? new DeliveryCost();
         }
     }
 }
