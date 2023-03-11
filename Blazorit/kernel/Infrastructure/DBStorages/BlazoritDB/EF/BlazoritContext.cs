@@ -31,9 +31,13 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<DlyUserDelivery> DlyUserDeliveries { get; set; }
 
+        public virtual DbSet<OrdCheckoutOrder> OrdCheckoutOrders { get; set; }
+
         public virtual DbSet<OrdOrder> OrdOrders { get; set; }
 
         public virtual DbSet<OrdOrderList> OrdOrderLists { get; set; }
+
+        public virtual DbSet<PmntPayment> PmntPayments { get; set; }
 
         public virtual DbSet<ProdCategory> ProdCategories { get; set; }
 
@@ -42,6 +46,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
         public virtual DbSet<ProdProduct> ProdProducts { get; set; }
 
         public virtual DbSet<VwCartShopcart> VwCartShopcarts { get; set; }
+
+        public virtual DbSet<VwDlyMethodsAddress> VwDlyMethodsAddresses { get; set; }
 
         public virtual DbSet<VwDlyUserDelivery> VwDlyUserDeliveries { get; set; }
 
@@ -228,13 +234,47 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasConstraintName("FK__dly_user_deliveries__dly_delivery_methods");
             });
 
+            modelBuilder.Entity<OrdCheckoutOrder>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("ord_checkout_orders_pkey");
+
+                entity.ToTable("ord_checkout_orders", "dom", tb => tb.HasComment("this table need for temporary storage info about order, while payment is being made"));
+
+                entity.HasIndex(e => e.PaymentToken, "ord_checkout_orders_payment_token_id_key").IsUnique();
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.Canceled)
+                    .IsRequired()
+                    .HasDefaultValueSql("true")
+                    .HasColumnName("canceled");
+                entity.Property(e => e.DateTimeCreated)
+                    .HasDefaultValueSql("'2023-03-11 18:05:13.365183+03'::timestamp with time zone")
+                    .HasColumnName("date_time_created");
+                entity.Property(e => e.DeliveryAddressId).HasColumnName("delivery_address_id");
+                entity.Property(e => e.DeliveryMethodId).HasColumnName("delivery_method_id");
+                entity.Property(e => e.PaymentAmount)
+                    .HasPrecision(16, 4)
+                    .HasColumnName("payment_amount");
+                entity.Property(e => e.PaymentToken)
+                    .HasMaxLength(100)
+                    .HasComment("uniq token")
+                    .HasColumnName("payment_token");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+            });
+
             modelBuilder.Entity<OrdOrder>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("ord_orders_pkey");
 
                 entity.ToTable("ord_orders", "dom");
 
+                entity.HasIndex(e => e.PaymentId, "UQ__ord_orders__payment_id").IsUnique();
+
                 entity.HasIndex(e => e.DeliveryId, "fki_fk__ord_orders__dly_user_deliveries");
+
+                entity.HasIndex(e => e.PaymentId, "fki_fk__ord_orders__pmnt_payments");
 
                 entity.HasIndex(e => e.UserId, "fki_fk__ord_orders__users__id");
 
@@ -245,12 +285,18 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_create");
                 entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
+                entity.Property(e => e.PaymentId).HasColumnName("payment_id");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.Delivery).WithMany(p => p.OrdOrders)
                     .HasForeignKey(d => d.DeliveryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk__ord_orders__dly_user_deliveries");
+
+                entity.HasOne(d => d.Payment).WithOne(p => p.OrdOrder)
+                    .HasForeignKey<OrdOrder>(d => d.PaymentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk__ord_orders__pmnt_payments");
             });
 
             modelBuilder.Entity<OrdOrderList>(entity =>
@@ -279,6 +325,23 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk__ord_order_list__prod_products");
+            });
+
+            modelBuilder.Entity<PmntPayment>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("pmnt_payments_pkey");
+
+                entity.ToTable("pmnt_payments", "dom");
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.DateTimeCreate)
+                    .HasDefaultValueSql("now()")
+                    .HasColumnName("date_time_create");
+                entity.Property(e => e.PaymentAmount)
+                    .HasPrecision(16, 4)
+                    .HasColumnName("payment_amount");
             });
 
             modelBuilder.Entity<ProdCategory>(entity =>

@@ -15,5 +15,7 @@
         public const string SHOPCART            = "shopcart";        
         public const string PRODUCT             = "product";
         public const string DELIVERY            = "delivery";
+
+        public const string PAYMENT             = "virtual-payment-page";
     }
 }

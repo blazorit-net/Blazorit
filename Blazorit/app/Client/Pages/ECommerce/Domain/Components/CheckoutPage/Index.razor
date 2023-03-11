@@ -6,6 +6,7 @@
 @using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 @using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries
 @using Microsoft.AspNetCore.Components
+@using Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.CheckoutOrders
 
 @implements IBlazoritComponent
 
@@ -18,7 +19,7 @@
         <GridCol Span="8">
             <Card Title="Delivery">
                 <Body>
-                    <Delivery @bind-SelectedMethod="@selectedDeliveryMethod" DeliveryCostChanged="Delivery_DeliveryCostChangedHandler" />
+                    <Delivery OnDeliveryChanged="Delivery_DeliveryChangedHandlerAsync" />
                 </Body>                
             </Card>
         </GridCol>
@@ -32,54 +33,7 @@
         <GridCol Span="6" Offset="1">
             <Affix OffsetTop="10">
                 <Card>  
-                    @*Quantity*@
-                    <GridRow Justify="space-between">
-                        <GridCol Flex=@("none")>
-                            <span class="total-quantity">Items: @CartState.State.StrTotalQuantity</span>
-                        </GridCol>
-                        <GridCol Flex=@("none")>
-                            <span class="total-quantity">@CartState.State.StrTotalPrice</span>
-                        </GridCol>
-                    </GridRow>
-                    @*Delivery cost*@
-                    <GridRow Justify="space-between">
-                        <GridCol Flex=@("none")>
-                            <span class="total-shipping">Shipping:</span>
-                        </GridCol>
-                        <GridCol Flex=@("none")>
-                            @if (deliveryCost.TotalCost == 0)
-                            {
-                                <span class="total-shipping">Free</span>
-                            } else
-                            {
-                                <span class="total-shipping">@deliveryCost.StrTotalCost</span>                                
-                            }                            
-                        </GridCol>
-                    </GridRow>
-                    @*Total price*@
-                    <Divider />
-                    <GridRow Justify="space-between">
-                        <GridCol Flex=@("none")>
-                            <span class="total-price">Total</span>
-                        </GridCol>
-                        <GridCol Flex=@("none")>
-                            <span class="total-price">@CartState.State.StrTotalPrice</span>
-                        </GridCol>
-                    </GridRow>
-                    @*Launch order button*@
-                    <Divider />
-                    <GridRow>
-                        <GridCol Span="24">
-                            <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block>Make the order</Button>
-                        </GridCol>
-                    </GridRow> 
-                    @*Products from shopcart*@
-                    <Divider />
-                    <GridRow>
-                        <GridCol>
-                            <CheckoutShopcart />
-                        </GridCol>
-                    </GridRow>
+                    <CheckoutOrderComp ShopCart="@CartState.State" Delivery="@delivery" />
                 </Card>
             </Affix>                  
         </GridCol>

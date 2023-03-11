@@ -23,7 +23,7 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Deliveries
         Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(DeliveryMethod method, string address);
 
         /// <summary>
-        /// Method returns delivery cost
+        /// Method returns delivery cost (possible, from 3th-d party service)
         /// </summary>
         /// <param name="method"></param>
         /// <param name="address"></param>

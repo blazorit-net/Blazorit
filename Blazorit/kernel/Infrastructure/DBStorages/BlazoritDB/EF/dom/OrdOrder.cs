@@ -13,7 +13,11 @@ public partial class OrdOrder
 
     public long DeliveryId { get; set; }
 
+    public long PaymentId { get; set; }
+
     public virtual DlyUserDelivery Delivery { get; set; } = null!;
 
     public virtual ICollection<OrdOrderList> OrdOrderLists { get; } = new List<OrdOrderList>();
+
+    public virtual PmntPayment Payment { get; set; } = null!;
 }

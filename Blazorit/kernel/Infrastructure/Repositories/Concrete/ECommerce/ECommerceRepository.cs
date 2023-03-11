@@ -363,12 +363,42 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
 
         /// <summary>
+        /// Method creates payment info in DB
+        /// </summary>
+        /// <param name="paymentAmount"></param>
+        /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
+        /// <returns></returns>
+        public async Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, string? manyParamsAboutPayments = null)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                PmntPayment payment = new() 
+                { 
+                    PaymentAmount = paymentAmount                 
+                };
+
+                await context.PmntPayments.AddAsync(payment);
+                return (true, payment.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(CreatePaymentInfoAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return (false, default);
+        }
+
+
+        /// <summary>
         /// Method create order from cart for User by userId
         /// And this method removes all items from user's shopcart
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="paymentId"></param>
         /// <returns></returns>
-        public async Task<bool> CreateOrderFromCart(long userId) {
+        public async Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId) {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
@@ -379,7 +409,9 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 }
 
                 OrdOrder order = new() {
-                    UserId = userId
+                    UserId = userId,
+                    PaymentId = paymentId,
+                    DeliveryId = deliveryId
                 };              
 
                 foreach (var item in cartList) {
@@ -725,6 +757,74 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
 
             return new List<DeliveryAddress>();
+        }
+
+
+        /// <summary>
+        /// Method returns User delivery (Id)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="addressId"></param>
+        /// <returns></returns>
+        public async Task<UserDelivery?> GetUserDelivery (long userId, long methodId, long addressId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                return await context.DlyUserDeliveries
+                    .Where(x => x.UserId == userId && x.MethodId == methodId && x.AddressId == addressId)
+                    .Select(x => new UserDelivery
+                    {
+                        UserId = x.UserId,
+                        MethodId = x.MethodId,
+                        AddressId = x.AddressId,
+                        DateTimeCreated = x.DateTimeCreated
+                    })
+                    .FirstOrDefaultAsync();                    
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetUserDelivery)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Method creates uniq token and info about order
+        /// </summary>
+        /// <param name="paymentToken"></param>
+        /// <param name="paymentAmount"></param>
+        /// <param name="userId"></param>
+        /// <param name="deliveryMethodId"></param>
+        /// <param name="deliveryAddressId"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateUniqPaymentTokenAsync(string paymentToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                await context.OrdCheckoutOrders.AddAsync(
+                    new OrdCheckoutOrder
+                    {
+                        PaymentToken = paymentToken,
+                        Canceled = false,
+                        PaymentAmount = paymentAmount,    
+                        UserId = userId,
+                        DeliveryMethodId = deliveryMethodId,
+                        DeliveryAddressId = deliveryAddressId
+                    });
+
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(CreateUniqPaymentTokenAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return await Task.FromResult(false);
         }
     }
 }

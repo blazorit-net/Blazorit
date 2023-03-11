@@ -8,6 +8,18 @@ namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders
 {
     public interface IOrderService
     {
-        Task<bool> CreateOrderFromCart(long userId);
+        /// <summary>
+        /// Method creates uniq token and info about order
+        /// </summary>
+        /// <param name="paymentAmount"></param>
+        /// <param name="userId"></param>
+        /// <param name="deliveryMethodId"></param>
+        /// <param name="deliveryAddressId"></param>
+        /// <returns></returns>
+        Task<(bool ok, string paymentToken)> CreateUniqPaymentTokenAsync(decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId);
+
+        //Task<(bool ok, long paymentId)> CreatePayment(long userId, string paymentInfo, decimal paymentAmount);
+
+        Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryMethodId, long deliveryAddressId);
     }
 }

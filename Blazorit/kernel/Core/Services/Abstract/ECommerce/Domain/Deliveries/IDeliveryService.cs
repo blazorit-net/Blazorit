@@ -29,12 +29,14 @@ namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries
         Task<IEnumerable<DeliveryAddress>> AddDeliveryAddressAsync(long userId, long methodId, string address);
 
         /// <summary>
-        /// Method returns delivery cost
+        /// Method returns delivery cost (possible, from 3th-d party service)
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
         /// <param name="address"></param>
         /// <returns></returns>
         Task<DeliveryCost> GetDeliveryCost(long userId, long methodId, string address);
+
+        Task<UserDelivery?> GetUserDeliveryPoint(long userId, long methodId, long addressId);
     }
 }

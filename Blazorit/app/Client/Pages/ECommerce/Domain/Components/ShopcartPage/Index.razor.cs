@@ -27,7 +27,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage
         }
 
 
-        public async Task OrderButton_ClickHandlerAsync()
+        public async Task CheckoutButton_ClickHandlerAsync()
         {
             await InvokeAsync(() => Navigation.NavigateTo(ConstPage.DELIVERY));
 

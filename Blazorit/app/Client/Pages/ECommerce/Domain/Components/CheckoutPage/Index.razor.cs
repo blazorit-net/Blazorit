@@ -9,7 +9,9 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage
     public partial class Index
     {
         private DeliveryMethod selectedDeliveryMethod = new();
+        private DeliveryAddress selectedDeliveryAddress = new();
         private DeliveryCost deliveryCost = new();
+        private Delivery delivery = new();
 
         [Inject]
         private CartState CartState { get; set; } = null!;
@@ -21,6 +23,11 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage
         private async Task Delivery_DeliveryCostChangedHandler(DeliveryCost item)
         {
             await InvokeAsync(() => deliveryCost = item);
+        }
+
+        private async Task Delivery_DeliveryChangedHandlerAsync(Delivery delivery)
+        {
+            await InvokeAsync(() => this.delivery = delivery);
         }
     }
 }

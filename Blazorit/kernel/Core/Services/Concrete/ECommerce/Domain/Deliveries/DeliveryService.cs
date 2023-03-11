@@ -75,7 +75,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
 
 
         /// <summary>
-        /// Method returns delivery cost
+        /// Method returns delivery cost (possible, from 3th-d party service)
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
@@ -91,6 +91,12 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
                 return new DeliveryCost(2); //stub 2$
             }            
             return new DeliveryCost(1); // stub 1$
+        }
+
+
+        public async Task<UserDelivery?> GetUserDeliveryPoint(long userId, long methodId, long addressId)
+        {
+            return await _dataRepo.GetUserDelivery(userId, methodId, addressId);
         }
     }
 }

@@ -39,7 +39,7 @@
         <Divider />
         <GridRow>
             <GridCol>
-                <Select @ref="@SelectDeliveryAddressRef"
+                <Select
                     TItem="DeliveryAddress"
                     TItemValue="DeliveryAddress"
                     DataSource="@deliveryAddresses"                    
@@ -75,7 +75,7 @@
     <Divider />
     <GridRow Justify="space-between">
         <GridCol Flex=@("none")>
-            <Text Mark>Shipping cost: @deliveryCost.StrTotalCost</Text>
+            <Text Mark>Shipping cost: @delivery.DeliveryCost.StrTotalCost</Text>
         </GridCol>
     </GridRow>
 </div>

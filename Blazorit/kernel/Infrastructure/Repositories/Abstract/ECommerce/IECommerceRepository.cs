@@ -77,18 +77,27 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         Task<bool> AddProductToWishlistByWishlistIdAsync(long wishlistId, string productSKU);
 
         /// <summary>
+        /// Method creates payment info in repository
+        /// </summary>
+        /// <param name="paymentAmount"></param>
+        /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
+        /// <returns></returns>
+        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, string? manyParamsAboutPayments = null);
+
+        /// <summary>
         /// Method create order from cart for User by userId
+        /// And this method removes all items from user's shopcart
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="paymentId"></param>
         /// <returns></returns>
-        Task<bool> CreateOrderFromCart(long userId);
+        Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId);
 
         /// <summary>
         /// Method returns all products from product's view
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<VwProduct>> GetProducts();
-
 
         /// <summary>
         /// Method return data of one product
@@ -97,7 +106,6 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="linkPart"></param>
         /// <returns></returns>
         Task<VwProduct?> GetProductDataAsync(string category, string linkPart);
-
 
         /// <summary>
         /// Method returns picture's link parts of one product
@@ -152,5 +160,27 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="methodId"></param>
         /// <returns></returns>
         Task<IEnumerable<DeliveryAddress>> GetCommonDeliveryAddressesAsync(long methodId);
+
+
+        /// <summary>
+        /// Method returns User delivery (Id)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="addressId"></param>
+        /// <returns></returns>
+        Task<UserDelivery?> GetUserDelivery(long userId, long methodId, long addressId);
+
+
+        /// <summary>
+        /// Method creates uniq token and info about order
+        /// </summary>
+        /// <param name="paymentToken"></param>
+        /// <param name="paymentAmount"></param>
+        /// <param name="userId"></param>
+        /// <param name="deliveryMethodId"></param>
+        /// <param name="deliveryAddressId"></param>
+        /// <returns></returns>
+        Task<bool> CreateUniqPaymentTokenAsync(string paymentToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId);
     }
 }
