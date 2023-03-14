@@ -240,7 +240,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.ToTable("ord_checkout_orders", "dom", tb => tb.HasComment("this table need for temporary storage info about order, while payment is being made"));
 
-                entity.HasIndex(e => e.PaymentToken, "ord_checkout_orders_payment_token_id_key").IsUnique();
+                entity.HasIndex(e => e.OrderToken, "ord_checkout_orders_payment_token_id_key").IsUnique();
 
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
@@ -250,17 +250,17 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasDefaultValueSql("true")
                     .HasColumnName("canceled");
                 entity.Property(e => e.DateTimeCreated)
-                    .HasDefaultValueSql("'2023-03-11 18:05:13.365183+03'::timestamp with time zone")
+                    .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_created");
                 entity.Property(e => e.DeliveryAddressId).HasColumnName("delivery_address_id");
                 entity.Property(e => e.DeliveryMethodId).HasColumnName("delivery_method_id");
+                entity.Property(e => e.OrderToken)
+                    .HasMaxLength(100)
+                    .HasComment("uniq token")
+                    .HasColumnName("order_token");
                 entity.Property(e => e.PaymentAmount)
                     .HasPrecision(16, 4)
                     .HasColumnName("payment_amount");
-                entity.Property(e => e.PaymentToken)
-                    .HasMaxLength(100)
-                    .HasComment("uniq token")
-                    .HasColumnName("payment_token");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 

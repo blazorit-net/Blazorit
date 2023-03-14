@@ -11,9 +11,9 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
     /// <summary>
     /// This class must contain all info (total price, qty products, delivery cost, payment method) for creating an order
     /// </summary>
-    public class CheckoutOrder
+    public class CheckOrder
     {
-        public CheckoutOrder() { }
+        public CheckOrder() { }
 
         //public CheckoutOrder(ShopCart shopCart, DeliveryCost deliveryCost)
         //{
@@ -21,7 +21,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
         //    DeliveryCost = deliveryCost;
         //}
 
-        public CheckoutOrder(ShopCart shopCart, Delivery delivery)
+        public CheckOrder(ShopCart shopCart, Delivery delivery)
         {
             ShopCart = shopCart;
             Delivery = delivery;

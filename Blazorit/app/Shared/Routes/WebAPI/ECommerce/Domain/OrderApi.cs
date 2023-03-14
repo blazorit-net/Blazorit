@@ -10,5 +10,7 @@ namespace Blazorit.Shared.Routes.WebAPI.ECommerce.Domain
     {
         public const string CONTROLLER = "api/ecommerce/domain/order";
         public const string CREATE_ORDER = "create-order";
+        public const string CREATE_ORDER_TOKEN = "create-order-token";
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,15 @@ namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders
         /// <param name="deliveryMethodId"></param>
         /// <param name="deliveryAddressId"></param>
         /// <returns></returns>
-        Task<(bool ok, string paymentToken)> CreateUniqPaymentTokenAsync(decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId);
+        Task<(bool ok, string paymentToken)> CreateUniqOrderTokenAsync(long userId, CheckOrder orderData);
 
-        //Task<(bool ok, long paymentId)> CreatePayment(long userId, string paymentInfo, decimal paymentAmount);
+        /// <summary>
+        /// Method creates order
+        /// </summary>
+        /// <param name="orderCreation"></param>
+        /// <returns></returns>
+        Task<bool> CreateOrder(OrderCreation orderCreation);
 
-        Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryMethodId, long deliveryAddressId);
+        //Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryMethodId, long deliveryAddressId);
     }
 }

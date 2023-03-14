@@ -11,9 +11,6 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage
         [Inject]
         private CartState CartState { get; set; } = null!;
 
-        //[Inject]
-        //private IOrderService OrderService { get; set; } = null!;
-
         [Inject]
         private NavigationManager Navigation { get; set; } = null!;
 

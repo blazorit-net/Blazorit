@@ -1,5 +1,6 @@
 ﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,16 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="paymentAmount"></param>
         /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
         /// <returns></returns>
-        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, string? manyParamsAboutPayments = null);
+        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, string? manyParamsAboutPayment = null);
+
+        /// <summary>
+        /// Method create or returns exists id of user delivery point
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="addressId"></param>
+        /// <returns>user delivery point ID</returns>
+        Task<(bool ok, long deliveryId)> InitUserDeliveryAsync(long userId, long methodId, long addressId);
 
         /// <summary>
         /// Method create order from cart for User by userId
@@ -181,6 +191,14 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="deliveryMethodId"></param>
         /// <param name="deliveryAddressId"></param>
         /// <returns></returns>
-        Task<bool> CreateUniqPaymentTokenAsync(string paymentToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId);
+        Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId);
+
+        /// <summary>
+        /// Methods returns info about order by paymentToken
+        /// </summary>
+        /// <param name="paymentToken"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<CheckoutOrder?> GetTokenOrderInfoAsync(string orderToken, long userId);
     }
 }

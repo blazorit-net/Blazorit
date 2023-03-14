@@ -12,6 +12,7 @@ using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.
 using System.Collections;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 {
@@ -380,7 +381,48 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 };
 
                 await context.PmntPayments.AddAsync(payment);
+                await context.SaveChangesAsync();
                 return (true, payment.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(CreatePaymentInfoAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return (false, default);
+        }
+
+
+        /// <summary>
+        /// Method create or returns exists id of user delivery point
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="methodId"></param>
+        /// <param name="addressId"></param>
+        /// <returns>user delivery point ID</returns>
+        public async Task<(bool ok, long deliveryId)> InitUserDeliveryAsync(long userId, long methodId, long addressId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                DlyUserDelivery? userDelivery = await context.DlyUserDeliveries
+                    .FirstOrDefaultAsync(x => x.UserId == userId && x.MethodId == methodId && x.AddressId == addressId);
+            
+                if (userDelivery == null)
+                {
+                    userDelivery = new DlyUserDelivery
+                    {
+                        UserId = userId,
+                        MethodId = methodId,
+                        AddressId = addressId
+                    };
+
+                    await context.DlyUserDeliveries.AddAsync(userDelivery);
+                    await context.SaveChangesAsync();
+                }
+
+                return (true, userDelivery.Id);
+            
             }
             catch (Exception ex)
             {
@@ -776,6 +818,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     .Where(x => x.UserId == userId && x.MethodId == methodId && x.AddressId == addressId)
                     .Select(x => new UserDelivery
                     {
+                        Id = x.Id,
                         UserId = x.UserId,
                         MethodId = x.MethodId,
                         AddressId = x.AddressId,
@@ -800,7 +843,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="deliveryMethodId"></param>
         /// <param name="deliveryAddressId"></param>
         /// <returns></returns>
-        public async Task<bool> CreateUniqPaymentTokenAsync(string paymentToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId)
+        public async Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId)
         {
             try
             {
@@ -808,7 +851,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 await context.OrdCheckoutOrders.AddAsync(
                     new OrdCheckoutOrder
                     {
-                        PaymentToken = paymentToken,
+                        OrderToken = orderToken,
                         Canceled = false,
                         PaymentAmount = paymentAmount,    
                         UserId = userId,
@@ -821,10 +864,45 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(CreateUniqPaymentTokenAsync)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(CreateUniqOrderTokenAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 
             return await Task.FromResult(false);
+        }
+
+        /// <summary>
+        /// Methods returns info about order by paymentToken
+        /// </summary>
+        /// <param name="paymentToken"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<CheckoutOrder?> GetTokenOrderInfoAsync(string orderToken, long userId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                CheckoutOrder? checkoutOrder = await context.OrdCheckoutOrders
+                    .Where(x => x.OrderToken == orderToken && x.UserId == userId)
+                    .Select(x => new CheckoutOrder
+                    {
+                        OrderToken = x.OrderToken,
+                        Canceled = x.Canceled ?? default,
+                        PaymentAmount = x.PaymentAmount,
+                        UserId = x.UserId,
+                        DeliveryMethodId = x.DeliveryMethodId,
+                        DeliveryAddressId = x.DeliveryAddressId,
+                        DateTimeCreated = x.DateTimeCreated
+                    })
+                    .FirstOrDefaultAsync();
+
+                return checkoutOrder;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetTokenOrderInfoAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return null;
         }
     }
 }

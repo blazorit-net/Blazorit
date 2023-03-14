@@ -15,7 +15,7 @@ public partial class OrdCheckoutOrder
     /// <summary>
     /// uniq token
     /// </summary>
-    public string PaymentToken { get; set; } = null!;
+    public string OrderToken { get; set; } = null!;
 
     public bool? Canceled { get; set; }
 

@@ -23,26 +23,34 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Orders
         }
 
 
-        public async Task CreateOrderFromCart()
-        {
-            var result = await _http.PostAndReadAsJsonOrDefaultAsync<bool>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER}");
-            await _cartService.SyncShopCartAsync(); // sync shopcart view state from kernel state
-        }
+        //public async Task CreateOrderFromCart()
+        //{
+        //    var result = await _http.PostAndReadAsJsonOrDefaultAsync<bool>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER}");
+        //    await _cartService.SyncShopCartAsync(); // sync shopcart view state from kernel state
+        //}
 
-
-        public async Task<bool> CreateOrder(string paymentToken, string? otherPaymentInfo = null)
-        {
-            return await Task.FromResult(false);
-        }
 
         /// <summary>
-        /// Method create token with info about order (delivery, amount and other)
+        /// Method creates order
         /// </summary>
-        /// <param name="paymentAmount"></param>
+        /// <param name="orderCreation"></param>
         /// <returns></returns>
-        public async Task<Response<string>> CreateUniqPaymentToken(decimal paymentAmount, CheckoutOrder checoutOrder)
+        public async Task<bool> CreateOrder(OrderCreation orderCreation)
         {
-            return await Task.FromResult(new Response<string>());
+            var result = await _http.PostAndReadAsJsonOrDefaultAsync<OrderCreation, bool>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER}", orderCreation);
+            return result;
+        }
+
+
+        /// <summary>
+        /// Method creates uniq token and info about order
+        /// </summary>
+        /// <param name="orderData"></param>
+        /// <returns></returns>
+        public async Task<Response<string>> CreateUniqOrderTokenAsync(CheckOrder orderData)
+        {
+            var result = await _http.PostAndReadAsJsonOrDefaultAsync<CheckOrder, Response<string>>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER_TOKEN}", orderData);
+            return result ?? new Response<string>("Data transfer error");
         }
     }
 }
