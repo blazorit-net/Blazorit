@@ -13,12 +13,10 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts {
             CartList = cartList.ToList();
         }
 
-        //public List<CartItem> CartList { get; set; } = new List<CartItem>();
-
         public List<CartItem> CartList { 
             get
             {
-                cartList = cartList.OrderByDescending(x => x.DateTimeCreated).ThenBy(x => x.Sku).ToList();
+                cartList = cartList.OrderByDescending(x => x.DateTimeCreated).ThenBy(x => x.Sku).ToList(); // ordering for all views
                 return cartList;
             }
             set

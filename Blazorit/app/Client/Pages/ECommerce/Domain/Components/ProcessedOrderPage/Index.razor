@@ -1,0 +1,35 @@
+﻿@attribute [Route($"{ConstPage.PROCESSED_ORDER}")]
+
+@using Blazorit.Client.Shared.Routes.ECommerce.Domain
+@using Blazorit.Client.Support.Enums
+
+@implements IBlazoritComponent
+
+@*TODO: delete this info*@
+<h1>Proccesed order page</h1>
+<div>PaymentSuccess: @PaymentSuccess</div>
+<div>PaymentInfo: @PaymentInfo</div>
+<div>PaymentToken: @PaymentToken</div>
+<div>PaymentAmount: @PaidAmount</div>
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-processed-order-page"))">
+    @if (isSuccessOrder == Tribool.True)
+    {
+        <Result Status="success"
+            Title="Successfully Purchased"
+            SubTitle="Order number: 2017182818828182881">
+            <Extra>
+                <Button Type="primary">Go Console</Button>
+                <Button>Buy Again</Button>
+            </Extra>
+        </Result>
+    } 
+    else if (isSuccessOrder == Tribool.False)
+    {
+        <Result Status="warning" Title="There are some problems with your operation." />    
+    }
+    else //while the result of the execution has not yet been received
+    {
+        <Result Title="Your operation in process... Wait, please." />
+    }
+</div>

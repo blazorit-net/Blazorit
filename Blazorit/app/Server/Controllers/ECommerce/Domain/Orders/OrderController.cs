@@ -41,7 +41,7 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Orders
 
 
         [HttpPost($"{OrderApi.CREATE_ORDER}")]
-        public async Task<ActionResult<bool>> CreateOrderAsync(OrderCreation orderCreation)
+        public async Task<ActionResult<bool>> CreateOrderAsync(PaidOrder orderCreation)
         {
             orderCreation.UserId = long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out long id) ? id : long.MinValue;
 

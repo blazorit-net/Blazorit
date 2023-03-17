@@ -15,12 +15,6 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
     {
         public CheckOrder() { }
 
-        //public CheckoutOrder(ShopCart shopCart, DeliveryCost deliveryCost)
-        //{
-        //    ShopCart = shopCart;
-        //    DeliveryCost = deliveryCost;
-        //}
-
         public CheckOrder(ShopCart shopCart, Delivery delivery)
         {
             ShopCart = shopCart;
@@ -29,7 +23,6 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
 
         public ShopCart ShopCart { get; set; } = new();
 
-        //public DeliveryCost DeliveryCost { get; set; } = new();
 
         public Delivery Delivery { get; set; } = new();
 

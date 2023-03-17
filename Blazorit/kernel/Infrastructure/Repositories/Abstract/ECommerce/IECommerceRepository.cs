@@ -83,7 +83,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="paymentAmount"></param>
         /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
         /// <returns></returns>
-        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, string? manyParamsAboutPayment = null);
+        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, long checkoutOrderId, string orderToken, string? manyParamsAboutPayment = null);
 
         /// <summary>
         /// Method create or returns exists id of user delivery point
@@ -92,16 +92,19 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="methodId"></param>
         /// <param name="addressId"></param>
         /// <returns>user delivery point ID</returns>
-        Task<(bool ok, long deliveryId)> InitUserDeliveryAsync(long userId, long methodId, long addressId);
+        Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId);
 
+        /// <summary>
         /// <summary>
         /// Method create order from cart for User by userId
         /// And this method removes all items from user's shopcart
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="paymentId"></param>
+        /// <param name="deliveryId"></param>
+        /// <param name="orderToken"></param>
         /// <returns></returns>
-        Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId);
+        Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId, string orderToken);
 
         /// <summary>
         /// Method returns all products from product's view
@@ -186,15 +189,15 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// Method creates uniq token and info about order
         /// </summary>
         /// <param name="paymentToken"></param>
-        /// <param name="paymentAmount"></param>
+        /// <param name="orderAmount"></param>
         /// <param name="userId"></param>
         /// <param name="deliveryMethodId"></param>
         /// <param name="deliveryAddressId"></param>
         /// <returns></returns>
-        Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId);
+        Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long userDeliveryId);
 
         /// <summary>
-        /// Methods returns info about order by paymentToken
+        /// Methods returns info about order by orderToken (not canceled)
         /// </summary>
         /// <param name="paymentToken"></param>
         /// <param name="userId"></param>

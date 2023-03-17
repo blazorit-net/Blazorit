@@ -1,18 +1,12 @@
-﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
-using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
+using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
-using Microsoft.Extensions.Logging;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
-using System.Collections;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 {
@@ -369,7 +363,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="paymentAmount"></param>
         /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
         /// <returns></returns>
-        public async Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, string? manyParamsAboutPayments = null)
+        public async Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, long checkoutOrderId, string orderToken, string? manyParamsAboutPayments = null)
         {
             try
             {
@@ -377,7 +371,10 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                 PmntPayment payment = new() 
                 { 
-                    PaymentAmount = paymentAmount                 
+                    PaymentAmount = paymentAmount,
+                    CheckoutOrderId = checkoutOrderId,
+                    OrderToken = orderToken,
+                    PaymentInfo = manyParamsAboutPayments
                 };
 
                 await context.PmntPayments.AddAsync(payment);
@@ -400,7 +397,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="methodId"></param>
         /// <param name="addressId"></param>
         /// <returns>user delivery point ID</returns>
-        public async Task<(bool ok, long deliveryId)> InitUserDeliveryAsync(long userId, long methodId, long addressId)
+        public async Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId)
         {
             try
             {
@@ -421,15 +418,22 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     await context.SaveChangesAsync();
                 }
 
-                return (true, userDelivery.Id);
+                return new UserDelivery
+                {
+                    Id = userDelivery.Id,
+                    UserId = userDelivery.UserId,
+                    MethodId = userDelivery.MethodId,
+                    AddressId = userDelivery.AddressId,
+                    DateTimeCreated = userDelivery.DateTimeCreated
+                };
             
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(CreatePaymentInfoAsync)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(InitUserDeliveryAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 
-            return (false, default);
+            return null;
         }
 
 
@@ -439,8 +443,10 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="paymentId"></param>
+        /// <param name="deliveryId"></param>
+        /// <param name="orderToken"></param>
         /// <returns></returns>
-        public async Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId) {
+        public async Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId, string orderToken) {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
@@ -472,9 +478,16 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                 // remove all items from user's shopcart
                 context.RemoveRange(context.CartShopcartLists.Where(x => x.Cart.UserId == userId));
-                context.RemoveRange(context.CartShopcarts.Where(x => x.UserId == userId));
+                context.RemoveRange(context.CartShopcarts.Where(x => x.UserId == userId));               
 
-                await context.SaveChangesAsync();
+                OrdCheckoutOrder? checkOrder = await context.OrdCheckoutOrders.FirstOrDefaultAsync(x => x.UserId == userId && x.OrderToken == orderToken);
+
+                if (checkOrder != null)
+                {
+                    checkOrder.Canceled = true; // cancel checout order. i.e. the order has been processed.                    
+                }
+
+                await context.SaveChangesAsync(); // create order data
                 return true;
 
             } catch (Exception ex) {
@@ -838,12 +851,11 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// Method creates uniq token and info about order
         /// </summary>
         /// <param name="paymentToken"></param>
-        /// <param name="paymentAmount"></param>
+        /// <param name="orderAmount"></param>
         /// <param name="userId"></param>
-        /// <param name="deliveryMethodId"></param>
-        /// <param name="deliveryAddressId"></param>
+        /// <param name="userDeliveryId"></param>
         /// <returns></returns>
-        public async Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal paymentAmount, long userId, long deliveryMethodId, long deliveryAddressId)
+        public async Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long userDeliveryId)
         {
             try
             {
@@ -853,10 +865,9 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     {
                         OrderToken = orderToken,
                         Canceled = false,
-                        PaymentAmount = paymentAmount,    
+                        OrderAmount = orderAmount,    
                         UserId = userId,
-                        DeliveryMethodId = deliveryMethodId,
-                        DeliveryAddressId = deliveryAddressId
+                        UserDeliveryId = userDeliveryId // TODO: DeliveryMethodId replace to UserDeliveryId
                     });
 
                 await context.SaveChangesAsync();
@@ -871,7 +882,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         }
 
         /// <summary>
-        /// Methods returns info about order by paymentToken
+        /// Methods returns info about order by orderToken (not canceled)
         /// </summary>
         /// <param name="paymentToken"></param>
         /// <param name="userId"></param>
@@ -882,15 +893,15 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
                 CheckoutOrder? checkoutOrder = await context.OrdCheckoutOrders
-                    .Where(x => x.OrderToken == orderToken && x.UserId == userId)
+                    .Where(x => x.OrderToken == orderToken && x.UserId == userId && x.Canceled == false)
                     .Select(x => new CheckoutOrder
                     {
+                        Id = x.Id, 
                         OrderToken = x.OrderToken,
                         Canceled = x.Canceled ?? default,
-                        PaymentAmount = x.PaymentAmount,
+                        OrderAmount = x.OrderAmount,
                         UserId = x.UserId,
-                        DeliveryMethodId = x.DeliveryMethodId,
-                        DeliveryAddressId = x.DeliveryAddressId,
+                        UserDeliveryId = x.UserDeliveryId,
                         DateTimeCreated = x.DateTimeCreated
                     })
                     .FirstOrDefaultAsync();

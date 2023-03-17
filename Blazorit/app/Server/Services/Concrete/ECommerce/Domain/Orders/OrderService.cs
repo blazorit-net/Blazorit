@@ -31,7 +31,7 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Orders
         /// </summary>
         /// <param name="orderCreation"></param>
         /// <returns></returns>
-        public async Task<bool> CreateOrder(OrderCreation orderCreation)
+        public async Task<bool> CreateOrder(PaidOrder orderCreation)
         {
             var result = await _orderService.CreateOrder(orderCreation);
             return result;

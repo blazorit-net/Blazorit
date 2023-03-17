@@ -11,5 +11,14 @@ public partial class PmntPayment
 
     public DateTime DateTimeCreate { get; set; }
 
+    /// <summary>
+    /// this field relation to id of ord_checkout_orders, but rows in ord_checkout_orders table can be deleted (whose canceled), than we have not Foreign key to ord_checkout_orders
+    /// </summary>
+    public long CheckoutOrderId { get; set; }
+
+    public string OrderToken { get; set; } = null!;
+
+    public string? PaymentInfo { get; set; }
+
     public virtual OrdOrder? OrdOrder { get; set; }
 }

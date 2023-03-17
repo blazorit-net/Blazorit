@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries
 {
+    /// <summary>
+    /// Сlass contains delivery data
+    /// </summary>
     public class Delivery
     {
         public Delivery() { }
@@ -19,6 +22,23 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries
 
         public UserDelivery UserDelivery { get; set; } = new();
 
-        public DeliveryCost DeliveryCost { get; set; } = new();        
+        /// <summary>
+        /// Delivery cost
+        /// </summary>
+        public DeliveryCost DeliveryCost { get; set; } = new();    
+        
+        
+        public bool IsCheckedDeliveryEntryFields 
+        { 
+            get
+            {
+                if (UserDelivery.AddressId != 0 && UserDelivery.MethodId != 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
     }
 }

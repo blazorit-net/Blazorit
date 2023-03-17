@@ -19,11 +19,9 @@ public partial class OrdCheckoutOrder
 
     public bool? Canceled { get; set; }
 
-    public decimal PaymentAmount { get; set; }
+    public decimal OrderAmount { get; set; }
 
     public long UserId { get; set; }
 
-    public long DeliveryMethodId { get; set; }
-
-    public long DeliveryAddressId { get; set; }
+    public long UserDeliveryId { get; set; }
 }

@@ -63,7 +63,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
         //################################################################
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
             //#############################################################
             //  #######################--IDENT--#########################
             //#############################################################
@@ -203,7 +204,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
             {
                 entity.HasKey(e => e.Id).HasName("dly_user_deliveries_pkey");
 
-                entity.ToTable("dly_user_deliveries", "dom");
+                entity.ToTable("dly_user_deliveries", "dom", tb => tb.HasComment("Addresses entered by the users"));
 
                 entity.HasIndex(e => new { e.UserId, e.MethodId, e.AddressId }, "UQ__dly_user_deliveries").IsUnique();
 
@@ -242,6 +243,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.HasIndex(e => e.OrderToken, "ord_checkout_orders_payment_token_id_key").IsUnique();
 
+                entity.HasIndex(e => new { e.OrderToken, e.Canceled }, "uqix__ord_checkout_orders__order_token__canceled").IsUnique();
+
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
@@ -252,15 +255,14 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.DateTimeCreated)
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_created");
-                entity.Property(e => e.DeliveryAddressId).HasColumnName("delivery_address_id");
-                entity.Property(e => e.DeliveryMethodId).HasColumnName("delivery_method_id");
+                entity.Property(e => e.OrderAmount)
+                    .HasPrecision(16, 4)
+                    .HasColumnName("order_amount");
                 entity.Property(e => e.OrderToken)
                     .HasMaxLength(100)
                     .HasComment("uniq token")
                     .HasColumnName("order_token");
-                entity.Property(e => e.PaymentAmount)
-                    .HasPrecision(16, 4)
-                    .HasColumnName("payment_amount");
+                entity.Property(e => e.UserDeliveryId).HasColumnName("user_delivery_id");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
@@ -333,15 +335,26 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.ToTable("pmnt_payments", "dom");
 
+                entity.HasIndex(e => e.CheckoutOrderId, "UQ__checkout_order_id").IsUnique();
+
+                entity.HasIndex(e => e.CheckoutOrderId, "fki_fk_not_valid__pmnt_payments__checout_orders__id");
+
                 entity.Property(e => e.Id)
                     .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
+                entity.Property(e => e.CheckoutOrderId)
+                    .HasComment("this field relation to id of ord_checkout_orders, but rows in ord_checkout_orders table can be deleted (whose canceled), than we have not Foreign key to ord_checkout_orders")
+                    .HasColumnName("checkout_order_id");
                 entity.Property(e => e.DateTimeCreate)
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_create");
+                entity.Property(e => e.OrderToken)
+                    .HasMaxLength(100)
+                    .HasColumnName("order_token");
                 entity.Property(e => e.PaymentAmount)
                     .HasPrecision(16, 4)
                     .HasColumnName("payment_amount");
+                entity.Property(e => e.PaymentInfo).HasColumnName("payment_info");
             });
 
             modelBuilder.Entity<ProdCategory>(entity =>

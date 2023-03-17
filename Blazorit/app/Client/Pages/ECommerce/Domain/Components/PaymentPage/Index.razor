@@ -1,15 +1,22 @@
-﻿@attribute [Route($"{ConstPage.PAYMENT}/{{PaymentToken}}/{{PaymentAmount}}")]
+﻿@attribute [Route($"{ConstPage.PAYMENT}/{{PaymentToken}}/{{PaymentAmount:decimal}}")]
 
 @using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 
-<h3>Virtual payment page</h3>
+<h3>SIMULATED PAYMENT PAGE</h3>
 
-<p>You need to implement payments</p>
-<p>It is a stub</p>
+<p>You need to implement payment in 3th-d party service, than this page</p>
+<p>IT IS A STUB</p>
+<br />
+<Divider />
+<div>token: @PaymentToken</div>
+<div>PaymentAmount: @PaymentAmount</div>
 
 <Button OnClick="PayButton_ClickHandler">Pay</Button>
 
 @code {
+    [Inject]
+    NavigationManager Navigation { get; set; } = null!;
+
     [Parameter]
     public string PaymentToken { get; set; } = string.Empty;
 
@@ -20,6 +27,17 @@
     {
         await Task.Delay(TimeSpan.FromSeconds(2)); // imitation payment on 3th-d party service
 
+        bool PaymentSuccess = true; //success
+        string PaymentInfo = "some payment info from imitate payment page";
+
         // redirect to url (our) with our token and other info about payment
+        string uri = Navigation.GetUriWithQueryParameters($"{ConstPage.PROCESSED_ORDER}", new Dictionary<string, object?>
+            {
+                ["is-success"] = PaymentSuccess,
+                ["PaymentInfo"] = PaymentInfo,
+                ["token"] = PaymentToken,
+                ["amount"] = PaymentAmount
+            });
+        Navigation.NavigateTo(uri);
     }
 }

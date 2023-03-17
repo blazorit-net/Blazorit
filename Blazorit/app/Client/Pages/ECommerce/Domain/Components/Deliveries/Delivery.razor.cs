@@ -25,12 +25,12 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
         [Parameter]
         public string? Class { get; set; }
 
-        [Parameter]
+        //[Parameter]
         public DeliveryAddress SelectedAddress { get; set; } = new();
         //[Parameter]
         //public EventCallback<DeliveryAddress> SelectedAddressChanged { get; set; } = new();
 
-        [Parameter]
+        //[Parameter]
         public DeliveryMethod SelectedMethod { get; set; } = new();
         //[Parameter]
         //public EventCallback<DeliveryMethod> SelectedMethodChanged { get; set; }
@@ -60,16 +60,16 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
             {
                 choosenDeliveryAddressRadio = DeliveryAddressRadio.ExistingDeliveryAddresses;
             }
-
-            //await SelectedMethodChanged.InvokeAsync(SelectedMethod);
+            
             delivery.UserDelivery.MethodId = SelectedMethod.Id;
             await OnDeliveryChanged.InvokeAsync(delivery);
+            //await SelectedMethodChanged.InvokeAsync(SelectedMethod);
         }
 
-  
+
         private async Task DeliveryMethod_SelectedItemChangedHandlerAsync(DeliveryMethod method)
         {
-            SelectedAddress.Address = string.Empty;
+            SelectedAddress = new DeliveryAddress(); // reset address
             deliveryAddresses = await DeliveryService.GetDeliveryAddresses(method);            
 
             if (method.EnterAddress && deliveryAddresses.Count() == 0)
@@ -87,6 +87,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
             //await SelectedMethodChanged.InvokeAsync(method);
         }
 
+
         private async Task UseNewAddress_ButtonClickAsync()
         {
             deliveryAddresses = await DeliveryService.AddDeliveryAddressAsync(SelectedMethod, deliveryTextArea);
@@ -103,20 +104,9 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
         private async Task DeliveryAddressesSelect_SelectedItemChangedHandler(DeliveryAddress selectedAddress)
         {
             delivery.UserDelivery.AddressId = selectedAddress.Id;
-            delivery.DeliveryCost = await DeliveryService.GetDeliveryCost(SelectedMethod, selectedAddress); ;
-            //await SelectedAddressChanged.InvokeAsync(selectedAddress);
+            delivery.DeliveryCost = await DeliveryService.GetDeliveryCost(SelectedMethod, selectedAddress);             
             await OnDeliveryChanged.InvokeAsync(delivery);
-            
-
-            //delivery = new KernelDeliveries.Delivery (
-            //    new UserDelivery {
-            //        MethodId = SelectedMethod.Id,
-            //        AddressId = selectedAddress.Id
-            //    }
-            //    , deliveryCost
-            //);
-
-            //await OnDeliveryChanged.InvokeAsync(delivery);
+            //await SelectedAddressChanged.InvokeAsync(selectedAddress);
         }
     }
 }

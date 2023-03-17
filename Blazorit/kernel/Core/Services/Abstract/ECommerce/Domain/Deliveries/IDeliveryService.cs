@@ -37,6 +37,8 @@ namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries
         /// <returns></returns>
         Task<DeliveryCost> GetDeliveryCost(long userId, long methodId, string address);
 
-        Task<UserDelivery?> GetUserDeliveryPoint(long userId, long methodId, long addressId);
+        //Task<UserDelivery?> GetUserDeliveryPoint(long userId, long methodId, long addressId);
+
+        Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId);
     }
 }

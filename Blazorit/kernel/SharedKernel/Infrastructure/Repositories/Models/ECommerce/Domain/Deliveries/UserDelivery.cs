@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries
 {
+    /// <summary>
+    /// Customer delivery point
+    /// </summary>
     public class UserDelivery
     {
         public long Id { get; set; }

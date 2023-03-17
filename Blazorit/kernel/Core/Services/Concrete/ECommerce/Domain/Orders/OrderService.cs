@@ -28,19 +28,25 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
         /// <summary>
         /// Method creates uniq token and info about order
         /// </summary>
-        /// <param name="paymentAmount"></param>
         /// <param name="userId"></param>
-        /// <param name="deliveryMethodId"></param>
-        /// <param name="deliveryAddressId"></param>
+        /// <param name="orderData"></param>
         /// <returns></returns>
         public async Task<(bool ok, string paymentToken)> CreateUniqOrderTokenAsync(long userId, CheckOrder orderData)
         {
-            decimal paymentAmount = orderData.TotalPrice;
+            decimal orderAmount = orderData.TotalPrice;
             long deliveryMethodId = orderData.Delivery.UserDelivery.MethodId;
             long deliveryAddressId = orderData.Delivery.UserDelivery.AddressId;
 
+            UserDelivery? userDelivery = await _deliveryService.InitUserDeliveryAsync(userId, deliveryMethodId, deliveryAddressId); // init user delivery point
+
+            if (userDelivery == null)
+            {
+                return (false, string.Empty);
+            }
+
             string paymentToken = Guid.NewGuid().ToString(); // TODO: implement creating uniq key (token)
-            bool result = await _dataRepo.CreateUniqOrderTokenAsync(paymentToken, paymentAmount, userId, deliveryMethodId, deliveryAddressId); // save to storage
+
+            bool result = await _dataRepo.CreateUniqOrderTokenAsync(paymentToken, orderAmount, userId, userDelivery.Id); // save to storage
 
             if (result)
             {
@@ -54,22 +60,14 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
         /// <summary>
         /// Method creates order
         /// </summary>
-        /// <param name="orderCreation"></param>
+        /// <param name="paidOrder"></param>
         /// <returns></returns>
-        public async Task<bool> CreateOrder(OrderCreation orderCreation)
+        public async Task<bool> CreateOrder(PaidOrder paidOrder)
         {
-            long userId = orderCreation.UserId;
-            string orderToken = orderCreation.OrderToken;
-            decimal paymentAmount = orderCreation.PaymentAmount;
-            string paymentInfo = orderCreation.PaymentInfo;
-
-            // set payment info to storage
-            var payInfo = await _dataRepo.CreatePaymentInfoAsync(paymentAmount, paymentInfo);
-
-            if (!payInfo.ok)
-            {
-                return false;
-            }
+            long userId = paidOrder.UserId;
+            string orderToken = paidOrder.OrderToken;
+            decimal paidAmount = paidOrder.PaidAmount;
+            string paymentInfo = paidOrder.PaymentInfo;
 
             CheckoutOrder? orderTokenData = await _dataRepo.GetTokenOrderInfoAsync(orderToken, userId); // get order data from storage
 
@@ -78,33 +76,21 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
                 return false;
             }
 
-            //// if (paymentAmount < orderTokenData.PaymentAmount) // then do error about it or log info about it and skip
+            // set payment info to storage
+            var payment = await _dataRepo.CreatePaymentInfoAsync(paidAmount, orderTokenData.Id, orderToken, paymentInfo);
 
-            // create full order in storage
-            var result = await CreateOrderFromCart(userId, payInfo.paymentId, orderTokenData.DeliveryMethodId, orderTokenData.DeliveryAddressId);
-            // TODO: if order created, then token to set as canceled
-            return result;
-        }
-
-
-        /// <summary>
-        /// Method creates order from cart by userId
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="paymentId"></param>
-        /// <param name="deliveryMethodId"></param>
-        /// <param name="deliveryAddressId"></param>
-        /// <returns></returns>
-        private async Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryMethodId, long deliveryAddressId)
-        {
-            UserDelivery? userDelivery = await _deliveryService.GetUserDeliveryPoint(userId, deliveryMethodId, deliveryAddressId);  
-            
-            if (userDelivery == null)
+            if (!payment.ok)
             {
                 return false;
             }
 
-            return await _dataRepo.CreateOrderFromCart(userId, paymentId, userDelivery.Id); // create order
+
+            //// if (paymentAmount < orderTokenData.OrderAmount) // then do error about it or log info about it and skip
+
+            // create full order in storage
+            var result = await _dataRepo.CreateOrderFromCart(userId, payment.paymentId, orderTokenData.UserDeliveryId, orderToken); // create order
+            // TODO: if order created, then token to set as canceled
+            return result;
         }
     }
 }
