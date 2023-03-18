@@ -23,6 +23,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<CartShopcartList> CartShopcartLists { get; set; }
 
+        public virtual DbSet<DlyDelivery> DlyDeliveries { get; set; }
+
         public virtual DbSet<DlyDeliveryAddress> DlyDeliveryAddresses { get; set; }
 
         public virtual DbSet<DlyDeliveryMethod> DlyDeliveryMethods { get; set; }
@@ -58,6 +60,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
         public virtual DbSet<WishWish> WishWishes { get; set; }
 
         public virtual DbSet<WishWishList> WishWishLists { get; set; }
+
         //################################################################
         //  ############################################################
         //################################################################
@@ -136,6 +139,36 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk__cart_shopcart_lists__prod_products");
+            });
+
+            modelBuilder.Entity<DlyDelivery>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("dly_deliveries_pkey");
+
+                entity.ToTable("dly_deliveries", "dom");
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.DateTimeCreate)
+                    .HasDefaultValueSql("'2023-03-18 15:26:11.350637+03'::timestamp with time zone")
+                    .HasColumnName("date_time_create");
+                entity.Property(e => e.DeliveryCost)
+                    .HasPrecision(16, 4)
+                    .HasColumnName("delivery_cost");
+                entity.Property(e => e.DeliveryDate).HasColumnName("delivery_date");
+                entity.Property(e => e.DeliveryTimeEnd)
+                    .HasColumnType("time with time zone")
+                    .HasColumnName("delivery_time_end");
+                entity.Property(e => e.DeliveryTimeStart)
+                    .HasColumnType("time with time zone")
+                    .HasColumnName("delivery_time_start");
+                entity.Property(e => e.UserDeliveryId).HasColumnName("user_delivery_id");
+
+                entity.HasOne(d => d.UserDelivery).WithMany(p => p.DlyDeliveries)
+                    .HasForeignKey(d => d.UserDeliveryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fki_fk__dly_deliveries__dly_user_deliveries");
             });
 
             modelBuilder.Entity<DlyDeliveryAddress>(entity =>
@@ -222,9 +255,6 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_created");
                 entity.Property(e => e.MethodId).HasColumnName("method_id");
-                entity.Property(e => e.PaidCost)
-                    .HasPrecision(16, 4)
-                    .HasColumnName("paid_cost");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.Address).WithMany(p => p.DlyUserDeliveries)
@@ -277,6 +307,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.HasIndex(e => e.PaymentId, "UQ__ord_orders__payment_id").IsUnique();
 
+                entity.HasIndex(e => e.DeliveryId, "fki_fk__ord_orders__dly_deliveries");
+
                 entity.HasIndex(e => e.DeliveryId, "fki_fk__ord_orders__dly_user_deliveries");
 
                 entity.HasIndex(e => e.PaymentId, "fki_fk__ord_orders__pmnt_payments");
@@ -296,7 +328,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.HasOne(d => d.Delivery).WithMany(p => p.OrdOrders)
                     .HasForeignKey(d => d.DeliveryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk__ord_orders__dly_user_deliveries");
+                    .HasConstraintName("fk__ord_orders__dly_deliveries");
 
                 entity.HasOne(d => d.Payment).WithOne(p => p.OrdOrder)
                     .HasForeignKey<OrdOrder>(d => d.PaymentId)

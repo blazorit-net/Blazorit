@@ -91,8 +91,8 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
         /// <param name="addressId"></param>
-        /// <returns>user delivery point ID</returns>
-        Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId, decimal deliveryCost);
+        /// <returns>delivery ID</returns>
+        Task<(bool ok, long deliveryId)> InitDeliveryAsync(long userId, long methodId, long addressId, decimal deliveryCost);
 
         /// <summary>
         /// <summary>

@@ -41,16 +41,16 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
             long deliveryAddressId = orderData.Delivery.UserDelivery.AddressId;
             decimal deliveryCost = orderData.Delivery.DeliveryCost.TotalCost;
 
-            UserDelivery? userDelivery = await _deliveryService.InitUserDeliveryAsync(userId, deliveryMethodId, deliveryAddressId, deliveryCost); // init user delivery point
+            var delivery = await _deliveryService.InitDeliveryAsync(userId, deliveryMethodId, deliveryAddressId, deliveryCost); // init delivery
 
-            if (userDelivery == null)
+            if (delivery.ok == false)
             {
                 return (false, string.Empty);
             }
 
             string paymentToken = Guid.NewGuid().ToString(); // TODO: implement creating uniq key (token)
 
-            bool result = await _dataRepo.CreateUniqOrderTokenAsync(paymentToken, orderAmount, userId, userDelivery.Id); // save to storage
+            bool result = await _dataRepo.CreateUniqOrderTokenAsync(paymentToken, orderAmount, userId, delivery.deliveryId); // save to storage
 
             if (result)
             {

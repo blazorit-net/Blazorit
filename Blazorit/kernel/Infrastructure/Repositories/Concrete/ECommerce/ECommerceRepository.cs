@@ -396,8 +396,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="userId"></param>
         /// <param name="methodId"></param>
         /// <param name="addressId"></param>
-        /// <returns>user delivery point ID</returns>
-        public async Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId, decimal deliveryCost)
+        /// <returns>delivery ID</returns>
+        public async Task<(bool ok, long deliveryId)> InitDeliveryAsync(long userId, long methodId, long addressId, decimal deliveryCost)
         {
             try
             {
@@ -411,30 +411,41 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     {
                         UserId = userId,
                         MethodId = methodId,
-                        AddressId = addressId,
-                        PaidCost = deliveryCost
+                        AddressId = addressId
                     };
 
-                    await context.DlyUserDeliveries.AddAsync(userDelivery);
-                    await context.SaveChangesAsync();
+                    await context.DlyUserDeliveries.AddAsync(userDelivery);                    
                 }
 
-                return new UserDelivery
+                DlyDelivery delivery = new()
                 {
-                    Id = userDelivery.Id,
-                    UserId = userDelivery.UserId,
-                    MethodId = userDelivery.MethodId,
-                    AddressId = userDelivery.AddressId,
-                    DateTimeCreated = userDelivery.DateTimeCreated
+                    DeliveryCost = deliveryCost,
+                    UserDelivery = userDelivery,
+                    //DeliveryDate,
+                    //DeliveryTimeStart,
+                    //DeliveryTimeEnd    
                 };
+
+                await context.DlyDeliveries.AddAsync(delivery);
+                await context.SaveChangesAsync();
+
+                return (true, delivery.Id);
+                //return new UserDelivery
+                //{
+                //    Id = userDelivery.Id,
+                //    UserId = userDelivery.UserId,
+                //    MethodId = userDelivery.MethodId,
+                //    AddressId = userDelivery.AddressId,
+                //    DateTimeCreated = userDelivery.DateTimeCreated
+                //};
             
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(InitUserDeliveryAsync)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(InitDeliveryAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 
-            return null;
+            return (default, default);
         }
 
 
