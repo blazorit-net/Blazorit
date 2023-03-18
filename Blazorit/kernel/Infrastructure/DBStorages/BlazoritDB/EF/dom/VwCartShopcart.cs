@@ -28,5 +28,5 @@ public partial class VwCartShopcart {
 
     public int? Quantity { get; set; }
 
-    public DateTime? DateTimeCreated { get; set; }
+    public DateTime? DateTimeItemCreate { get; set; }
 }

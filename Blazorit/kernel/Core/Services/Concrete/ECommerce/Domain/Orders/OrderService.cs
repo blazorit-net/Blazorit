@@ -2,9 +2,12 @@
 using Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +39,9 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
             decimal orderAmount = orderData.TotalPrice;
             long deliveryMethodId = orderData.Delivery.UserDelivery.MethodId;
             long deliveryAddressId = orderData.Delivery.UserDelivery.AddressId;
+            decimal deliveryCost = orderData.Delivery.DeliveryCost.TotalCost;
 
-            UserDelivery? userDelivery = await _deliveryService.InitUserDeliveryAsync(userId, deliveryMethodId, deliveryAddressId); // init user delivery point
+            UserDelivery? userDelivery = await _deliveryService.InitUserDeliveryAsync(userId, deliveryMethodId, deliveryAddressId, deliveryCost); // init user delivery point
 
             if (userDelivery == null)
             {
@@ -90,6 +94,58 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
             // create full order in storage
             var result = await _dataRepo.CreateOrderFromCart(userId, payment.paymentId, orderTokenData.UserDeliveryId, orderToken); // create order
             // TODO: if order created, then token to set as canceled
+            return result;
+        }
+
+
+        /// <summary>
+        /// Method receives shopcart
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<Order?> GetUserOrderAsync(long userId)
+        {
+            IEnumerable<VwOrder> repoResult = await _dataRepo.GetUserOrderListAsync(userId, -1);
+            IEnumerable<OrderItem> result = await GetOrderItemsFromOrdersAsync(repoResult);
+            return result.Count() == 0 ? null : new Order(result);
+        }
+
+        /// <summary>
+        /// Method converts IEnumerable<VwOrder> to IEnumerable<OrderItem> and adds additional data from repository (picture's link parts)
+        /// </summary>
+        /// <param name="orderList"></param>
+        /// <returns></returns>
+        private async Task<IEnumerable<OrderItem>> GetOrderItemsFromOrdersAsync(IEnumerable<VwOrder> orderList)
+        {
+
+            IEnumerable<OrderItem> result = orderList.Select(x => new OrderItem
+            {
+                ProductId = x.ProductId,
+                Category = x.Category.Trim(),
+                ProductLinkPart = x.ProductLinkPart.Trim(),
+                Name = x.Name,
+                ProductPrice = x.ProductPrice,
+                OrderPrice = x.OrderPrice,
+                Sku = x.Sku,
+                Quantity = x.Quantity,
+                ////DateTimeCreated = x.DateTimeItemCreate
+                 
+            }).ToList();
+
+            foreach (var item in result)
+            {
+                item.PicturesLinkParts = (await _dataRepo.GetProductPictureLinkPartsAsync(item.ProductId, "medium", "site")) // select images for shopcart item
+                    .Select(x => new PictureLinkPart
+                    {
+                        LinkPart = x.LinkPart.Trim(),
+                        OrderNum = x.OrderNum,
+                        PicSize = x.PicSize
+                    }).OrderBy(x => x.OrderNum)
+                    .ToList();
+
+                item.ProductPictureLinkPart = item.PicturesLinkParts.FirstOrDefault()?.LinkPart.Trim() ?? string.Empty;
+            }
+
             return result;
         }
     }

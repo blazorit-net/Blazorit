@@ -15,6 +15,8 @@ public partial class VwOrdOrder
 
     public DateTime? DateTimeCreate { get; set; }
 
+    public long? ProductId { get; set; }
+
     public string? Sku { get; set; }
 
     public string? Name { get; set; }
@@ -22,6 +24,10 @@ public partial class VwOrdOrder
     public string? Curr { get; set; }
 
     public decimal? ProductPrice { get; set; }
+
+    public string? Category { get; set; }
+
+    public string? ProductLinkPart { get; set; }
 
     public decimal? OrderPrice { get; set; }
 

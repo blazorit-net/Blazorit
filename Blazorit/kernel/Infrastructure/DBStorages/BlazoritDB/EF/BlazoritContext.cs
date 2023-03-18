@@ -222,6 +222,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_created");
                 entity.Property(e => e.MethodId).HasColumnName("method_id");
+                entity.Property(e => e.PaidCost)
+                    .HasPrecision(16, 4)
+                    .HasColumnName("paid_cost");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.Address).WithMany(p => p.DlyUserDeliveries)
@@ -475,7 +478,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasColumnName("curr");
                 entity.Property(e => e.DateCreate).HasColumnName("date_create");
                 entity.Property(e => e.DateTimeCreate).HasColumnName("date_time_create");
-                entity.Property(e => e.DateTimeCreated).HasColumnName("date_time_created");
+                entity.Property(e => e.DateTimeItemCreate).HasColumnName("date_time_item_create");
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
                     .HasColumnName("name");
@@ -539,6 +542,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasNoKey()
                     .ToView("vw_ord_orders", "dom");
 
+                entity.Property(e => e.Category)
+                    .HasMaxLength(100)
+                    .HasColumnName("category");
                 entity.Property(e => e.Curr)
                     .HasMaxLength(3)
                     .HasColumnName("curr");
@@ -552,6 +558,10 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.OrderPrice)
                     .HasPrecision(16, 4)
                     .HasColumnName("order_price");
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+                entity.Property(e => e.ProductLinkPart)
+                    .HasMaxLength(200)
+                    .HasColumnName("product_link_part");
                 entity.Property(e => e.ProductPrice)
                     .HasPrecision(16, 4)
                     .HasColumnName("product_price");

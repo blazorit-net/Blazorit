@@ -15,6 +15,8 @@ public partial class DlyUserDelivery
 
     public DateTime DateTimeCreated { get; set; }
 
+    public decimal PaidCost { get; set; }
+
     public virtual DlyDeliveryAddress Address { get; set; } = null!;
 
     public virtual DlyDeliveryMethod Method { get; set; } = null!;

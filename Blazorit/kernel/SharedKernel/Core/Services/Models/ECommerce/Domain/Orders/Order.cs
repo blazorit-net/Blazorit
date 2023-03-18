@@ -22,7 +22,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
         {
             get
             {
-                orderList = orderList.OrderByDescending(x => x.DateTimeCreated).ThenBy(x => x.Sku).ToList(); // ordering for all views
+                orderList = orderList.OrderByDescending(x => x.Sku).ToList(); // ordering for all views
                 return orderList;
             }
             set
@@ -39,11 +39,11 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
             }
         }
 
-        public decimal TotalPrice
+        public decimal TotalProductPrice
         {
             get
             {
-                return OrderList.Sum(x => x.Price * x.Quantity);
+                return OrderList.Sum(x => x.TotalProductPrice);
             }
         }
 
@@ -55,11 +55,29 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
             }
         }
 
-        public string StrTotalPrice
+        public string StrTotalProductPrice
         {
             get
             {
-                return TotalPrice.ToString("N0");
+                return TotalProductPrice.ToString("N0");
+            }
+        }
+
+
+        public decimal TotalOrderPrice
+        {
+            get
+            {
+                return OrderList.Sum(x => x.TotalOrderPrice);
+            }
+        }
+
+
+        public string StrTotalOrderPrice
+        {
+            get
+            {
+                return TotalOrderPrice.ToString("N0");
             }
         }
     }

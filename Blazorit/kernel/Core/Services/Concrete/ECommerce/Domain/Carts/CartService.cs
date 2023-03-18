@@ -78,7 +78,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
                {
                    ProductId = left.ProductId,
                    Quantity = Math.Max(left.Quantity, right?.Quantity ?? 0), //get max quantity
-                   DateTimeCreated = right?.DateTimeCreated ?? left.DateTimeCreated
+                   DateTimeCreated = right?.DateTimeCreated ?? left.DateTimeItemCreate
                };
             var clientOuterJoin =
                 from left in clientList
@@ -95,7 +95,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
             {
                   ProductId= x.ProductId,
                   Quantity = x.Quantity,
-                  DateTimeCreated = x.DateTimeCreated
+                  DateTimeItemCreate = x.DateTimeCreated
             }).ToList();
 
             var repoResult = await _dataRepo.UpdateShopCartAsync(userId, fullOuterJoin);
@@ -119,7 +119,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
                 Price = x.ProductPrice,
                 Sku = x.Sku,
                 Quantity = x.Quantity,
-                DateTimeCreated = x.DateTimeCreated
+                DateTimeCreated = x.DateTimeItemCreate
             }).ToList();
 
             foreach (var item in result) {

@@ -8,7 +8,7 @@
 <p>IT IS A STUB</p>
 <br />
 <Divider />
-<div>token: @PaymentToken</div>
+<div>Token: @PaymentToken</div>
 <div>PaymentAmount: @PaymentAmount</div>
 
 <Button OnClick="PayButton_ClickHandler">Pay</Button>
@@ -38,6 +38,7 @@
                 ["token"] = PaymentToken,
                 ["amount"] = PaymentAmount
             });
+
         Navigation.NavigateTo(uri);
     }
 }

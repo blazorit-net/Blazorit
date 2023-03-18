@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts
+namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders
 {
-    public class VwShopcart
+    public class VwOrder
     {
-        public long CartId { get; set; }
+        public long OrderId { get; set; }
+
+        public long DeliveryId { get; set; }
 
         public long ProductId { get; set; }
 
@@ -24,9 +26,8 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
 
         public string ProductLinkPart { get; set; } = string.Empty;
 
+        public decimal OrderPrice { get; set; }
+
         public int Quantity { get; set; }
-
-        public DateTimeOffset DateTimeItemCreate { get; set; }
-
     }
 }

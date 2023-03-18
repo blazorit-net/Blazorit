@@ -92,7 +92,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="methodId"></param>
         /// <param name="addressId"></param>
         /// <returns>user delivery point ID</returns>
-        Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId);
+        Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId, decimal deliveryCost);
 
         /// <summary>
         /// <summary>
@@ -203,5 +203,13 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<CheckoutOrder?> GetTokenOrderInfoAsync(string orderToken, long userId);
+
+        /// <summary>
+        /// Method returns all user's items from order by orderId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<VwOrder>> GetUserOrderListAsync(long userId, long orderId);
     }
 }

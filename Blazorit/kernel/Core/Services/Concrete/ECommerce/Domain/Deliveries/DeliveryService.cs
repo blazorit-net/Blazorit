@@ -99,9 +99,9 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
         //    return await _dataRepo.GetUserDelivery(userId, methodId, addressId);
         //}
 
-        public async Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId)
+        public async Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId, decimal deliveryCost)
         {
-            UserDelivery? result = await _dataRepo.InitUserDeliveryAsync(userId, methodId, addressId);
+            UserDelivery? result = await _dataRepo.InitUserDeliveryAsync(userId, methodId, addressId, deliveryCost);
             return result;
         }
     }

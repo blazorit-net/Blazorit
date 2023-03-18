@@ -397,7 +397,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="methodId"></param>
         /// <param name="addressId"></param>
         /// <returns>user delivery point ID</returns>
-        public async Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId)
+        public async Task<UserDelivery?> InitUserDeliveryAsync(long userId, long methodId, long addressId, decimal deliveryCost)
         {
             try
             {
@@ -411,7 +411,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     {
                         UserId = userId,
                         MethodId = methodId,
-                        AddressId = addressId
+                        AddressId = addressId,
+                        PaidCost = deliveryCost
                     };
 
                     await context.DlyUserDeliveries.AddAsync(userDelivery);
@@ -617,7 +618,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     .Select(x => new VwShopcart {
                         CartId = x.CartId.GetValueOrDefault(),
                         Curr = x.Curr!,
-                        DateTimeCreated = x.DateTimeCreated.GetValueOrDefault(),
+                        DateTimeItemCreate = x.DateTimeItemCreate.GetValueOrDefault(),
                         Name = x.Name!, 
                         ProductId = x.ProductId.GetValueOrDefault(),
                         ProductPrice = x.ProductPrice.GetValueOrDefault(),
@@ -915,5 +916,48 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
             return null;
         }
+
+
+        /// <summary>
+        /// Method returns all user's items from order by orderId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<VwOrder>> GetUserOrderListAsync(long userId, long orderId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var list = await context.VwOrdOrders
+                    .Where(x => x.UserId == userId && x.OrderId == orderId)
+                    .Select(x => new VwOrder
+                    {
+                        OrderId = x.OrderId.GetValueOrDefault(),
+                        Curr = x.Curr!,
+                        ////DateTimeItemCreate = x.DateTimeCreate.GetValueOrDefault(),
+                        Name = x.Name!,
+                        ProductId = x.ProductId.GetValueOrDefault(),
+                        ProductPrice = x.ProductPrice.GetValueOrDefault(),
+                        Quantity = x.Quantity.GetValueOrDefault(),
+                        Sku = x.Sku!,
+                        ProductLinkPart = x.ProductLinkPart!,
+                        Category = x.Category!,
+                        OrderPrice = x.OrderPrice.GetValueOrDefault(),
+                        DeliveryId = x.DeliveryId.GetValueOrDefault()
+                    })
+                    .ToListAsync();
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetShopCartListAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return Enumerable.Empty<VwOrder>();
+        }
+
     }
 }
