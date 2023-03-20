@@ -17,6 +17,6 @@ namespace Blazorit.Server.Services.Abstract.ECommerce.Domain.Orders
         /// </summary>
         /// <param name="orderCreation"></param>
         /// <returns></returns>
-        Task<bool> CreateOrder(PaidOrder orderCreation);
+        Task<Order?> CreateOrder(PaidOrder orderCreation);
     }
 }

@@ -7,38 +7,39 @@ using System.Threading.Tasks;
 
 namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries
 {
-    /// <summary>
-    /// Сlass contains delivery data
-    /// </summary>
     public class Delivery
     {
         public Delivery() { }
 
-        public Delivery(UserDelivery userDelivery, DeliveryCost cost)
+        public Delivery(VwDelivery delivery)
         {
-            UserDelivery = userDelivery;
-            DeliveryCost = cost;
+            MethodId = delivery.MethodId;
+            AddressId = delivery.AddressId;
+            Method = delivery.Method;
+            Address = delivery.Address;
+            Comment = delivery.Comment;
+            DeliveryCost = new DeliveryCost(delivery.DeliveryCost);
+            DeliveryDate = delivery.DeliveryDate;
+            DeliveryTimeStart = delivery.DeliveryTimeStart;
+            DeliveryTimeEnd = delivery.DeliveryTimeEnd;
         }
 
-        public UserDelivery UserDelivery { get; set; } = new();
+        public long MethodId { get; set; }
 
-        /// <summary>
-        /// Delivery cost
-        /// </summary>
-        public DeliveryCost DeliveryCost { get; set; } = new();    
-        
-        
-        public bool IsCheckedDeliveryEntryFields 
-        { 
-            get
-            {
-                if (UserDelivery.AddressId != 0 && UserDelivery.MethodId != 0)
-                {
-                    return true;
-                }
+        public long AddressId { get; set; }
 
-                return false;
-            }
-        }
+        public string Method { get; set; } = string.Empty;
+
+        public string Address { get; set; } = string.Empty;
+
+        public string Comment { get; set; } = string.Empty;
+
+        public DeliveryCost DeliveryCost { get; set; } = new();
+
+        public DateOnly DeliveryDate { get; set; } = default;
+
+        public DateTimeOffset DeliveryTimeStart { get; set; } = default;
+
+        public DateTimeOffset DeliveryTimeEnd { get; set; } = default;
     }
 }

@@ -16,7 +16,7 @@ namespace Blazorit.Client.Support.Helpers {
         /// <param name="requestUri"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<TValue?> GetFromJsonOrDefaultAsync<TValue>(this HttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, CancellationToken cancellationToken = default) 
+        public static async Task<TValue?> GetFromJsonOrDefaultAsync<TValue>(this HttpClient client, [StringSyntax(StringSyntaxAttribute.Uri)] string? requestUri, CancellationToken cancellationToken = default)
         {
             try {
                 return await client.GetFromJsonAsync<TValue>(requestUri, cancellationToken);                 

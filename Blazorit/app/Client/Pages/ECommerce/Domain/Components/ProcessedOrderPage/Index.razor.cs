@@ -1,6 +1,7 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Client.Support.Enums;
+using Blazorit.Shared.Models.Universal;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
 using Microsoft.AspNetCore.Components;
 using System.Xml.Linq;
@@ -13,6 +14,8 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProcessedOrderPage
     public partial class Index
     {
         private Tribool isSuccessOrder = Tribool.None;
+
+        private Order orderData = new();
 
         [Inject]
         private IOrderService OrderService { get; set; } = null!;
@@ -73,7 +76,14 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProcessedOrderPage
                     PaymentInfo = PaymentInfo
                 };
 
-                isSuccessOrder = (await OrderService.CreateOrder(orderInfo)).ToTribool();                
+                Response<Order> orderResponse = await OrderService.CreateOrder(orderInfo);
+
+                if (orderResponse.Ok)
+                {
+                    orderData = orderResponse.Data!;                    
+                } 
+
+                isSuccessOrder = orderResponse.Ok.ToTribool();
                 await CartService.SyncShopCartAsync();
             }
         }

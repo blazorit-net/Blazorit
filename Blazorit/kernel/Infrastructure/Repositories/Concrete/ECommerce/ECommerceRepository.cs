@@ -458,14 +458,14 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="deliveryId"></param>
         /// <param name="orderToken"></param>
         /// <returns></returns>
-        public async Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId, string orderToken) {
+        public async Task<(bool ok, long orderId)> CreateOrderFromCart(long userId, long paymentId, long deliveryId, string orderToken) {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
                 List<VwCartShopcart>? cartList = context.VwCartShopcarts.Where(x => x.UserId == userId).ToList();
                 
                 if (cartList == null) {
-                    return false;
+                    return (false, default);
                 }
 
                 OrdOrder order = new() {
@@ -500,13 +500,13 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 }
 
                 await context.SaveChangesAsync(); // create order data
-                return true;
+                return (true, order.Id);
 
             } catch (Exception ex) {
                 _logger?.LogError(ex, $"Error occurred in the method {nameof(CreateOrderFromCart)} of the {nameof(ECommerceRepository)} repository");
             }
 
-            return false;
+            return (false, default);
         }
 
 
@@ -865,9 +865,9 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="paymentToken"></param>
         /// <param name="orderAmount"></param>
         /// <param name="userId"></param>
-        /// <param name="userDeliveryId"></param>
+        /// <param name="deliveryId"></param>
         /// <returns></returns>
-        public async Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long userDeliveryId)
+        public async Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long deliveryId)
         {
             try
             {
@@ -879,7 +879,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         Canceled = false,
                         OrderAmount = orderAmount,    
                         UserId = userId,
-                        UserDeliveryId = userDeliveryId // TODO: DeliveryMethodId replace to UserDeliveryId
+                        DeliveryId = deliveryId 
                     });
 
                 await context.SaveChangesAsync();
@@ -913,7 +913,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         Canceled = x.Canceled ?? default,
                         OrderAmount = x.OrderAmount,
                         UserId = x.UserId,
-                        UserDeliveryId = x.UserDeliveryId,
+                        DeliveryId = x.DeliveryId,
                         DateTimeCreated = x.DateTimeCreated
                     })
                     .FirstOrDefaultAsync();
@@ -964,10 +964,60 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetShopCartListAsync)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetUserOrderListAsync)} of the {nameof(ECommerceRepository)} repository");
             }
 
             return Enumerable.Empty<VwOrder>();
+        }
+
+
+        /// <summary>
+        /// Method returns delivery info for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public async Task<VwDelivery?> GetDeliveryByOrder(long userId, long orderId)
+        {
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            try
+            {
+                OrdOrder? order = await context.OrdOrders.FirstOrDefaultAsync(x => x.Id == orderId);
+
+                if (order == null)
+                {
+                    return null;
+                }
+
+                var result = await context.VwDlyDeliveries
+                    .Where(x => x.UserId == userId && x.Id == order.DeliveryId)
+                    .Select(x => new VwDelivery()
+                    {
+                        Id = x.Id.GetValueOrDefault(),
+                        UserId = x.UserId.GetValueOrDefault(),
+                        Address = x.Address!,
+                        AddressId = x.AddressId.GetValueOrDefault(),
+                        Method = x.Method!,
+                        MethodId = x.MethodId.GetValueOrDefault(),
+                        DateTimeCreate = x.DateTimeCreate.GetValueOrDefault(),
+                        Comment = x.Comment!,
+                        DeliveryCost = x.DeliveryCost.GetValueOrDefault(),
+                        DeliveryDate = x.DeliveryDate.GetValueOrDefault(),
+                        DeliveryTimeEnd = x.DeliveryTimeEnd.GetValueOrDefault(),
+                        DeliveryTimeStart = x.DeliveryTimeStart.GetValueOrDefault()
+
+                    })
+                    .FirstOrDefaultAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryByOrder)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return null;
         }
 
     }

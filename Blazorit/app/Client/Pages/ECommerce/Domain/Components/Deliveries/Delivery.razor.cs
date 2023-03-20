@@ -15,7 +15,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
         private DeliveryAddressRadio choosenDeliveryAddressRadio = DeliveryAddressRadio.ExistingDeliveryAddresses;
         private string deliveryTextArea = string.Empty;
         //private DeliveryCost deliveryCost = new();
-        private KernelDeliveries.Delivery delivery = new();
+        private KernelDeliveries.UserDeliveryPoint delivery = new();
 
         //private Select<DeliveryAddress, DeliveryAddress>? SelectDeliveryAddressRef = new();
 
@@ -41,7 +41,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
 
 
         [Parameter]
-        public EventCallback<KernelDeliveries.Delivery> OnDeliveryChanged { get; set; } = new();
+        public EventCallback<KernelDeliveries.UserDeliveryPoint> OnDeliveryChanged { get; set; } = new();
 
 
 

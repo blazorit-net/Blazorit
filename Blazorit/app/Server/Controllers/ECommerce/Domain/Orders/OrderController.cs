@@ -41,18 +41,18 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Orders
 
 
         [HttpPost($"{OrderApi.CREATE_ORDER}")]
-        public async Task<ActionResult<bool>> CreateOrderAsync(PaidOrder orderCreation)
+        public async Task<ActionResult<Response<Order>>> CreateOrderAsync(PaidOrder orderCreation)
         {
             orderCreation.UserId = long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out long id) ? id : long.MinValue;
 
             var result = await _orderService.CreateOrder(orderCreation);
 
-            if (result == false)
+            if (result == null)
             {
-                return BadRequest();
+                return Problem();
             }
 
-            return Ok(result);
+            return Ok(new Response<Order>(result, "Order successfully completed"));
         }
 
     }

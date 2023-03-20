@@ -23,5 +23,5 @@ public partial class OrdCheckoutOrder
 
     public long UserId { get; set; }
 
-    public long UserDeliveryId { get; set; }
+    public long DeliveryId { get; set; }
 }

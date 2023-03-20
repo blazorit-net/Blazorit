@@ -10,7 +10,7 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
     {
         public long Id { get; set; }
 
-        public DateTime DateTimeCreated { get; set; }
+        public DateTimeOffset DateTimeCreated { get; set; }
 
         /// <summary>
         /// uniq token
@@ -23,6 +23,6 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
 
         public long UserId { get; set; }
 
-        public long UserDeliveryId { get; set; }
+        public long DeliveryId { get; set; }
     }
 }

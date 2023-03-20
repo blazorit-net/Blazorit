@@ -3,6 +3,7 @@ using Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
@@ -66,7 +67,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
         /// </summary>
         /// <param name="paidOrder"></param>
         /// <returns></returns>
-        public async Task<bool> CreateOrder(PaidOrder paidOrder)
+        public async Task<Order?> CreateOrder(PaidOrder paidOrder)
         {
             long userId = paidOrder.UserId;
             string orderToken = paidOrder.OrderToken;
@@ -77,7 +78,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
 
             if (orderTokenData == null)
             {
-                return false;
+                return null;
             }
 
             // set payment info to storage
@@ -85,16 +86,23 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
 
             if (!payment.ok)
             {
-                return false;
+                return null;
             }
 
 
             //// if (paymentAmount < orderTokenData.OrderAmount) // then do error about it or log info about it and skip
 
             // create full order in storage
-            var result = await _dataRepo.CreateOrderFromCart(userId, payment.paymentId, orderTokenData.UserDeliveryId, orderToken); // create order
-            // TODO: if order created, then token to set as canceled
-            return result;
+            var orderResult = await _dataRepo.CreateOrderFromCart(userId, payment.paymentId, orderTokenData.DeliveryId, orderToken); // create order
+
+            if (!orderResult.ok)
+            {
+                return null;
+            }
+
+            // after creating order we return this order from storage
+            Order? order = await GetUserOrderAsync(userId, orderResult.orderId);            
+            return order;
         }
 
 
@@ -103,11 +111,14 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<Order?> GetUserOrderAsync(long userId)
+        public async Task<Order?> GetUserOrderAsync(long userId, long orderId)
         {
-            IEnumerable<VwOrder> repoResult = await _dataRepo.GetUserOrderListAsync(userId, -1);
-            IEnumerable<OrderItem> result = await GetOrderItemsFromOrdersAsync(repoResult);
-            return result.Count() == 0 ? null : new Order(result);
+            Delivery? delivery = await _deliveryService.GetDeliveryByOrder(userId, orderId);
+
+            IEnumerable<VwOrder> repoResult = await _dataRepo.GetUserOrderListAsync(userId, orderId);
+            IEnumerable<OrderItem> listItems = await GetOrderItemsFromOrdersAsync(repoResult);            
+            
+            return listItems.Count() == 0 ? null : new Order(listItems, delivery ?? new Delivery());
         }
 
         /// <summary>

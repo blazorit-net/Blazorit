@@ -104,7 +104,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="deliveryId"></param>
         /// <param name="orderToken"></param>
         /// <returns></returns>
-        Task<bool> CreateOrderFromCart(long userId, long paymentId, long deliveryId, string orderToken);
+        Task<(bool ok, long orderId)> CreateOrderFromCart(long userId, long paymentId, long deliveryId, string orderToken);
 
         /// <summary>
         /// Method returns all products from product's view
@@ -194,7 +194,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="deliveryMethodId"></param>
         /// <param name="deliveryAddressId"></param>
         /// <returns></returns>
-        Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long userDeliveryId);
+        Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long deliveryId);
 
         /// <summary>
         /// Methods returns info about order by orderToken (not canceled)
@@ -211,5 +211,13 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="orderId"></param>
         /// <returns></returns>
         Task<IEnumerable<VwOrder>> GetUserOrderListAsync(long userId, long orderId);
+
+        /// <summary>
+        /// Method returns delivery info for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        Task<VwDelivery?> GetDeliveryByOrder(long userId, long orderId);
     }
 }

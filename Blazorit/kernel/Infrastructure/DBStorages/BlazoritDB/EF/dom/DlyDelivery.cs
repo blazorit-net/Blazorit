@@ -19,7 +19,7 @@ public partial class DlyDelivery
 
     public DateTimeOffset? DeliveryTimeEnd { get; set; }
 
-    public virtual ICollection<OrdOrder> OrdOrders { get; } = new List<OrdOrder>();
+    public virtual OrdOrder? OrdOrder { get; set; }
 
     public virtual DlyUserDelivery UserDelivery { get; set; } = null!;
 }

@@ -1,4 +1,5 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,15 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
 
         public Order() { }
 
-        public Order(IEnumerable<OrderItem> cartList)
+        public Order(IEnumerable<OrderItem> cartList, Delivery delivery)
         {
             OrderList = cartList.ToList();
+            this.Delivery = delivery;
         }
+
+
+        public Delivery Delivery { get; set; } = new();
+
 
         public List<OrderItem> OrderList
         {

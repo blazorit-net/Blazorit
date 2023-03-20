@@ -30,7 +30,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
 
 
         [Parameter]
-        public Delivery Delivery { get; set; } = new();
+        public SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries.UserDeliveryPoint Delivery { get; set; } = new();
 
 
         [Parameter]

@@ -11,7 +11,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage
         private DeliveryMethod selectedDeliveryMethod = new();
         private DeliveryAddress selectedDeliveryAddress = new();
         private DeliveryCost deliveryCost = new();
-        private Delivery delivery = new();
+        private SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries.UserDeliveryPoint delivery = new();
 
         [Inject]
         private CartState CartState { get; set; } = null!;
@@ -25,7 +25,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage
             await InvokeAsync(() => deliveryCost = item);
         }
 
-        private async Task Delivery_DeliveryChangedHandlerAsync(Delivery delivery)
+        private async Task Delivery_DeliveryChangedHandlerAsync(SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries.UserDeliveryPoint delivery)
         {
             await InvokeAsync(() => this.delivery = delivery);
         }

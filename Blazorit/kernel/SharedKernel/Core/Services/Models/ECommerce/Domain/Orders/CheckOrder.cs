@@ -15,7 +15,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
     {
         public CheckOrder() { }
 
-        public CheckOrder(ShopCart shopCart, Delivery delivery)
+        public CheckOrder(ShopCart shopCart, UserDeliveryPoint delivery)
         {
             ShopCart = shopCart;
             Delivery = delivery;
@@ -24,7 +24,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
         public ShopCart ShopCart { get; set; } = new();
 
 
-        public Delivery Delivery { get; set; } = new();
+        public UserDeliveryPoint Delivery { get; set; } = new();
 
 
         /// <summary>
