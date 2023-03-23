@@ -1,4 +1,5 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,17 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
     {
         public OrderItem() { }
 
-        ////public OrderItem(ProductCardData product)
-        ////{
-        ////    ProductId = product.Id;
-        ////    Sku = product.Sku;
-        ////    Category = product.Category;
-        ////    ProductLinkPart = product.LinkPart;
-        ////    Name = product.Name;
-        ////    Price = product.Price;
-        ////    ProductPictureLinkPart = product.MainPictureLinkPart;
-        ////    PicturesLinkParts = product.PicturesLinkParts;
-        ////    Quantity = 0;
-        ////}
+        public OrderItem(VwOrder order)
+        {
+            ProductId = order.ProductId;
+            Category = order.Category.Trim();
+            ProductLinkPart = order.ProductLinkPart.Trim();
+            Name = order.Name;
+            ProductPrice = order.ProductPrice;
+            OrderPrice = order.OrderPrice;
+            Sku = order.Sku;
+            Quantity = order.Quantity; 
+        }
 
         public long ProductId { get; set; }
 
@@ -105,7 +105,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
         {
             get
             {
-                return ProductPrice.ToString("N0");
+                return OrderPrice.ToString("N0");
             }
         }
 

@@ -1,0 +1,16 @@
+﻿span.about-order-subtitle {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+span.about-order-sub-item {
+    color: #898f97;
+}
+
+span.about-order-content-payment-amount {
+    font-weight: bold;
+}
+
+span.about-order-content-delivery-cost {
+    font-weight: bold;
+}

@@ -27,7 +27,9 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries
         /// </summary>
         public DeliveryCost DeliveryCost { get; set; } = new();    
         
-        
+        /// <summary>
+        /// Property checks fields
+        /// </summary>
         public bool IsCheckedDeliveryEntryFields 
         { 
             get

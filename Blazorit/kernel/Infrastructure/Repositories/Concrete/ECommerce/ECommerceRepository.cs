@@ -1,9 +1,11 @@
 ﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
+//using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -363,7 +365,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="paymentAmount"></param>
         /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
         /// <returns></returns>
-        public async Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, long checkoutOrderId, string orderToken, string? manyParamsAboutPayments = null)
+        public async Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, bool isPaid, long checkoutOrderId, string orderToken, string? manyParamsAboutPayments = null)
         {
             try
             {
@@ -372,6 +374,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 PmntPayment payment = new() 
                 { 
                     PaymentAmount = paymentAmount,
+                    IsPaid = isPaid,
                     CheckoutOrderId = checkoutOrderId,
                     OrderToken = orderToken,
                     PaymentInfo = manyParamsAboutPayments
@@ -877,7 +880,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     {
                         OrderToken = orderToken,
                         Canceled = false,
-                        OrderAmount = orderAmount,    
+                        PaymentAmount = orderAmount,    
                         UserId = userId,
                         DeliveryId = deliveryId 
                     });
@@ -911,7 +914,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         Id = x.Id, 
                         OrderToken = x.OrderToken,
                         Canceled = x.Canceled ?? default,
-                        OrderAmount = x.OrderAmount,
+                        PaymentAmount = x.PaymentAmount,
                         UserId = x.UserId,
                         DeliveryId = x.DeliveryId,
                         DateTimeCreated = x.DateTimeCreated
@@ -1015,6 +1018,74 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             catch (Exception ex)
             {
                 _logger?.LogError(ex, $"Error occurred in the method {nameof(GetDeliveryByOrder)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return null;
+        }
+
+        
+        /// <summary>
+        /// Method returns order
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public async Task<Order?> GetOrder(long userId, long orderId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                Order? order = await context.OrdOrders
+                    .Where(x => x.UserId == userId && x.Id == orderId)
+                    .Select(x => new Order
+                    {
+                        Id = x.Id,
+                        DateTimeCreate = x.DateTimeCreate, 
+                        DeliveryId = x.DeliveryId, 
+                        PaymentId = x.PaymentId, 
+                        UserId = x.UserId
+                    })
+                    .FirstOrDefaultAsync();
+
+                return order;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetOrder)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Methos returns payment data by paymentId
+        /// </summary>
+        /// <param name="paymentId"></param>
+        /// <returns></returns>
+        public async Task<Payment?> GetPayment(long paymentId) 
+        {
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            try
+            {
+                var result = await context.PmntPayments
+                    .Where(x => x.Id == paymentId)
+                    .Select(x => new Payment
+                    {
+                        CheckoutOrderId = x.CheckoutOrderId,
+                        DateTimeCreate = x.DateTimeCreate,
+                        Id = x.Id, 
+                        IsPaid = x.IsPaid, 
+                        OrderToken = x.OrderToken, 
+                        PaymentAmount = x.PaymentAmount, 
+                        PaymentInfo = x.PaymentInfo ?? string.Empty
+                    })
+                    .FirstOrDefaultAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetPayment)} of the {nameof(ECommerceRepository)} repository");
             }
 
             return null;

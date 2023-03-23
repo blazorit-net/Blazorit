@@ -23,6 +23,9 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProcessedOrderPage
         [Inject]
         private ICartService CartService { get; set; } = null!;
 
+        [Inject]
+        NavigationManager Navigation { get; set; } = null!;
+
         /// <summary>
         /// Result of payment in in 3th-d party service
         /// </summary>

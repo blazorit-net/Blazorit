@@ -1,0 +1,90 @@
+﻿@using Blazorit.Client.Pages.ECommerce.Domain.Components.OrderCards.Comps.OrderItems
+@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-order-card"))">
+    @*about order shortly*@
+    <GridRow>
+        <GridCol Span="24">
+            <div>
+                <span>Order № @OrderData.OrderId</span>
+            </div>
+        </GridCol>
+    </GridRow>
+    <Divider />
+    @*about order full*@
+    <GridRow>
+        @*order items*@
+        <GridCol Span="11">
+            <AntList DataSource="@OrderData.OrderList">
+                <ChildContent Context="item">
+                    <ListItem NoFlex>
+                        <OrderItem Item="@item" />
+                    </ListItem>
+                </ChildContent>
+            </AntList>
+        </GridCol>
+        @*about payments and delivery*@
+        <GridCol Offset="1" Span="12">
+            <GridRow Gutter="10">
+                <GridCol Span="8">
+                    <span class="about-order-sub-item">Date of the order:</span>
+                </GridCol>
+                <GridCol Span="16">
+                    <span>@OrderData.StrDateCreate</span>
+                </GridCol>
+            </GridRow>
+            
+            @*Payment info*@
+            <Divider />
+            <GridRow>
+                <GridCol Span="24">
+                    <span class="about-order-subtitle">Payment method</span>
+                </GridCol>
+            </GridRow>
+            <GridRow Gutter="10">                
+                <GridCol Span="8">
+                    <span class="about-order-sub-item">Online card:</span>
+                </GridCol>
+                <GridCol Span="16">
+                    <span class="about-order-content-payment-amount">@OrderData.Payment.StrPaymentAmount</span>
+                    @if (@OrderData.Payment.IsPaid)
+                    {
+                        <span>, @OrderData.Payment.StrIsPaid</span>
+                    }
+                </GridCol>
+            </GridRow>
+
+            @*Delivery info*@
+            <Divider />
+            <GridRow>
+                <GridCol Span="24">
+                    <span class="about-order-subtitle">Delivery</span>
+                </GridCol>
+            </GridRow>
+            <GridRow Gutter="10">
+                <GridCol Span="8">
+                    <span class="about-order-sub-item">Delivery method:</span>
+                </GridCol>
+                <GridCol Span="16">
+                    <span>@OrderData.Delivery.Method</span>
+                </GridCol>
+            </GridRow>
+            <GridRow Gutter="10">
+                <GridCol Span="8">
+                    <span class="about-order-sub-item">Delivery address:</span>
+                </GridCol>
+                <GridCol Span="16">
+                    <span>@OrderData.Delivery.Address</span>
+                </GridCol>
+            </GridRow>
+            <GridRow Gutter="10">
+                <GridCol Span="8">
+                    <span class="about-order-sub-item">Delivery cost:</span>
+                </GridCol>
+                <GridCol Span="16">
+                    <span class="about-order-content-delivery-cost">@OrderData.Delivery.DeliveryCost.StrTotalCost</span>
+                </GridCol>
+            </GridRow>
+        </GridCol>
+    </GridRow>
+</div>

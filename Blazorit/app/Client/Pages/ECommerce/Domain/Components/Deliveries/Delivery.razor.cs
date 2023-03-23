@@ -14,7 +14,6 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
         private IEnumerable<DeliveryAddress> deliveryAddresses = new List<DeliveryAddress>();
         private DeliveryAddressRadio choosenDeliveryAddressRadio = DeliveryAddressRadio.ExistingDeliveryAddresses;
         private string deliveryTextArea = string.Empty;
-        //private DeliveryCost deliveryCost = new();
         private KernelDeliveries.UserDeliveryPoint delivery = new();
 
         //private Select<DeliveryAddress, DeliveryAddress>? SelectDeliveryAddressRef = new();
@@ -82,6 +81,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
             }
 
             delivery.UserDelivery.MethodId = method.Id;
+            delivery.UserDelivery.AddressId = SelectedAddress.Id;
             delivery.DeliveryCost = new DeliveryCost(); // reset delivery cost
             await OnDeliveryChanged.InvokeAsync(delivery); 
             //await SelectedMethodChanged.InvokeAsync(method);

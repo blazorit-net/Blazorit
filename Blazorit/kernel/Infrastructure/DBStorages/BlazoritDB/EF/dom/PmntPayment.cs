@@ -20,5 +20,7 @@ public partial class PmntPayment
 
     public string? PaymentInfo { get; set; }
 
+    public bool IsPaid { get; set; }
+
     public virtual OrdOrder? OrdOrder { get; set; }
 }

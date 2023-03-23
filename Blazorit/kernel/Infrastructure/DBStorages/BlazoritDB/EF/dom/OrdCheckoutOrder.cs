@@ -19,7 +19,7 @@ public partial class OrdCheckoutOrder
 
     public bool? Canceled { get; set; }
 
-    public decimal OrderAmount { get; set; }
+    public decimal PaymentAmount { get; set; }
 
     public long UserId { get; set; }
 

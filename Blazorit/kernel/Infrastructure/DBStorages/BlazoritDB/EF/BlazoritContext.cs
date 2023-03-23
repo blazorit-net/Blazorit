@@ -153,7 +153,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
                 entity.Property(e => e.DateTimeCreate)
-                    .HasDefaultValueSql("'2023-03-18 15:26:11.350637+03'::timestamp with time zone")
+                    .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_create");
                 entity.Property(e => e.DeliveryCost)
                     .HasPrecision(16, 4)
@@ -291,9 +291,9 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_created");
                 entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
-                entity.Property(e => e.OrderAmount)
+                entity.Property(e => e.PaymentAmount)
                     .HasPrecision(16, 4)
-                    .HasColumnName("order_amount");
+                    .HasColumnName("payment_amount");
                 entity.Property(e => e.OrderToken)
                     .HasMaxLength(100)
                     .HasComment("uniq token")
@@ -387,6 +387,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.DateTimeCreate)
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_create");
+                entity.Property(e => e.IsPaid).HasColumnName("is_paid");
                 entity.Property(e => e.OrderToken)
                     .HasMaxLength(100)
                     .HasColumnName("order_token");

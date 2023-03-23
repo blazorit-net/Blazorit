@@ -1,6 +1,7 @@
 ﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="paymentAmount"></param>
         /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
         /// <returns></returns>
-        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, long checkoutOrderId, string orderToken, string? manyParamsAboutPayment = null);
+        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, bool isPaid, long checkoutOrderId, string orderToken, string? manyParamsAboutPayment = null);
 
         /// <summary>
         /// Method create or returns exists id of user delivery point
@@ -219,5 +220,19 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="orderId"></param>
         /// <returns></returns>
         Task<VwDelivery?> GetDeliveryByOrder(long userId, long orderId);
+
+        /// <summary>
+        /// Method returns order
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+         Task<Order?> GetOrder(long userId, long orderId);
+
+        /// <summary>
+        /// Methos returns payment data by paymentId
+        /// </summary>
+        /// <param name="paymentId"></param>
+        /// <returns></returns>
+        Task<Payment?> GetPayment(long paymentId);
     }
 }

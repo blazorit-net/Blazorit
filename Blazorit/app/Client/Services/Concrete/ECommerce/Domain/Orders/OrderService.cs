@@ -37,8 +37,8 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Orders
         /// <returns></returns>
         public async Task<Response<Order>> CreateOrder(PaidOrder orderCreation)
         {
-            Response<Order>? result = await _http.PostAndReadAsJsonOrDefaultAsync<PaidOrder, Response<Order>>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER}", orderCreation);
-            return result ?? new Response<Order>("Data transfer error");
+            var result = await _http.PostAndReadAsJsonOrNewAsync<PaidOrder, Response<Order>>($"{OrderApi.CONTROLLER}/{OrderApi.CREATE_ORDER}", orderCreation);
+            return result;
         }
 
 
