@@ -2,47 +2,52 @@
 @implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-checkout-order"))">
-    @*Quantity*@
-    <GridRow Justify="space-between">
-        <GridCol Flex=@("none")>
-            <span class="total-quantity">Items: @checkoutOrder.StrSubTotalQuantity</span>
-        </GridCol>
-        <GridCol Flex=@("none")>
-            <span class="total-quantity">@checkoutOrder.StrSubTotalPrice</span>
-        </GridCol>
-    </GridRow>
-    @*Delivery cost*@
-    <GridRow Justify="space-between">
-        <GridCol Flex=@("none")>
-            <span class="total-shipping">Shipping:</span>
-        </GridCol>
-        <GridCol Flex=@("none")>
-            @if (checkoutOrder.Delivery.DeliveryCost.TotalCost == 0)
-            {
-                <span class="total-shipping">Free</span>
-            } else
-            {
-                <span class="total-shipping">@checkoutOrder.Delivery.DeliveryCost.StrTotalCost</span>
-            }                            
-        </GridCol>
-    </GridRow>
-    @*Total price*@
-    <Divider />
-    <GridRow Justify="space-between">
-        <GridCol Flex=@("none")>
-            <span class="total-price">Total</span>
-        </GridCol>
-        <GridCol Flex=@("none")>
-            <span class="total-price">@checkoutOrder.StrTotalPrice</span>
-        </GridCol>
-    </GridRow>
-    @*Launch order button*@
-    <Divider />
-    <GridRow>
-        <GridCol Span="24">
-            <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block OnClick="CreateOrderButton_ClickHandler">Make the order</Button>
-        </GridCol>
-    </GridRow> 
+    <div class="bit-local-relative">
+        @*Quantity*@
+        <GridRow Justify="space-between">
+            <GridCol Flex=@("none")>
+                <span class="total-quantity">Items: @checkoutOrder.StrSubTotalQuantity</span>
+            </GridCol>
+            <GridCol Flex=@("none")>
+                <span class="total-quantity">@checkoutOrder.StrSubTotalPrice</span>
+            </GridCol>
+        </GridRow>
+        @*Delivery cost*@
+        <GridRow Justify="space-between">
+            <GridCol Flex=@("none")>
+                <span class="total-shipping">Shipping:</span>
+            </GridCol>
+            <GridCol Flex=@("none")>
+                @if (checkoutOrder.Delivery.DeliveryCost.TotalCost == 0)
+                {
+                    <span class="total-shipping">Free</span>
+                } else
+                {
+                    <span class="total-shipping">@checkoutOrder.Delivery.DeliveryCost.StrTotalCost</span>
+                }                            
+            </GridCol>
+        </GridRow>
+        @*Total price*@
+        <Divider />
+        <GridRow Justify="space-between">
+            <GridCol Flex=@("none")>
+                <span class="total-price">Total</span>
+            </GridCol>
+            <GridCol Flex=@("none")>
+                <span class="total-price">@checkoutOrder.StrTotalPrice</span>
+            </GridCol>
+        </GridRow>
+        @*Launch order button*@
+        <Divider />
+        <GridRow>
+            <GridCol Span="24">
+                <Button Size="@ButtonSize.Large" Type="@ButtonType.Primary" Block OnClick="CreateOrderButton_ClickHandler">Make the order</Button>
+            </GridCol>
+        </GridRow>
+
+        <Spin Class="bit-local-absolute" Spinning="@isSpinning" />
+    </div>
+
     @*Products from shopcart*@
     <Divider />
     <GridRow>

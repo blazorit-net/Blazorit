@@ -17,6 +17,9 @@ public partial class OrdCheckoutOrder
     /// </summary>
     public string OrderToken { get; set; } = null!;
 
+    /// <summary>
+    /// if this field is canceled, than you can delete this row from table.
+    /// </summary>
     public bool? Canceled { get; set; }
 
     public decimal PaymentAmount { get; set; }
@@ -24,4 +27,6 @@ public partial class OrdCheckoutOrder
     public long UserId { get; set; }
 
     public long DeliveryId { get; set; }
+
+    public long PaymentMethodId { get; set; }
 }

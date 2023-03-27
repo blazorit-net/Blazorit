@@ -1,5 +1,6 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,20 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders
     {
         public CheckOrder() { }
 
-        public CheckOrder(ShopCart shopCart, UserDeliveryPoint delivery)
+        public CheckOrder(ShopCart shopCart, UserDeliveryPoint delivery, PaymentMethod paymentMethod)
         {
             ShopCart = shopCart;
             Delivery = delivery;
+            PaymentMethod = paymentMethod;
         }
 
         public ShopCart ShopCart { get; set; } = new();
 
 
         public UserDeliveryPoint Delivery { get; set; } = new();
+
+
+        public PaymentMethod PaymentMethod { get; set; } = new();
 
 
         /// <summary>

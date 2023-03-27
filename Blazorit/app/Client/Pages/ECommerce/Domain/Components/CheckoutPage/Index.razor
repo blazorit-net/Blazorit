@@ -1,4 +1,4 @@
-﻿@attribute [Route($"{ConstPage.DELIVERY}")] 
+﻿@attribute [Route($"{ConstPage.CHECKOUT}")] 
 
 @using Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.CheckoutShopcarts
 @using Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
@@ -10,7 +10,7 @@
 
 @implements IBlazoritComponent
 
-<PageTitle>Delivery</PageTitle>
+<PageTitle>Order checkout</PageTitle>
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-checkout-page"))">
     <h1>Checkout</h1>
@@ -26,14 +26,14 @@
         <GridCol Span="8" Offset="1">
             <Card Title="Payment">
                 <Body>
-                    <Payment />
+                    <Payment OnPaymentMethodChanged="Payment_PaymentMethodChangedHandlerAsync" />
                 </Body>
             </Card>
         </GridCol>
         <GridCol Span="6" Offset="1">
             <Affix OffsetTop="10">
                 <Card>  
-                    <CheckoutOrderComp ShopCart="@CartState.State" Delivery="@delivery" />
+                    <CheckoutOrderComp ShopCart="@CartState.State" Delivery="@delivery" PaymentMethod="@paymentMethod" />
                 </Card>
             </Affix>                  
         </GridCol>

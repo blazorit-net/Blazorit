@@ -32,7 +32,8 @@
                 </GridCol>
             </GridRow>
         </GridCol>
-        @*@uantity*@
+       
+        @*@Quantity*@
         <GridCol Span="4">
             <ButtonGroup>
                 <Button OnClick="@(async () => await SubtractQuantity())" Disabled="@isMinusButtonDisabled">
@@ -44,6 +45,7 @@
                 </Button>
             </ButtonGroup>
         </GridCol>
+        
         @*Price*@
         <GridCol Span="4">
             <span class="item-total-price">@Item.StrTotalPrice</span>

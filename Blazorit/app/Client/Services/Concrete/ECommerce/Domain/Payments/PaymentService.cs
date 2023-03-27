@@ -1,20 +1,28 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain.Payments;
+using Blazorit.Client.Support.Helpers;
 using Blazorit.Shared.Models.Universal;
+using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Payments
 {
     public class PaymentService : IPaymentService
     {
-        /// <summary>
-        /// Method create token with info about order (delivery, amount and other)
-        /// </summary>
-        /// <param name="paymentAmount"></param>
-        /// <returns></returns>
-        public async Task<Response<string>> CreateUniqPaymentToken(decimal paymentAmount)
+        private readonly HttpClient _http;
+
+        public PaymentService(HttpClient http)
         {
-            return await Task.FromResult(new Response<string>());
+            _http = http;
         }
 
-
+        /// <summary>
+        /// Method returns payment methods
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<PaymentMethod>> GetPaymentMethodsAsync()
+        {
+            var result = await _http.GetFromJsonOrDefaultAsync<IEnumerable<PaymentMethod>>($"{PaymentApi.CONTROLLER}/{PaymentApi.GET_METHODS}");
+            return result ?? Enumerable.Empty<PaymentMethod>();
+        }
     }
 }

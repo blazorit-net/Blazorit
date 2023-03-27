@@ -65,7 +65,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProcessedOrderPage
 
 
         /// <summary>
-        /// Method created order
+        /// Method creates order
         /// </summary>
         /// <returns></returns>
         private async Task CreateOrder()

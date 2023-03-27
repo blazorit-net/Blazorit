@@ -21,5 +21,7 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
         public string PaymentInfo { get; set; } = string.Empty;
 
         public bool IsPaid { get; set; }
+
+        public long PaymentMethodId { get; set; }
     }
 }

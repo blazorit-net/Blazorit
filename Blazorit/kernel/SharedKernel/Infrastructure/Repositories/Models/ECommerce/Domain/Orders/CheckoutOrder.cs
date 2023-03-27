@@ -24,5 +24,7 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
         public long UserId { get; set; }
 
         public long DeliveryId { get; set; }
+
+        public long PaymentMethodId { get; set; }
     }
 }

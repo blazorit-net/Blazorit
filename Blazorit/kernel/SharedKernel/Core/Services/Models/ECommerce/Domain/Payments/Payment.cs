@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +15,18 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Payments
     {
         public Payment() { }
 
-        public Payment(InfrPayments.Payment payment)
+        public Payment(InfrPayments.Payment payment, PaymentMethod paymentMethod)
         {
             PaymentAmount = payment.PaymentAmount;
             IsPaid = payment.IsPaid;
-            PaymentMethod = string.Empty;
+            PaymentMethod = paymentMethod;
         }
 
         public decimal PaymentAmount { get; set; }
 
-        public bool IsPaid { get; set; } 
+        public bool IsPaid { get; set; }
 
-        /// <summary>
-        /// This property can be change to real payment method (TODO: Implement it)
-        /// </summary>
-        public string PaymentMethod { get; set; } = string.Empty; 
+        public PaymentMethod PaymentMethod { get; set; } = new();
 
         public string StrPaymentAmount
         {

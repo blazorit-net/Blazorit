@@ -1,4 +1,4 @@
-﻿
+﻿@using Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts
 @implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-cart-button"))">
@@ -9,11 +9,6 @@
     </Badge>
 
     <Drawer Visible="@isVisibleCartDrawer" Placement="right" Title='("Shopcart")' OnClose="_ => CloseCartDrawer()" Width="400">
-        <Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts.Shopcart @bind-IsVisibleShopcartDrawer="@isVisibleCartDrawer" />
+        <Shopcart @bind-IsVisibleShopcartDrawer="@isVisibleCartDrawer" />
     </Drawer>
 </div>
-
-
-@code {
-
-}

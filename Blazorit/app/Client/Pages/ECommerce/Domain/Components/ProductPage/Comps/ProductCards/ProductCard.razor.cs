@@ -8,7 +8,8 @@ using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.ProductCards
 {
     public partial class ProductCard : IDisposable
-    {   
+    {
+        private bool isSpinning = false; // spin on/off
         bool isImagePreviewVisible = false;
 
         [Inject]
@@ -51,7 +52,9 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage.Comps.Pr
 
 
         private async Task AddToCartButton_ClickHandlerAsync() {
+            isSpinning = true;
             await CartService.AddProductToCartAsync(new CartItem(Data) { Quantity = 1});
+            isSpinning = false;
             /*
                 //CartState.State.CartList = result.ToList();
                 //CartState.NotifyStateChanged();  

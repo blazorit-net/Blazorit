@@ -4,6 +4,9 @@ using Blazorit.Client.Services.Abstract.ECommerce.Domain.Data;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage
 {
+    /// <summary>
+    /// ProductPage
+    /// </summary>
     public partial class Index {
         private ProductCardData productCard = new();
 

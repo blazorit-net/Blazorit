@@ -41,6 +41,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
         public virtual DbSet<PmntPayment> PmntPayments { get; set; }
 
+        public virtual DbSet<PmntPaymentMethod> PmntPaymentMethods { get; set; }
+
         public virtual DbSet<ProdCategory> ProdCategories { get; set; }
 
         public virtual DbSet<ProdPicture> ProdPictures { get; set; }
@@ -286,18 +288,20 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.Canceled)
                     .IsRequired()
                     .HasDefaultValueSql("true")
+                    .HasComment("if this field is canceled, than you can delete this row from table.")
                     .HasColumnName("canceled");
                 entity.Property(e => e.DateTimeCreated)
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_created");
                 entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
-                entity.Property(e => e.PaymentAmount)
-                    .HasPrecision(16, 4)
-                    .HasColumnName("payment_amount");
                 entity.Property(e => e.OrderToken)
                     .HasMaxLength(100)
                     .HasComment("uniq token")
                     .HasColumnName("order_token");
+                entity.Property(e => e.PaymentAmount)
+                    .HasPrecision(16, 4)
+                    .HasColumnName("payment_amount");
+                entity.Property(e => e.PaymentMethodId).HasColumnName("payment_method_id");
                 entity.Property(e => e.UserId).HasColumnName("user_id");
             });
 
@@ -376,6 +380,8 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
 
                 entity.HasIndex(e => e.CheckoutOrderId, "UQ__checkout_order_id").IsUnique();
 
+                entity.HasIndex(e => e.PaymentMethodId, "fki_fk__pmnt_payments__pmnt_payment_methods");
+
                 entity.HasIndex(e => e.CheckoutOrderId, "fki_fk_not_valid__pmnt_payments__checout_orders__id");
 
                 entity.Property(e => e.Id)
@@ -395,6 +401,30 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasPrecision(16, 4)
                     .HasColumnName("payment_amount");
                 entity.Property(e => e.PaymentInfo).HasColumnName("payment_info");
+                entity.Property(e => e.PaymentMethodId).HasColumnName("payment_method_id");
+
+                entity.HasOne(d => d.PaymentMethod).WithMany(p => p.PmntPayments)
+                    .HasForeignKey(d => d.PaymentMethodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk__pmnt_payments__pmnt_payment_methods");
+            });
+
+            modelBuilder.Entity<PmntPaymentMethod>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("pmnt_payment_methods_pkey");
+
+                entity.ToTable("pmnt_payment_methods", "dom");
+
+                entity.Property(e => e.Id)
+                    .UseIdentityAlwaysColumn()
+                    .HasColumnName("id");
+                entity.Property(e => e.IsCod)
+                    .HasComment("Is Cash On Delivery")
+                    .HasColumnName("is_cod");
+                entity.Property(e => e.Method)
+                    .HasMaxLength(200)
+                    .HasColumnName("method");
+                entity.Property(e => e.Ordby).HasColumnName("ordby");
             });
 
             modelBuilder.Entity<ProdCategory>(entity =>

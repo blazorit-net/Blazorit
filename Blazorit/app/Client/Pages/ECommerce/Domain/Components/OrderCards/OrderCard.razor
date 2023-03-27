@@ -43,7 +43,7 @@
             </GridRow>
             <GridRow Gutter="10">                
                 <GridCol Span="8">
-                    <span class="about-order-sub-item">Online card:</span>
+                    <span class="about-order-sub-item">@($"{OrderData.Payment.PaymentMethod.Method}:")</span>
                 </GridCol>
                 <GridCol Span="16">
                     <span class="about-order-content-payment-amount">@OrderData.Payment.StrPaymentAmount</span>

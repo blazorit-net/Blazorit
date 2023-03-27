@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage
 {
+    /// <summary>
+    /// ShopcartPage
+    /// </summary>
     public partial class Index : IDisposable
     {
         [Inject]
@@ -26,7 +29,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage
 
         public async Task CheckoutButton_ClickHandlerAsync()
         {
-            await InvokeAsync(() => Navigation.NavigateTo(ConstPage.DELIVERY));
+            await InvokeAsync(() => Navigation.NavigateTo(ConstPage.CHECKOUT));
 
             //await OrderService.CreateOrderFromCart();
         }

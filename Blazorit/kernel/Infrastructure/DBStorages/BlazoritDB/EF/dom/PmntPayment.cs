@@ -22,5 +22,9 @@ public partial class PmntPayment
 
     public bool IsPaid { get; set; }
 
+    public long PaymentMethodId { get; set; }
+
     public virtual OrdOrder? OrdOrder { get; set; }
+
+    public virtual PmntPaymentMethod PaymentMethod { get; set; } = null!;
 }

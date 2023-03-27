@@ -365,7 +365,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// <param name="paymentAmount"></param>
         /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
         /// <returns></returns>
-        public async Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, bool isPaid, long checkoutOrderId, string orderToken, string? manyParamsAboutPayments = null)
+        public async Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, long paymentMethodId, bool isPaid, long checkoutOrderId, string orderToken, string? manyParamsAboutPayments = null)
         {
             try
             {
@@ -374,6 +374,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 PmntPayment payment = new() 
                 { 
                     PaymentAmount = paymentAmount,
+                    PaymentMethodId = paymentMethodId,
                     IsPaid = isPaid,
                     CheckoutOrderId = checkoutOrderId,
                     OrderToken = orderToken,
@@ -866,11 +867,11 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         /// Method creates uniq token and info about order
         /// </summary>
         /// <param name="paymentToken"></param>
-        /// <param name="orderAmount"></param>
+        /// <param name="paymentAmount"></param>
         /// <param name="userId"></param>
         /// <param name="deliveryId"></param>
         /// <returns></returns>
-        public async Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long deliveryId)
+        public async Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal paymentAmount, long userId, long deliveryId, long paymentMethodId)
         {
             try
             {
@@ -880,9 +881,10 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     {
                         OrderToken = orderToken,
                         Canceled = false,
-                        PaymentAmount = orderAmount,    
+                        PaymentAmount = paymentAmount,    
                         UserId = userId,
-                        DeliveryId = deliveryId 
+                        DeliveryId = deliveryId,
+                        PaymentMethodId = paymentMethodId
                     });
 
                 await context.SaveChangesAsync();
@@ -917,6 +919,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         PaymentAmount = x.PaymentAmount,
                         UserId = x.UserId,
                         DeliveryId = x.DeliveryId,
+                        PaymentMethodId = x.PaymentMethodId,
                         DateTimeCreated = x.DateTimeCreated
                     })
                     .FirstOrDefaultAsync();
@@ -1078,7 +1081,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         IsPaid = x.IsPaid, 
                         OrderToken = x.OrderToken, 
                         PaymentAmount = x.PaymentAmount, 
-                        PaymentInfo = x.PaymentInfo ?? string.Empty
+                        PaymentInfo = x.PaymentInfo ?? string.Empty, 
+                        PaymentMethodId = x.PaymentMethodId
                     })
                     .FirstOrDefaultAsync();
                 return result;
@@ -1091,5 +1095,68 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             return null;
         }
 
+
+        /// <summary>
+        /// Method returns payment methods
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<PaymentMethod>> GetPaymentMethodsAsync()
+        {          
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var result = await context.PmntPaymentMethods
+                    .Select(x => new PaymentMethod
+                    {
+                        Id = x.Id,
+                        Method = x.Method,
+                        IsCOD = x.IsCod,
+                        Ordby = x.Ordby
+                    })
+                    .ToListAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetPaymentMethodsAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return Enumerable.Empty<PaymentMethod>();
+        }
+
+
+        /// <summary>
+        /// Method returns payment method
+        /// </summary>
+        /// <param name="methodId"></param>
+        /// <returns></returns>
+        public async Task<PaymentMethod?> GetPaymentMethodAsync(long methodId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var result = await context.PmntPaymentMethods
+                    .Where(x => x.Id == methodId)
+                    .Select(x => new PaymentMethod
+                    {
+                        Id = x.Id,
+                        Method = x.Method,
+                        IsCOD = x.IsCod,
+                        Ordby = x.Ordby
+                    })
+                    .FirstOrDefaultAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetPaymentMethodAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return null;
+        }
     }
 }

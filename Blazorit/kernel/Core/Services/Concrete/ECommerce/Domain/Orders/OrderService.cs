@@ -17,6 +17,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blazorit.Core.Services.Abstract.ECommerce.Domain.Payments;
+
 
 namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
 {
@@ -24,11 +26,13 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
     {
         private readonly IECommerceRepository _dataRepo;
         private readonly IDeliveryService _deliveryService;
+        private readonly IPaymentService _paymentService;
 
-        public OrderService(IECommerceRepository dataRepo, IDeliveryService deliveryService)
+        public OrderService(IECommerceRepository dataRepo, IDeliveryService deliveryService, IPaymentService paymentService)
         {
             _dataRepo = dataRepo;
             _deliveryService = deliveryService;
+            _paymentService = paymentService;
         }
 
 
@@ -40,10 +44,11 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
         /// <returns></returns>
         public async Task<(bool ok, string paymentToken)> CreateUniqOrderTokenAsync(long userId, CoreOrders.CheckOrder orderData)
         {
-            decimal orderAmount = orderData.TotalPrice; // INFO: this amount you can get from kernel (from repository)
+            decimal paymentAmount = orderData.TotalPrice; // INFO: this amount you can get from kernel (from repository)
             long deliveryMethodId = orderData.Delivery.UserDelivery.MethodId;
             long deliveryAddressId = orderData.Delivery.UserDelivery.AddressId;
             decimal deliveryCost = orderData.Delivery.DeliveryCost.TotalCost; // INFO: this delivery cost you can get from kernel (from 3th-d pary service or repository)
+            long payMethodId = orderData.PaymentMethod.Id;
 
             var delivery = await _deliveryService.InitDeliveryAsync(userId, deliveryMethodId, deliveryAddressId, deliveryCost); // init delivery
 
@@ -54,7 +59,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
 
             string paymentToken = Guid.NewGuid().ToString(); // TODO: implement creating uniq key (token)
 
-            bool result = await _dataRepo.CreateUniqOrderTokenAsync(paymentToken, orderAmount, userId, delivery.deliveryId); // save to storage
+            bool result = await _dataRepo.CreateUniqOrderTokenAsync(paymentToken, paymentAmount, userId, delivery.deliveryId, payMethodId); // save to storage
 
             if (result)
             {
@@ -89,15 +94,17 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
             // check paid amount
             if (paidAmount < orderTokenData.PaymentAmount)
             {
-                // then do error about it or log info about it and skip
+                // INFO: then do error about it or log info about it and skip
+                isPaid = false;
             }
-            else
-            {
-                isPaid = true; // order is paid
+            else            
+            {                
+                bool isCOD = (await _paymentService.GetPaymentMethodAsync(orderTokenData.PaymentMethodId))?.IsCOD ?? true; // get result of Is Cash On Delivery
+                isPaid = !isCOD; // order is paid
             }
 
             // set payment info to storage
-            var payment = await _dataRepo.CreatePaymentInfoAsync(paidAmount, isPaid, orderTokenData.Id, orderToken, paymentInfo);
+            var payment = await _dataRepo.CreatePaymentInfoAsync(orderTokenData.PaymentAmount, orderTokenData.PaymentMethodId, isPaid, orderTokenData.Id, orderToken, paymentInfo);
 
             if (!payment.ok)
             {
@@ -134,7 +141,9 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
 
             Delivery delivery = (await _deliveryService.GetDeliveryByOrder(userId, orderId)) ?? new();
             InfrPayments.Payment infrPayment = (await _dataRepo.GetPayment(infrOrder.PaymentId)) ?? new();
-            CorePayments.Payment corePayment = new(infrPayment);            
+            InfrPayments.PaymentMethod paymentMethod = (await _paymentService.GetPaymentMethodAsync(infrPayment.PaymentMethodId)) ?? new();
+
+            CorePayments.Payment corePayment = new(infrPayment, paymentMethod);            
 
             IEnumerable<InfrOrders.VwOrder> repoResult = await _dataRepo.GetUserOrderListAsync(userId, orderId);
             IEnumerable<CoreOrders.OrderItem> listItems = await GetOrderItemsFromOrdersAsync(repoResult);            

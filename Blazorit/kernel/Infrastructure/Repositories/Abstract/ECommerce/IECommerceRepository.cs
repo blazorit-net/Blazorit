@@ -84,7 +84,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="paymentAmount"></param>
         /// <param name="manyParamsAboutPayments">you can extend your table for other fields, and this param must be deleted, and insert other params to method signature</param>
         /// <returns></returns>
-        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, bool isPaid, long checkoutOrderId, string orderToken, string? manyParamsAboutPayment = null);
+        Task<(bool ok, long paymentId)> CreatePaymentInfoAsync(decimal paymentAmount, long paymentMethodId, bool isPaid, long checkoutOrderId, string orderToken, string? manyParamsAboutPayment = null);
 
         /// <summary>
         /// Method create or returns exists id of user delivery point
@@ -190,12 +190,12 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// Method creates uniq token and info about order
         /// </summary>
         /// <param name="paymentToken"></param>
-        /// <param name="orderAmount"></param>
+        /// <param name="paymentAmount"></param>
         /// <param name="userId"></param>
         /// <param name="deliveryMethodId"></param>
         /// <param name="deliveryAddressId"></param>
         /// <returns></returns>
-        Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal orderAmount, long userId, long deliveryId);
+        Task<bool> CreateUniqOrderTokenAsync(string orderToken, decimal paymentAmount, long userId, long deliveryId, long paymentMethodId);
 
         /// <summary>
         /// Methods returns info about order by orderToken (not canceled)
@@ -234,5 +234,18 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="paymentId"></param>
         /// <returns></returns>
         Task<Payment?> GetPayment(long paymentId);
+
+        /// <summary>
+        /// Method returns payment methods
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<PaymentMethod>> GetPaymentMethodsAsync();
+
+        /// <summary>
+        /// Method returns payment method
+        /// </summary>
+        /// <param name="methodId"></param>
+        /// <returns></returns>
+        Task<PaymentMethod?> GetPaymentMethodAsync(long methodId);
     }
 }

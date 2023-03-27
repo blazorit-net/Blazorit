@@ -1,5 +1,19 @@
-﻿<p>Payment component. TODO here</p>
+﻿@using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments
 
-@code {
+@implements IBlazoritComponent
 
-}
+<div class="@(((IBlazoritComponent)this).GetClass("bit-payment"))">
+    <GridRow>
+        <GridCol>
+            <h4>Select payment method</h4>
+            <Select TItem="PaymentMethod"
+                    TItemValue="PaymentMethod"
+                    DataSource="@paymentMethods"
+                    @bind-Value="@selectedMethod"
+                    LabelName="@nameof(PaymentMethod.Method)"
+                    Placeholder="Choose payment method"
+                    OnSelectedItemChanged="@(async (method) => await PaymentMethod_SelectedItemChangedHandlerAsync(method))">
+            </Select>
+        </GridCol>
+    </GridRow>
+</div>

@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.AddingCartButtons
 {
+    /// <summary>
+    /// this class is not using
+    /// </summary>
     public partial class AddingCartButtonsComp : IDisposable
     {
         [Inject]

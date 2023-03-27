@@ -6,12 +6,14 @@ using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.CheckoutOrders
 {
     public partial class CheckoutOrderComp
     {
+        private bool isSpinning = false; // spin on/off
         private CheckOrder checkoutOrder = new();
 
         [Inject]
@@ -30,7 +32,10 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
 
 
         [Parameter]
-        public SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries.UserDeliveryPoint Delivery { get; set; } = new();
+        public UserDeliveryPoint Delivery { get; set; } = new();
+
+        [Parameter]
+        public PaymentMethod PaymentMethod { get; set; } = new();
 
 
         [Parameter]
@@ -39,7 +44,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
 
         protected override async Task OnParametersSetAsync()
         {
-            await InvokeAsync(() => checkoutOrder = new CheckOrder(ShopCart, Delivery));
+            await InvokeAsync(() => checkoutOrder = new CheckOrder(ShopCart, Delivery, PaymentMethod));
         }
 
 
@@ -54,28 +59,43 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
                 return;
             }
 
+            // if user needs to select his delivery
+            if (!this.PaymentMethod.IsOkMethod)
+            {
+                await AntMessage.Warning("Please, select a payment method");
+                return;
+            }
+
+            isSpinning = true;
             Response<string> resultToken = await OrderService.CreateUniqOrderTokenAsync(checkoutOrder); // create token(info)
+            isSpinning = false;
 
             if (resultToken.Ok)
             {
-                // TODO: go to 3th-d party payment service and recive it token-returned
-                Navigation.NavigateTo($"{ConstPage.PAYMENT}/{resultToken.Data}/{checkoutOrder.TotalPrice}");
+                if (PaymentMethod.IsCOD) // cash on delivery method
+                {
+                    // redirect to url (our) with our token and other info about payment
+                    string uri = Navigation.GetUriWithQueryParameters($"{ConstPage.PROCESSED_ORDER}", new Dictionary<string, object?>
+                    {
+                        ["is-success"] = true,
+                        ["PaymentInfo"] = "cash on delivery",
+                        ["token"] = resultToken.Data,
+                        ["amount"] = 0
+                    });
+
+                    Navigation.NavigateTo(uri);
+                }
+                else // online paying method
+                {
+                    // TODO: go to 3th-d party payment service and recive it token-returned
+                    Navigation.NavigateTo($"{ConstPage.PAYMENT}/{resultToken.Data}/{checkoutOrder.TotalPrice}");
+                }
+                // else // await AntMessage.Warning("Error. This payment method is not supported");
+            } 
+            else
+            {
+                await AntMessage.Warning("Error. Try to go back to the cart and checkout again");
             }
-
-
-
-
-            //// this func must implement in other place
-            //if (resultToken.Ok)
-            //{
-            //    PaidOrder orderInfo = new()
-            //    {
-            //        OrderToken = resultToken.Data!,
-            //        PaidAmount = 0,
-            //        PaymentInfo = "some payment info"
-            //    };
-            //await OrderService.CreateOrder(orderInfo);
-        }
-        
+        }        
     }
 }

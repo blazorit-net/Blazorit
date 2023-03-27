@@ -124,3 +124,17 @@ a, .btn-link {
         transform-origin: left top;
         transition: scale ease-out 0.5s;
     }*/
+
+
+/* for center spiner in div (GridCol) */
+.bit-local-absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* if Spin is not in GridCol, then wrapper must be div with this css class */
+div.bit-local-relative {
+    position: relative
+}

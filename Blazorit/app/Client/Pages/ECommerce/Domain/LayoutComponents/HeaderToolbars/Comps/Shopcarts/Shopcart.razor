@@ -7,39 +7,6 @@
             <ChildContent Context="item">
                 <ListItem NoFlex>
                     <ShopcartItem Item="@item" IsVisibleShopcartDrawer="@IsVisibleShopcartDrawer" IsVisibleShopcartDrawerChanged="@IsVisibleShopcartDrawerChanged" />
-@*                    <GridRow>
-                        <GridCol Span="8">
-                            <Image Src="@item.ProductPictureLinkPart" />
-                        </GridCol>
-                        <GridCol Span="16">
-                            <GridRow>
-                                <GridCol Span="24">
-                                    <b><a href="@(PageRouter.RefToProductPage(item))" onclick="@(async () => await ProductNameButton_ClickHandler(item))">@item.Name</a></b>
-                                    
-                                </GridCol>
-                            </GridRow>
-                            <GridRow>
-                                <GridCol Span="24">
-                                    sku: @item.Sku
-                                </GridCol>
-                            </GridRow>
-                            <GridRow>
-                                <GridCol Span="24">
-                                    Quantity: @item.Quantity
-                                </GridCol>
-                            </GridRow>
-                            <GridRow>
-                                <GridCol Span="24">
-                                    For one: @item.StrPrice
-                                </GridCol>
-                            </GridRow>
-                            <GridRow>
-                                <GridCol Span="24">
-                                    <b>Price: @item.StrTotalPrice</b>
-                                </GridCol>
-                            </GridRow>
-                        </GridCol>
-                    </GridRow>*@
                 </ListItem>
             </ChildContent>
         </AntList>
@@ -63,8 +30,15 @@
                 <Button OnClick="@(async () => await ShopcartButton_ClickHandler())" Block>SHOPCART</Button>
             </GridCol>
             <GridCol Span="12">
-                <Button Type="@ButtonType.Primary" Block>CHECKOUT</Button>
+                <Button Type="@ButtonType.Primary" Block OnClick="@(async () => await CheckoutButton_ClickHandler())">CHECKOUT</Button>
             </GridCol>
         </GridRow>     
     </div>
+    
+    <Spin Class="bit-local-absolute" Spinning="@isSpinning" />
 </div>
+
+
+
+
+
