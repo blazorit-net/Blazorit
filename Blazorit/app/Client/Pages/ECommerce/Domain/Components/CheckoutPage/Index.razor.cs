@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage
 {
+    /// <summary>
+    /// CheckoutPage
+    /// </summary>
     public partial class Index
     {
         private UserDeliveryPoint delivery = new();

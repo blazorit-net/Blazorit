@@ -19,8 +19,14 @@
             }
         }
 
+        /// <summary>
+        /// This event is needed to use it like this: In OnInitialized: TState.OnChange += StateHasChanged (In Dispose method: TState.OnChange -= StateHasChanged)
+        /// </summary>
         public event Action? OnChange;
 
+        /// <summary>
+        /// You must call this method if only the internal fields of T object are changed, not the object itself
+        /// </summary>
         public void NotifyStateChanged() => OnChange?.Invoke();
     }
 }

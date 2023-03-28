@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.CheckoutOrders
 {
-    public partial class CheckoutOrderComp
+    public partial class CheckoutOrder
     {
         private bool isSpinning = false; // spin on/off
         private CheckOrder checkoutOrder = new();

@@ -6,26 +6,11 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
 {
     public partial class CheckoutShopcart
     {
-        //[Inject]
-        //private CartState CartState { get; set; } = null!;
-
         [Parameter]
         public string? Class { get; set; }
 
 
         [Parameter]
         public ShopCart ShopCart { get; set; } = new();
-
-
-        //protected override void OnInitialized()
-        //{
-        //    CartState.OnChange += StateHasChanged;
-        //}
-
-
-        //public void Dispose()
-        //{
-        //    CartState.OnChange -= StateHasChanged;
-        //}
     }
 }

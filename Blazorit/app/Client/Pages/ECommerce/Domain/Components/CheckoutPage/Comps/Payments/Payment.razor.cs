@@ -2,7 +2,7 @@
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using Microsoft.AspNetCore.Components;
 
-namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Payments
+namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.Payments
 {
     public partial class Payment
     {

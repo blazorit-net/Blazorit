@@ -1,8 +1,8 @@
 ﻿@attribute [Route($"{ConstPage.CHECKOUT}")] 
 
 @using Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.CheckoutShopcarts
-@using Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
-@using Blazorit.Client.Pages.ECommerce.Domain.Components.Payments
+@using Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.Payments
+@using Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.Deliveries
 @using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 @using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries
 @using Microsoft.AspNetCore.Components
@@ -33,7 +33,7 @@
         <GridCol Span="6" Offset="1">
             <Affix OffsetTop="10">
                 <Card>  
-                    <CheckoutOrderComp ShopCart="@CartState.State" Delivery="@delivery" PaymentMethod="@paymentMethod" />
+                    <CheckoutOrder ShopCart="@CartState.State" Delivery="@delivery" PaymentMethod="@paymentMethod" />
                 </Card>
             </Affix>                  
         </GridCol>

@@ -41,16 +41,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\ECommerce\Domain\Components\CheckoutPage\Comps\CheckoutOrders\CheckoutOrderComp.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\ECommerce\Domain\Components\CheckoutPage\Comps\CheckoutOrders\CheckoutOrderComp.razor" />
     <_ContentIncludedByDefault Remove="Pages\ECommerce\Domain\Components\PaymentPage\Index.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\ECommerce\Domain\Components\CheckoutPage\Comps\CheckoutOrders\CheckoutOrderComp.razor" />
+    <None Include="Pages\ECommerce\Domain\Components\CheckoutPage\Comps\CheckoutOrders\CheckoutOrder.razor" />
     <None Include="Pages\ECommerce\Domain\Components\PaymentPage\Index.razor" />
   </ItemGroup>
 

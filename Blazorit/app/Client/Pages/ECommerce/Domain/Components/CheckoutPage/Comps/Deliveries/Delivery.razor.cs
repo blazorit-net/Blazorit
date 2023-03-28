@@ -6,7 +6,7 @@ using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.
 using Microsoft.AspNetCore.Components;
 using KernelDeliveries = Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
 
-namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
+namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.Deliveries
 {
     public partial class Delivery
     {
@@ -33,10 +33,6 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.Deliveries
         public DeliveryMethod SelectedMethod { get; set; } = new();
         //[Parameter]
         //public EventCallback<DeliveryMethod> SelectedMethodChanged { get; set; }
-
-
-        //[Parameter]
-        //public EventCallback<DeliveryCost> DeliveryCostChanged { get; set; } = new();
 
 
         [Parameter]
