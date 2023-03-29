@@ -8,6 +8,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage.Comps.S
     public partial class ShopcartItem
     {
         bool isImagePreviewVisible = false;
+        private bool isSpinning = false; // spin on/off
 
         [Inject]
         private ICartService CartService { get; set; } = null!;
@@ -61,6 +62,14 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage.Comps.S
             {
                 isMinusButtonDisabled = false;
             }
+        }
+
+
+        private async Task DeleteProductButton_ClickHandlerAsync(CartItem item)
+        {
+            isSpinning = true;
+            await CartService.DeleteProductFromCartAsync(item);
+            isSpinning = false;
         }
     }
 }

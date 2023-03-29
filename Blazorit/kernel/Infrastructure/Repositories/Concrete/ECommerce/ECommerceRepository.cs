@@ -251,7 +251,29 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         }
 
 
-        //public Task<(bool ok, long cartId)> AddProductToCartAsync(long userId, long productId, int quantity)
+        /// <summary>
+        /// Method delte product from cart (cart by userId)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteProductFromCartAsync(long userId, long productId)
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                CartShopcart cart = await context.CartShopcarts.FirstAsync(x => x.UserId == userId);
+                context.RemoveRange(context.CartShopcartLists.Where(x => x.Cart == cart && x.ProductId == productId));                
+                await context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(DeleteProductFromCartAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return false;
+        }
 
 
         /// <summary>

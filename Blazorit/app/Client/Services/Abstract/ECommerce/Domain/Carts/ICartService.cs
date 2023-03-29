@@ -22,6 +22,13 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts
         Task AddProductToCartAsync(CartItem cartItem);
 
         /// <summary>
+        /// Method delte product from cart (cart by userId)
+        /// </summary>
+        /// <param name="cartItem"></param>
+        /// <returns></returns>
+        Task DeleteProductFromCartAsync(CartItem cartItem);
+
+        /// <summary>
         /// Method synchronizes shopcart's view state from kernel state
         /// </summary>
         /// <returns></returns>

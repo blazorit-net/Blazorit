@@ -1,7 +1,7 @@
 ﻿@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 @implements IBlazoritComponent
 
-<div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-item"))">
+<div class="@(((IBlazoritComponent)this).GetClass("bit-shopcart-item; bit-local-relative"))">
     <GridRow>
         <GridCol Span="4">               
                 <Image PreviewVisible="false"
@@ -47,8 +47,23 @@
         </GridCol>
         
         @*Price*@
+
         <GridCol Span="4">
-            <span class="item-total-price">@Item.StrTotalPrice</span>
+            <Space Direction="DirectionVHType.Vertical" Style="justify-content: space-between; height:100%; width:100%" Align="end">
+                <SpaceItem>
+                    <span class="item-total-price">@Item.StrTotalPrice</span>
+                </SpaceItem>
+                <SpaceItem>
+                    <Button Type="@ButtonType.Link">
+                        <Icon Height="2em" Width="2em" Type="heart" Theme="outline" />
+                    </Button>
+                    <Button Type="@ButtonType.Link" OnClick="@(async () => await DeleteProductButton_ClickHandlerAsync(Item))">
+                        <Icon Height="2em" Width="2em" Type="delete" Theme="outline" />
+                    </Button>
+                </SpaceItem>
+            </Space>
         </GridCol>
     </GridRow>
+
+    <Spin Class="bit-local-absolute" Spinning="@isSpinning" />
 </div>

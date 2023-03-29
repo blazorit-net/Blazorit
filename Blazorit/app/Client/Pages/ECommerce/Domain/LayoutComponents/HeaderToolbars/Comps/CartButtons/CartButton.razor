@@ -3,7 +3,7 @@
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-cart-button"))">
     <Badge Count="@Count">
-        <Button Ghost Type="@ButtonType.Text" @onclick="_ => OpenCartDrawer()">
+        <Button Ghost Type="@ButtonType.Text" @onclick="_ => OpenCartDrawerAsync()">
             <Icon Type="shopping-cart" Theme="outline" /> Cart 
         </Button>
     </Badge>

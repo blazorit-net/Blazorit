@@ -90,6 +90,41 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
 
 
         /// <summary>
+        /// Method delte product from cart (cart by userId)
+        /// </summary>
+        /// <param name="cartItem"></param>
+        /// <returns></returns>
+        public async Task DeleteProductFromCartAsync(CartItem cartItem)
+        {
+            ShopCart resultCart = new();
+
+            bool isAuth = await _ident.IsUserAuthenticated();
+
+            if (isAuth) // delete proudct from server
+            {
+                var serverCart = await _http.PostAndReadAsJsonOrNewAsync<CartItem, ShopCart>($"{CartApi.CONTROLLER}/{CartApi.DELETE_PRODUCT_ITEM}", cartItem);
+                resultCart = serverCart;// ?? new ShopCart();
+            }
+            else // delete product from local storage
+            {
+                ShopCart localCart = await _localStorage.GetItemAsync<ShopCart>(LOCAL_SHOPCART) ?? new ShopCart();
+                localCart.CartList.RemoveAll(x => x.ProductId == cartItem.ProductId);
+
+                //CartItem? item = localCart.CartList.FirstOrDefault(x => x.ProductId == cartItem.ProductId);
+                //if (item is not null)
+                //{
+                //    localCart.CartList.RemoveAll(x => x.ProductId == cartItem.ProductId);
+                //}
+
+                await _localStorage.SetItemAsync(LOCAL_SHOPCART, localCart);
+                resultCart = localCart; //local storage
+            }
+
+            _cartState.State = resultCart;
+        }
+
+
+        /// <summary>
         /// Method receives shopcart
         /// </summary>
         /// <returns></returns>

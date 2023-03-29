@@ -14,13 +14,13 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries
     {
         public UserDeliveryPoint() { }
 
-        public UserDeliveryPoint(Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries.UserDelivery userDelivery, DeliveryCost cost)
+        public UserDeliveryPoint(UserDelivery userDelivery, DeliveryCost cost)
         {
             UserDelivery = userDelivery;
             DeliveryCost = cost;
         }
 
-        public Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries.UserDelivery UserDelivery { get; set; } = new();
+        public UserDelivery UserDelivery { get; set; } = new();
 
         /// <summary>
         /// Delivery cost

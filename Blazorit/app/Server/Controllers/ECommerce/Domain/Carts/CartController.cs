@@ -41,7 +41,22 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Carts
             var result = await _cartService.AddProductToCartAsync(userId, cartItem);
 
             if (result == null) {
-                return BadRequest();
+                return Problem();
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpPost($"{CartApi.DELETE_PRODUCT_ITEM}")]
+        public async Task<ActionResult<ShopCart>> DeleteProductFromCartAsync(CartItem cartItem)
+        {
+            long userId = long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out long id) ? id : long.MinValue;
+            var result = await _cartService.DeleteProductFromCartAsync(userId, cartItem);
+
+            if (result == null)
+            {
+                return Problem();
             }
 
             return Ok(result);
@@ -54,12 +69,10 @@ namespace Blazorit.Server.Controllers.ECommerce.Domain.Carts
             var result = await _cartService.MergeShopCarts(userId, clientCart);
 
             if (result == null) {
-                return BadRequest();
+                return Problem();
             }
 
             return Ok(result);
         }
-
-
     }
 }

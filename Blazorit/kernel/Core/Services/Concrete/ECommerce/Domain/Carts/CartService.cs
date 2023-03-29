@@ -61,6 +61,19 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
 
 
         /// <summary>
+        /// Method delte product from cart (cart by userId)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cartItem"></param>
+        /// <returns></returns>
+        public async Task<ShopCart?> DeleteProductFromCartAsync(long userId, CartItem cartItem)
+        {
+            bool isOk = await _dataRepo.DeleteProductFromCartAsync(userId, cartItem.ProductId);
+            return await GetShopCartListAsync(userId);
+        }
+
+
+        /// <summary>
         /// Method merges client shopcart with kernel cart
         /// </summary>
         /// <param name="userId"></param>

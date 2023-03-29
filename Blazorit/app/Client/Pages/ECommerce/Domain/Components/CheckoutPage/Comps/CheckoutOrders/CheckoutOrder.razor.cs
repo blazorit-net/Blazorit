@@ -1,6 +1,8 @@
 ﻿using AntDesign;
+using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Blazorit.Shared.Models.Universal;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
@@ -26,6 +28,8 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
         [Inject]
         private IOrderService OrderService { get; set; } = null!;
 
+        [Inject]
+        private ICartService CartService { get; set; } = null!;
 
         [Parameter]
         public ShopCart ShopCart { get; set; } = new();
@@ -40,6 +44,14 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
 
         [Parameter]
         public string? Class { get; set; }
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            //isSpinning = true;
+            await CartService.SyncShopCartAsync(); // sync cart
+            //isSpinning = false;
+        }
 
 
         protected override async Task OnParametersSetAsync()
@@ -59,10 +71,21 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.C
                 return;
             }
 
-            // if user needs to select his delivery
+            // if user needs to select his payment method
             if (!this.PaymentMethod.IsOkMethod)
             {
                 await AntMessage.Warning("Please, select a payment method");
+                return;
+            }
+
+            isSpinning = true;
+            await CartService.SyncShopCartAsync(); // sync cart
+            isSpinning = false;            
+
+            // if cart is empty
+            if (ShopCart.TotalQuantity == 0)
+            {
+                await AntMessage.Error("Your cart is empty");
                 return;
             }
 

@@ -19,17 +19,6 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries
             this.Cost = cost;
         }
 
-        //public DeliveryCost(decimal cost, long methodId, long addressId)
-        //{
-        //    this.Cost = cost;
-        //    this.MethodId = methodId;
-        //    this.AddressId = addressId;
-        //}
-
-        //long MethodId { get; set; } = new();
-
-        //long AddressId { get; set; } = new();
-
 
         public decimal Cost { get; set; }
 
