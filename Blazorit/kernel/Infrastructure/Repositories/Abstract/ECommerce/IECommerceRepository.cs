@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
 {
     public interface IECommerceRepository {
+        
+        /*
         /// <summary>
         /// Method adds product to products repository. This method assigns unique SKU for the product
         /// </summary>
@@ -34,6 +36,7 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         /// <param name="categoryName"></param>
         /// <returns>(Success, unique SKU)</returns>
         Task<(bool ok, string sku)> AddProductAsync(string sku, string name, string curr, decimal price, string? description, string? categoryName);
+        */
 
         /// <summary>
         /// Method adds product to user's cart by product SKU

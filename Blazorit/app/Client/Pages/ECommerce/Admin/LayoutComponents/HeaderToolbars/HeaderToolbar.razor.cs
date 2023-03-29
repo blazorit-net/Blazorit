@@ -12,12 +12,12 @@ namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.HeaderToolbars
             Navigation.NavigateTo(ConstPage.ADMIN_LOGIN);
         }
 
-        private async Task Logout() {
-            ////var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
-            ////if (authProvider == null) return;
-            ////await authProvider.LogoutAuthenticationStateAsync();
-            ////Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
-        }
+        //private async Task Logout() {
+        //    ////var authProvider = AuthenticationStateProvider as CustomAuthStateProvider;
+        //    ////if (authProvider == null) return;
+        //    ////await authProvider.LogoutAuthenticationStateAsync();
+        //    ////Navigation.NavigateTo("/", false); ////Navigation.NavigateTo("/", true);
+        //}
 
         ////CssBuilder classHeaderToolboar = BlazorComponentUtilities.CssBuilder.Default("header-toolbar").AddClass("");
     }

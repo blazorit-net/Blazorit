@@ -8,6 +8,4 @@ namespace Blazorit.Client.Base.Components {
             return Support.Components.Methods.GetClass(this.Class, classes);
         }
     }
-
-
 }

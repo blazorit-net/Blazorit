@@ -27,6 +27,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
         }
 
 
+        /*
         /// <summary>
         /// Method adds product to products repository. This method assigns unique SKU for the product
         /// </summary>
@@ -112,6 +113,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
             return (false, string.Empty);
         }
+        */
 
 
         /// <summary>
