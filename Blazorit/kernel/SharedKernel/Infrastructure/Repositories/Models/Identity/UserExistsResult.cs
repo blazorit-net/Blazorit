@@ -1,4 +1,4 @@
-﻿namespace Blazorit.SharedKernel.Core.Services.Models.Identity
+﻿namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.Identity
 {
     public enum UserExistsResult
     {

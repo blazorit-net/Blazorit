@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazorit.Client.Models.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -19,7 +20,7 @@ namespace Blazorit.Client.Providers.Concrete.Identity
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            string identityToken = await _localStorageService.GetItemAsStringAsync("identityToken");
+            string identityToken = await _localStorageService.GetItemAsStringAsync(Constants.STORAGE_TOKEN_NAME);
 
             var identity = new ClaimsIdentity();
             _http.DefaultRequestHeaders.Authorization = null;
@@ -34,7 +35,7 @@ namespace Blazorit.Client.Providers.Concrete.Identity
                 }
                 catch
                 {
-                    await _localStorageService.RemoveItemAsync("identityToken");
+                    await _localStorageService.RemoveItemAsync(Constants.STORAGE_TOKEN_NAME);
                     identity = new ClaimsIdentity();
                 }
             }

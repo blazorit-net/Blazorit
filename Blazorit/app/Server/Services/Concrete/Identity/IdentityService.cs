@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Blazorit.Shared.Models.Identity;
+using Blazorit.SharedKernel.Core.Services.Models.Identity;
 
 namespace Blazorit.Server.Services.Concrete.Identity
 {
@@ -22,43 +23,49 @@ namespace Blazorit.Server.Services.Concrete.Identity
         public string GetUserName() => _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
 
 
-        public async Task<Response<string>> Login(string userName, string password) {            
-            var responseFromCore = await _identService.CheckUser(userName, password);
-            var response = new Response<string>();
+        /// <summary>
+        /// Method check user and returns token (string)
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<IdentResponse<string>> Login(string userName, string password) {            
+            var resultFromCore = await _identService.CheckUser(userName, password);
+            var response = new IdentResponse<string>();
 
-            response.Success = responseFromCore.Success;
-            response.Message = responseFromCore.Message;
+            response.Success = resultFromCore.Success;
+            response.Message = resultFromCore.Message;
 
-            if (response.Success == true) {
-                response.Data = CreateToken(responseFromCore.Data.userId, responseFromCore.Data.userName, responseFromCore.Data.userRole);
+            if (resultFromCore.Success == true) {
+                response.Data = CreateToken(resultFromCore.Data!);
             } 
 
             return response;
         }
 
 
-        public async Task<Response<long>> Register(string userName, string password) {
+        public async Task<IdentResponse<long>> Register(string userName, string password) {
             var resultFromCore = await _identService.RegisterUser(userName, password);
-            ConvertResponseFromCoreToServer(resultFromCore, out Response<long> response);
+            ConvertResponseFromCoreToServer(resultFromCore, out IdentResponse<long> response);
 
             return response;
         }
 
 
-        public async Task<Response<bool>> ChangePassword(long userId, string newPassword) {
+        public async Task<IdentResponse<bool>> ChangePassword(long userId, string newPassword) {
             var resultFromCore = await _identService.ChangeUserPassword(userId, newPassword);
-            ConvertResponseFromCoreToServer(resultFromCore, out Response<bool> response);
+            ConvertResponseFromCoreToServer(resultFromCore, out IdentResponse<bool> response);
 
             return response;
         }
 
 
-        private string CreateToken(long userId, string userName, string userRole) {
+        private string CreateToken(UserTokenData userData) {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                new Claim(ClaimTypes.Name, userName),
-                new Claim(ClaimTypes.Role, userRole)
+                new Claim(ClaimTypes.NameIdentifier, userData.UserId.ToString()),
+                new Claim(ClaimTypes.Name, userData.UserName),
+                new Claim(ClaimTypes.Role, userData.UserRole)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8
@@ -77,8 +84,8 @@ namespace Blazorit.Server.Services.Concrete.Identity
         }
 
 
-        private void ConvertResponseFromCoreToServer<T>(CoreServices.Models.Identity.ServiceResult<T> from, out Response<T> to) {
-            to = new Response<T>();
+        private void ConvertResponseFromCoreToServer<T>(CoreServices.Models.Identity.IdentResult<T> from, out IdentResponse<T> to) {
+            to = new IdentResponse<T>();
             to.Success = from.Success;
             to.Message = from.Message;
             to.Data = from.Data;

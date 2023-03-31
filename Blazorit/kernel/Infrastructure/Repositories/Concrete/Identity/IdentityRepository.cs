@@ -1,6 +1,6 @@
 ﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
-using Blazorit.SharedKernel.Core.Services.Models.Identity;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.Identity
@@ -39,7 +39,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity
                         UserName = userName,
                         PasswordHash = passwordHash,
                         PasswordSalt = passwordSalt,
-                        DateCreated = DateTime.Now,
+                        DateCreated =  DateTime.UtcNow,
                         UserRole = userRole
                     };
 

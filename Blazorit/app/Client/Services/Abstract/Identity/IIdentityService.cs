@@ -5,11 +5,11 @@ namespace Blazorit.Client.Services.Abstract.Identity
 {
     public interface IIdentityService
     {
-        Task<Response<int>> Register(UserRegister request);
+        Task<IdentResponse<int>> Register(UserRegister request);
         Task LoginAtClient(string? token);
         Task LogoutAsync();
-        Task<Response<string>> LoginAtServer(UserLogin request);
-        Task<Response<bool>> ChangePassword(UserChangePassword request);
+        Task<IdentResponse<string>> LoginAtServer(UserLogin request);
+        Task<IdentResponse<bool>> ChangePassword(UserChangePassword request);
         Task<bool> IsUserAuthenticated();
 
     }

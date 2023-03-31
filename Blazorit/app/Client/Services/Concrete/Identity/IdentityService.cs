@@ -4,11 +4,13 @@ using System.Net.Http.Json;
 using Blazorit.Shared.Models.Identity;
 using Blazored.LocalStorage;
 using System.Security.Claims;
+using Blazorit.Shared.Routes.WebAPI.Identity;
+using Blazorit.Client.Models.Identity;
 
 namespace Blazorit.Client.Services.Concrete.Identity
 {
     public class IdentityService : IIdentityService
-    {
+    {       
         private readonly HttpClient _http;
         private readonly AuthenticationStateProvider _authStateProvider;
         private readonly ILocalStorageService _localStorage;
@@ -27,32 +29,32 @@ namespace Blazorit.Client.Services.Concrete.Identity
 
         public async Task LoginAtClient(string? token)
         {
-            await _localStorage.SetItemAsync("identityToken", token);
+            await _localStorage.SetItemAsync(Constants.STORAGE_TOKEN_NAME, token);
             await _authStateProvider.GetAuthenticationStateAsync();
         }
 
         public async Task LogoutAsync()
         {
-            await _localStorage.RemoveItemAsync("identityToken");
+            await _localStorage.RemoveItemAsync(Constants.STORAGE_TOKEN_NAME);
             await _authStateProvider.GetAuthenticationStateAsync();
         }
 
-        public async Task<Response<string>> LoginAtServer(UserLogin request)
+        public async Task<IdentResponse<string>> LoginAtServer(UserLogin request)
         {
-            var result = await _http.PostAsJsonAsync("api/identity/login", request);
-            return await result.Content.ReadFromJsonAsync<Response<string>>() ?? new Response<string> { Success = false, Message = "Error response" };
+            var result = await _http.PostAsJsonAsync($"{IdentApi.CONTROLLER}/{IdentApi.LOGIN}", request);
+            return await result.Content.ReadFromJsonAsync<IdentResponse<string>>() ?? new IdentResponse<string> { Success = false, Message = "Error response" };
         }
 
-        public async Task<Response<bool>> ChangePassword(UserChangePassword request)
+        public async Task<IdentResponse<bool>> ChangePassword(UserChangePassword request)
         {
-            var result = await _http.PostAsJsonAsync("api/identity/change-password", request.Password);
-            return await result.Content.ReadFromJsonAsync<Response<bool>>() ?? new Response<bool> { Success = false, Message = "Error response" };
+            var result = await _http.PostAsJsonAsync($"{IdentApi.CONTROLLER}/{IdentApi.CHANGE_PASSWORD}", request.Password);
+            return await result.Content.ReadFromJsonAsync<IdentResponse<bool>>() ?? new IdentResponse<bool> { Success = false, Message = "Error response" };
         }
 
-        public async Task<Response<int>> Register(UserRegister request)
+        public async Task<IdentResponse<int>> Register(UserRegister request)
         {
-            var result = await _http.PostAsJsonAsync("api/identity/register", request);
-            return await result.Content.ReadFromJsonAsync<Response<int>>() ?? new Response<int> { Success = false, Message = "Error response" };
+            var result = await _http.PostAsJsonAsync($"{IdentApi.CONTROLLER}/{IdentApi.REGISTER}", request);
+            return await result.Content.ReadFromJsonAsync<IdentResponse<int>>() ?? new IdentResponse<int> { Success = false, Message = "Error response" };
         }
 
     }

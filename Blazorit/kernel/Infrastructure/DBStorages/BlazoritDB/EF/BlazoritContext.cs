@@ -82,9 +82,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.ToTable("users", "ident");
 
                 entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.DateCreated)
-                    .HasColumnType("timestamp without time zone")
-                    .HasColumnName("date_created");
+                entity.Property(e => e.DateCreated).HasColumnName("date_created");
                 entity.Property(e => e.PasswordHash).HasColumnName("password_hash");
                 entity.Property(e => e.PasswordSalt).HasColumnName("password_salt");
                 entity.Property(e => e.UserName)

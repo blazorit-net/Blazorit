@@ -2,6 +2,7 @@
 using Blazorit.Core.Services.Models.Identity;
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
 using System.Security.Cryptography;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.Identity;
 using Blazorit.SharedKernel.Core.Services.Models.Identity;
 
 namespace Blazorit.Core.Services.Concrete.Identity
@@ -15,8 +16,8 @@ namespace Blazorit.Core.Services.Concrete.Identity
         }
 
 
-        public async Task<ServiceResult<(long userId, string userName, string userRole)>> CheckUser(string userName, string password) {
-            var response = new ServiceResult<(long, string, string)>();
+        public async Task<IdentResult<UserTokenData>> CheckUser(string userName, string password) {
+            var response = new IdentResult<UserTokenData>();
             var user = await _identRepo.GetUser(userName);
             if (user == null) {
                 response.Success = false;
@@ -27,22 +28,22 @@ namespace Blazorit.Core.Services.Concrete.Identity
             } else {
                 response.Success = true;
                 response.Message = "User password matches";
-                response.Data = (user.Id, user.UserName, user.Role);
+                response.Data = new UserTokenData(user.Id, user.UserName, user.Role);
             }
 
             return response;
         }
 
 
-        public async Task<ServiceResult<long>> RegisterUser(string userName, string password) {            
+        public async Task<IdentResult<long>> RegisterUser(string userName, string password) {            
             var userExists = await _identRepo.UserExists(userName);
             if (userExists == UserExistsResult.Exists) {
-                return new ServiceResult<long> {
+                return new IdentResult<long> {
                     Success = false,
                     Message = "User already exists."
                 };
             } else if (userExists == UserExistsResult.Error) {
-                return new ServiceResult<long> {
+                return new IdentResult<long> {
                     Success = false,
                     Message = "User check failed."
                 };
@@ -52,12 +53,12 @@ namespace Blazorit.Core.Services.Concrete.Identity
             
             var regRslt = await _identRepo.RegisterUser(userName, passwordHash, passwordSalt, "user_role");
             if (regRslt.isOk == true) {
-                return new ServiceResult<long> { 
+                return new IdentResult<long> { 
                     Data = regRslt.userId, 
                     Success = true,
                     Message = "Registration successful!" };
             } else {
-                return new ServiceResult<long> {
+                return new IdentResult<long> {
                     Success = false,
                     Message = "User registration error."
                 };
@@ -65,10 +66,10 @@ namespace Blazorit.Core.Services.Concrete.Identity
         }
 
 
-        public async Task<ServiceResult<bool>> ChangeUserPassword(long userId, string newPassword) {
+        public async Task<IdentResult<bool>> ChangeUserPassword(long userId, string newPassword) {
             var user = await _identRepo.GetUser(userId);
             if (user == null) {
-                return new ServiceResult<bool> {
+                return new IdentResult<bool> {
                     Success = false,
                     Message = "User not found."
                 };
@@ -77,10 +78,10 @@ namespace Blazorit.Core.Services.Concrete.Identity
             CreatePasswordHash(newPassword, out byte[] passwordHash, out byte[] passwordSalt);
 
             if (await _identRepo.ChangeUserPassword(userId, passwordHash, passwordSalt)) {
-                return new ServiceResult<bool> { Success = true, Message = "Password has been changed." };
+                return new IdentResult<bool> { Success = true, Message = "Password has been changed." };
             }
 
-            return new ServiceResult<bool> { Success = false, Message = "Password hasn't been changed!" };
+            return new IdentResult<bool> { Success = false, Message = "Password hasn't been changed!" };
         }
 
 
