@@ -110,10 +110,10 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce
         Task<(bool ok, long orderId)> CreateOrderFromCart(long userId, long paymentId, long deliveryId, string orderToken);
 
         /// <summary>
-        /// Method returns all products from product's view
+        /// Method returns all actual products from product's view
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<VwProduct>> GetProducts();
+        Task<IEnumerable<VwProduct>> GetProductsOnSite();
 
         /// <summary>
         /// Method return data of one product

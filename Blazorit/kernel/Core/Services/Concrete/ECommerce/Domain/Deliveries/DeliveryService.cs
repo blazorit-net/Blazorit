@@ -44,7 +44,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries
                 result = await _dataRepo.GetCommonDeliveryAddressesAsync(method.Id);
             }
             
-            return result;
+            return result.OrderBy(x => x.DateTimeCreated);
         }
 
         /// <summary>

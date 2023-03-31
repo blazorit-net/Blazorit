@@ -27,6 +27,8 @@ public partial class VwProdProduct
 
     public string? LinkPart { get; set; }
 
+    public bool? IsOnSite { get; set; }
+
     public string? Category { get; set; }
 
     public string? CategoryFullName { get; set; }

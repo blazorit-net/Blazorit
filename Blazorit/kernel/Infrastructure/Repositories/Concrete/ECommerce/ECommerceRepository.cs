@@ -26,54 +26,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             _logger = logger;
         }
 
-
         /*
-        /// <summary>
-        /// Method adds product to products repository. This method assigns unique SKU for the product
-        /// </summary>
-        /// <param name="name">Product name</param>
-        /// <param name="curr">Currency</param>
-        /// <param name="price"></param>
-        /// <param name="description"></param>
-        /// <param name="categoryName"></param>
-        /// <returns>(Success, unique SKU)</returns>
-        public async Task<(bool ok, string sku)> AddProductAsync(string name, string curr, decimal price, string? description, string? categoryName) {
-            try {
-                using var context = await _contextFactory.CreateDbContextAsync();
-
-                ProdCategory? category = null;
-                string prefixSku = string.Empty;
-
-                ProdProduct product = new() {
-                    Name = name,
-                    Curr = curr,
-                    Price = price,
-                    Description = description
-                };
-
-                if (categoryName != null) {
-                    category = await context.ProdCategories.Where(x => x.Name == categoryName).FirstOrDefaultAsync();
-                }
-
-                if (category != null && category.PrefixSku != null) {
-                    prefixSku = $"{category.PrefixSku}-";
-                }
-
-                product.Category = category;
-                long maxProductId = context.ProdProducts.Max(x => x.Id);
-                product.Sku = prefixSku + (1200 + (maxProductId + 1)).ToString(); //auto SKU (you can use any logic for auto SKU)
-
-                await context.ProdProducts.AddAsync(product);
-                await context.SaveChangesAsync();
-                return (true, product.Sku);
-            } catch (Exception ex) {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(AddProductAsync)} of the {nameof(ECommerceRepository)} repository");
-            }
-
-            return (false, string.Empty);
-        }
-
-
         /// <summary>
         /// Method adds product to products repository. You need assign SKU for the product
         /// </summary>
@@ -212,26 +165,28 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                 }
                 else
                 {
-                    CartShopcartList? cartList = await context.CartShopcartLists.Where(x => x.CartId == cart.Id && x.ProductId == productId).FirstOrDefaultAsync();
+                    CartShopcartList? productOfCartList = await context.CartShopcartLists
+                        .Where(x => x.CartId == cart.Id && x.ProductId == productId)
+                        .FirstOrDefaultAsync();
 
                     //insert new product for the cart
-                    if (cartList is null)
+                    if (productOfCartList is null)
                     {
-                        cartList = new CartShopcartList()
+                        productOfCartList = new CartShopcartList()
                         {
                             Cart = cart,
                             ProductId = productId,
                             Quantity = quantity
                         };
 
-                        await context.CartShopcartLists.AddAsync(cartList);
+                        await context.CartShopcartLists.AddAsync(productOfCartList);
                     }
                     else
                     { //update quantity
                       // check cart item for logic (zero or negative number) quantity 
-                        if ((cartList.Quantity + quantity) > 0)
+                        if ((productOfCartList.Quantity + quantity) > 0)
                         {
-                            cartList.Quantity += quantity;
+                            productOfCartList.Quantity += quantity;
                         }
                         else
                         {
@@ -507,14 +462,15 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
 
         /// <summary>
-        /// Method returns all products from product's view
+        /// Method returns only all actual products from product's view
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<VwProduct>> GetProducts() {
+        public async Task<IEnumerable<VwProduct>> GetProductsOnSite() {
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                return context.VwProdProducts ////.ToList()
+                return context.VwProdProducts
+                    .Where(x => x.IsOnSite == true) // only actual products
                     .Select(x => new VwProduct {
                             Category = x.Category!,
                             CategoryFullName = x.CategoryFullName!,
@@ -531,7 +487,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     })
                     .ToList();
             } catch (Exception ex) {
-                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProducts)} of the {nameof(ECommerceRepository)} repository");
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetProductsOnSite)} of the {nameof(ECommerceRepository)} repository");
             }
 
             return new List<VwProduct>();
@@ -548,7 +504,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var product = context.VwProdProducts
+                var product = await context.VwProdProducts
                     .Where(x => x.Category == category && x.LinkPart == linkPart)
                     .Select(x => new VwProduct {
                         Category = x.Category!,
@@ -558,14 +514,14 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         DateModified = x.DateModified.GetValueOrDefault(),
                         DateTimeCreate = x.DateTimeCreate.GetValueOrDefault(),
                         DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
-                        Description = x.Description,
+                        Description = x.Description ?? string.Empty,
                         Id = x.Id.GetValueOrDefault(),
                         Name = x.Name!,
                         Price = x.Price.GetValueOrDefault(),
                         Sku = x.Sku!,
                         LinkPart = x.LinkPart!
                     })
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
                 //if (product is not null) {
                 //    product.Description = context.ProdProducts.Where(x => x.Id == product.Id).FirstOrDefault().Description!;

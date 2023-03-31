@@ -28,6 +28,11 @@ public partial class ProdProduct
 
     public string LinkPart { get; set; } = null!;
 
+    /// <summary>
+    /// if on_site is true than this product show on the site, else not show
+    /// </summary>
+    public bool? IsOnSite { get; set; }
+
     public virtual ICollection<CartShopcartList> CartShopcartLists { get; } = new List<CartShopcartList>();
 
     public virtual ProdCategory Category { get; set; } = null!;

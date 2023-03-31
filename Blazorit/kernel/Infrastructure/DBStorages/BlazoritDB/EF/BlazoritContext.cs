@@ -507,6 +507,11 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                     .HasDefaultValueSql("now()")
                     .HasColumnName("date_time_modified");
                 entity.Property(e => e.Description).HasColumnName("description");
+                entity.Property(e => e.IsOnSite)
+                    .IsRequired()
+                    .HasDefaultValueSql("true")
+                    .HasComment("if on_site is true than this product show on the site, else not show")
+                    .HasColumnName("is_on_site");
                 entity.Property(e => e.LinkPart)
                     .HasMaxLength(200)
                     .HasDefaultValueSql("'empty'::character varying")
@@ -690,6 +695,7 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
                 entity.Property(e => e.DateTimeModified).HasColumnName("date_time_modified");
                 entity.Property(e => e.Description).HasColumnName("description");
                 entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.IsOnSite).HasColumnName("is_on_site");
                 entity.Property(e => e.LinkPart)
                     .HasMaxLength(200)
                     .HasColumnName("link_part");
@@ -746,7 +752,6 @@ namespace Blazorit.Infrastructure.DBStorages.BlazoritDB.EF {
             //################################################################
             //  ############################################################
             //################################################################
-
 
             OnModelCreatingPartial(modelBuilder);
         }

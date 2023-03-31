@@ -10,11 +10,11 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
     {
         public long Id { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
 
-        public string Sku { get; set; } = null!;
+        public string Sku { get; set; } = string.Empty;
 
-        public string Curr { get; set; } = null!;
+        public string Curr { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
 
@@ -26,12 +26,14 @@ namespace Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Dom
 
         public DateTimeOffset DateTimeModified { get; set; }
 
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        public string LinkPart { get; set; } = null!;
+        public string LinkPart { get; set; } = string.Empty;
 
-        public string Category { get; set; } = null!;
+        public bool IsOnSite { get; set; }
 
-        public string CategoryFullName { get; set; } = null!;
+        public string Category { get; set; } = string.Empty;
+
+        public string CategoryFullName { get; set; } = string.Empty;
     }
 }

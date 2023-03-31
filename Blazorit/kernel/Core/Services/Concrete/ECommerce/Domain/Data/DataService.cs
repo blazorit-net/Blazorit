@@ -28,7 +28,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Data
         public async Task<IEnumerable<SubMenu>> GetMainHeaderMenu()
         {
 
-            var products = await _dataRepo.GetProducts();
+            var products = await _dataRepo.GetProductsOnSite();
 
             if (products == null || !products.Any())
             {
@@ -82,7 +82,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Data
             {
                 Category = product.Category,
                 CategoryFullName = product.CategoryFullName,
-                Description = product.Description ?? string.Empty,
+                Description = product.Description,
                 Id = product.Id,
                 LinkPart = product.LinkPart.Trim(),
                 Name = product.Name,
