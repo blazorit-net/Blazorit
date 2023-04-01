@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using AntDesign;
+using Blazorit.Client.Services.Abstract.Identity;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts {
     public partial class Shopcart : IDisposable {
@@ -10,6 +11,9 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars
 
         [Inject]
         private CartState CartState { get; set; } = null!;
+
+        [Inject]
+        private IIdentityService IdentityService { get; set; } = null!;
 
         [Inject]
         private IMessageService AntMessage { get; set; } = null!;
@@ -47,6 +51,12 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars
 
         private async Task CheckoutButton_ClickHandler()
         {
+            if (!await IdentityService.IsUserAuthenticated())
+            {
+                await AntMessage.Warning("You are not authorized");
+                return;
+            }
+
             if (CartState.State.TotalQuantity == 0)
             {                
                 await IsVisibleShopcartDrawerChanged.InvokeAsync(false);

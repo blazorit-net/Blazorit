@@ -1,6 +1,7 @@
 ﻿using AntDesign;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Orders;
+using Blazorit.Client.Services.Abstract.Identity;
 using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Microsoft.AspNetCore.Components;
@@ -18,6 +19,9 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage
 
         [Inject]
         private ICartService CartService { get; set; } = null!;
+
+        [Inject]
+        private IIdentityService IdentityService { get; set; } = null!;
 
         [Inject]
         private IMessageService AntMessage { get; set; } = null!;
@@ -38,6 +42,11 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ShopcartPage
 
         public async Task CheckoutButton_ClickHandlerAsync()
         {
+            if (!await IdentityService.IsUserAuthenticated())
+            {
+                await AntMessage.Warning("You are not authorized");
+                return;
+            }
 
             if (CartState.State.TotalQuantity == 0)
             {                

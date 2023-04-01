@@ -1,7 +1,7 @@
-﻿using Blazorit.Core.Services.Models.Identity;
-using Blazorit.SharedKernel.Core.Services.Models.Identity;
+﻿using Blazorit.SharedKernel.Core.IdentityRoles;
 
-namespace Blazorit.Core.Services.Abstract.Identity {
+namespace Blazorit.Core.Services.Abstract.Identity
+{
     public interface IIdentityService {
         Task<IdentResult<UserTokenData>> CheckUser(string userName, string password);
         Task<IdentResult<long>> RegisterUser(string userName, string password);

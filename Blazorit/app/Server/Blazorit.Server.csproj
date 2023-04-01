@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\ECommerce\Admin\" />
     <Folder Include="Models\ECommerce\Domain\" />
   </ItemGroup>
 

@@ -1,9 +1,8 @@
 ﻿using Blazorit.Core.Services.Abstract.Identity;
-using Blazorit.Core.Services.Models.Identity;
 using Blazorit.Infrastructure.Repositories.Abstract.Identity;
 using System.Security.Cryptography;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.Identity;
-using Blazorit.SharedKernel.Core.Services.Models.Identity;
+using Blazorit.SharedKernel.Core.IdentityRoles;
 
 namespace Blazorit.Core.Services.Concrete.Identity
 {

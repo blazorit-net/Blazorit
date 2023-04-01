@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Blazorit.Shared.Models.Identity;
-using Blazorit.SharedKernel.Core.Services.Models.Identity;
+using Blazorit.SharedKernel.Core.IdentityRoles;
 
 namespace Blazorit.Server.Services.Concrete.Identity
 {
@@ -84,7 +84,7 @@ namespace Blazorit.Server.Services.Concrete.Identity
         }
 
 
-        private void ConvertResponseFromCoreToServer<T>(CoreServices.Models.Identity.IdentResult<T> from, out IdentResponse<T> to) {
+        private void ConvertResponseFromCoreToServer<T>(IdentResult<T> from, out IdentResponse<T> to) {
             to = new IdentResponse<T>();
             to.Success = from.Success;
             to.Message = from.Message;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blazorit.SharedKernel.Core.Services.Models.Identity
+namespace Blazorit.SharedKernel.Core.IdentityRoles
 {
     public class UserTokenData
     {
@@ -20,7 +20,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.Identity
         public long UserId { get; set; }
 
         public string UserName { get; set; } = string.Empty;
-        
+
         public string UserRole { get; set; } = string.Empty;
     }
 }
