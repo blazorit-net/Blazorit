@@ -22,5 +22,16 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Admin.Products
             var result = await _productService.AddProductAsync(product);
             return result;
         }
+
+
+        /// <summary>
+        /// Method returns all products
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            var result = await _productService.GetAllProductsAsync();
+            return result;
+        }
     }
 }

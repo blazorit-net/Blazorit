@@ -9,7 +9,7 @@
                     <SpaceItem>
                         <AuthorizeView Roles="admin_role" Context="admin_context">
                             <Authorized>
-                                <Button Ghost Danger OnClick=@(() => Navigation.NavigateTo(ConstPage.ADMIN_INDEX))>
+                                <Button Ghost Danger OnClick=@(() => Navigation.NavigateTo(Blazorit.Client.Shared.Routes.ECommerce.Admin.AdminPage.INDEX))>
                                     Admin
                                 </Button>
                             </Authorized>

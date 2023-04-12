@@ -28,5 +28,11 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin
         /// <param name="sku"></param>
         /// <returns></returns>
         Task<VwProduct?> GetProductAsync(string sku);
+
+        /// <summary>
+        /// Method returns all products from repository
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<VwProduct>> GetAllProductsAsync();
     }
 }

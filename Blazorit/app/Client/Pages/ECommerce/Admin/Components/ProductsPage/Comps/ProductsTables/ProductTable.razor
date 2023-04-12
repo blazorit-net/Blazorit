@@ -1,0 +1,22 @@
+﻿@using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+@implements IBlazoritComponent
+
+<div class="@(((IBlazoritComponent)this).GetClass("bit-products-table"))">
+    <GridRow>
+        <GridCol>
+            <Table TItem="Product" DataSource="products" OnRowClick="@(async (row) => await ProductsTable_ClickRowHandlerAsync(row))">
+                <Selection Key="@context.Id.ToString()" />
+                <PropertyColumn Property="c => c!.Id" Sortable />
+                <PropertyColumn Property="c => c!.IsOnSite" Sortable />
+                <PropertyColumn Property="c => c!.Sku" Sortable />
+                <PropertyColumn Property="c => c!.Name" Sortable />
+                <PropertyColumn Property="c => c!.Curr" Sortable Filterable />
+                <PropertyColumn Property="c => c!.Price" Format="N2" Sortable />
+                <PropertyColumn Property="c => c!.CategoryFullName" Sortable />
+                <PropertyColumn Property="c => c!.Category" Sortable />
+                <PropertyColumn Property="c => c!.LinkPart" Sortable />
+                <PropertyColumn Property="c => c!.Description" Sortable />
+            </Table>
+        </GridCol>
+    </GridRow>
+</div>

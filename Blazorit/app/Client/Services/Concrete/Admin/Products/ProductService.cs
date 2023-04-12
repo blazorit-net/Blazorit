@@ -26,5 +26,11 @@ namespace Blazorit.Client.Services.Concrete.Admin.Products
             Product result = await _http.PostAndReadAsJsonOrNewAsync<Product, Product>($"{ProductApi.CONTROLLER}/{ProductApi.ADD_PRODUCT}", product);
             return result;
         }
+
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            IEnumerable<Product> result = await _http.GetFromJsonOrNewAsync<List<Product>>($"{ProductApi.CONTROLLER}/{ProductApi.GET_PRODUCTS}");
+            return result;
+        }
     }
 }

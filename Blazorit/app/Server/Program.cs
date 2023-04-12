@@ -51,12 +51,14 @@ builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Ca
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts.CartService>();
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders.IOrderService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders.OrderService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Orders.IOrderService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Orders.OrderService>();
-
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries.DeliveryService>();
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries.DeliveryService>();
-
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Payments.IPaymentService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Payments.PaymentService>();
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Payments.IPaymentService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Payments.PaymentService>();
+
+builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin.IECommerceAdminRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin.ECommerceAdminRepository>();
+builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Admin.Products.IProductService, Blazorit.Server.Services.Concrete.ECommerce.Admin.Products.ProductService>();
+builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Admin.Products.IProductService, Blazorit.Core.Services.Concrete.ECommerce.Admin.Products.ProductService>();
 //################################################################
 //  ############################################################
 //################################################################

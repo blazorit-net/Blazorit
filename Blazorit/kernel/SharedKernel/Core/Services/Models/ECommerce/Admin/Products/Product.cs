@@ -22,6 +22,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products
             this.DateTimeModified = product.DateTimeModified;
             this.Description = product.Description;
             this.LinkPart = product.LinkPart;
+            this.IsOnSite = product.IsOnSite;
             this.Category = product.Category;
             this.CategoryFullName = product.CategoryFullName;
         }
@@ -36,6 +37,14 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products
 
         public decimal Price { get; set; }
 
+        public string StrPrice 
+        { 
+            get
+            {
+                return Price.ToString("N2");
+            } 
+        }
+
         public DateTimeOffset DateTimeCreate { get; set; }
 
         public DateTimeOffset DateTimeModified { get; set; }
@@ -43,6 +52,8 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products
         public string Description { get; set; } = string.Empty;
 
         public string LinkPart { get; set; } = string.Empty;
+
+        public bool IsOnSite { get; set; }
 
         public string Category { get; set; } = string.Empty;
 

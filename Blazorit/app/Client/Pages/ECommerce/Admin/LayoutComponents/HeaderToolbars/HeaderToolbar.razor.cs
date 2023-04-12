@@ -1,6 +1,6 @@
 ﻿using Blazorit.Client.Providers.Concrete.Identity;
 using Microsoft.AspNetCore.Components;
-using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+using Blazorit.Client.Shared.Routes.ECommerce.Admin;
 
 namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.HeaderToolbars
 {
@@ -9,7 +9,7 @@ namespace Blazorit.Client.Pages.ECommerce.Admin.LayoutComponents.HeaderToolbars
         public string? Class { get; set; }
 
         private void NavigateToLogin() {
-            Navigation.NavigateTo(ConstPage.ADMIN_LOGIN);
+            Navigation.NavigateTo(AdminPage.ADMIN_LOGIN);
         }
 
         //private async Task Logout() {

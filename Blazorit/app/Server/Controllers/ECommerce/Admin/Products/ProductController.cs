@@ -22,19 +22,18 @@ namespace Blazorit.Server.Controllers.ECommerce.Admin.Products
         }
 
 
-        //[HttpGet($"{CartApi.GET_SHOPCART}")]
-        //public async Task<ActionResult<ShopCart>> GetShopCartListAsync()
-        //{
-        //    long userId = long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out long id) ? id : long.MinValue;
-        //    var result = await _cartService.GetShopCartListAsync(userId);
+        [HttpGet($"{ProductApi.GET_PRODUCTS}")]
+        public async Task<ActionResult<List<Product>>> GetAllProductsAsync()
+        {            
+            var result = await _productService.GetAllProductsAsync();
 
-        //    if (result == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (result.Count() == 0)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(result);
-        //}
+            return Ok(result);
+        }
 
 
         [HttpPost($"{ProductApi.ADD_PRODUCT}")]

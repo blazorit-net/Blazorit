@@ -16,6 +16,8 @@ using Blazorit.Client.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Client.Services.Concrete.ECommerce.Domain.Deliveries;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Payments;
 using Blazorit.Client.Services.Concrete.ECommerce.Domain.Payments;
+using Blazorit.Client.Services.Abstract.Admin.Products;
+using Blazorit.Client.Services.Concrete.Admin.Products;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -37,6 +39,9 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IDeliveryService, DeliveryService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<Blazorit.Client.States.ECommerce.Domain.Carts.CartState>(); //Scoped state for shopcart components
+
+// #######################--admin--###########################
+builder.Services.AddScoped<IProductService, ProductService>();
 //################################################################
 //  ############################################################
 //################################################################

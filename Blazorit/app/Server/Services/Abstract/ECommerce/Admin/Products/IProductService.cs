@@ -10,5 +10,11 @@ namespace Blazorit.Server.Services.Abstract.ECommerce.Admin.Products
         /// <param name="product"></param>
         /// <returns></returns>
         Task<Product?> AddProductAsync(Product product);
+
+        /// <summary>
+        /// Method returns all products
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Product>> GetAllProductsAsync();
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using Blazorit.Client.Base.Components;
-@using Blazorit.Client.Shared.Routes.ECommerce.Domain
+@using Blazorit.Client.Shared.Routes.ECommerce.Admin;
 @implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-sider-menu"))">
@@ -45,8 +45,11 @@
             }
             <SubMenu Key="userMenu" TitleTemplate=userMenuTitle>
                 <MenuItem Key="1000" RouterLink="/admin/account">Account</MenuItem>
-                <MenuItem Key="1001" RouterLink=@ConstPage.ADMIN_LOGIN>SignIn</MenuItem>
-                <MenuItem Key="1002" RouterLink=@ConstPage.ADMIN_REGISTER>SignUp</MenuItem>
+                <MenuItem Key="1001" RouterLink=@AdminPage.ADMIN_LOGIN>SignIn</MenuItem>
+                <MenuItem Key="1002" RouterLink=@AdminPage.ADMIN_REGISTER>SignUp</MenuItem>
+            </SubMenu>
+            <SubMenu Key="productsMenu" TitleTemplate="userMenuTitle">
+                <MenuItem Key="2001" RouterLink=@AdminPage.PRODUCTS>Products</MenuItem>
             </SubMenu>
         </Menu>
     </Sider>

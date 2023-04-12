@@ -1,6 +1,7 @@
 ﻿using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin;
+using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -133,6 +134,43 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
             }
 
             return null;
+        }
+
+
+        public async Task<IEnumerable<VwProduct>> GetAllProductsAsync()
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var result = await context.VwProdProducts
+                    .Select(x => new VwProduct
+                    {
+                        Category = x.Category!,
+                        CategoryFullName = x.CategoryFullName!,
+                        Curr = x.Curr!,
+                        DateCreate = x.DateCreate.GetValueOrDefault(),
+                        DateModified = x.DateModified.GetValueOrDefault(),
+                        DateTimeCreate = x.DateTimeCreate.GetValueOrDefault(),
+                        DateTimeModified = x.DateTimeModified.GetValueOrDefault(),
+                        Description = x.Description ?? string.Empty,
+                        Id = x.Id.GetValueOrDefault(),
+                        Name = x.Name!,
+                        Price = x.Price.GetValueOrDefault(),
+                        Sku = x.Sku!,
+                        LinkPart = x.LinkPart!,
+                        IsOnSite = x.IsOnSite ?? default
+                    })
+                    .ToListAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetAllProductsAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return Enumerable.Empty<VwProduct>();
         }
     }
 }

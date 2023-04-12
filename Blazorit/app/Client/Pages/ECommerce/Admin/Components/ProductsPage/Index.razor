@@ -1,0 +1,26 @@
+﻿@attribute [Route($"{AdminPage.PRODUCTS}")]
+@using Blazorit.Client.Shared.Routes.ECommerce.Admin;
+@using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+@using Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.ProductsTables;
+@implements IBlazoritComponent
+
+<PageTitle>Products</PageTitle>
+<div class="@(((IBlazoritComponent)this).GetClass("bit-products-page"))">
+    <h1>Products</h1>
+    <GridRow>
+        <GridCol>
+            <Card>
+                <ProductTable OnRowClick="ProductsTable_RowClickHandler" />
+            </Card>            
+        </GridCol>
+    </GridRow>
+    <GridRow>
+        <GridCol>
+            <Card Title="Description">                
+                <Body>
+                    @description
+                </Body>
+            </Card>            
+        </GridCol>
+    </GridRow>
+</div>

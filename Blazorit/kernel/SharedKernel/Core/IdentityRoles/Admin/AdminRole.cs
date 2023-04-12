@@ -11,6 +11,6 @@ namespace Blazorit.SharedKernel.Core.IdentityRoles.Admin
     /// </summary>
     public static class AdminRole
     {
-        public const string ADMIN = "admin";
+        public const string ADMIN = "admin_role";
     }
 }

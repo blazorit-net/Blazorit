@@ -1,7 +1,7 @@
 ﻿@using Blazorit.Client.Base.Components;
 @using Blazorit.Client.Providers.Concrete.Identity
 @using Blazorit.Client.Pages.ECommerce.Identity
-@using Blazorit.Client.Shared.Routes.ECommerce.Domain;
+@using Blazorit.Client.Shared.Routes.ECommerce.Admin;
 
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -15,7 +15,7 @@
                     <SpaceItem>
                         <AuthorizeView>
                             <Authorized>
-                                <Button OnClick=@(() => Navigation.NavigateTo(ConstPage.ADMIN_ACCOUNT))>
+                                <Button OnClick=@(() => Navigation.NavigateTo(AdminPage.ADMIN_ACCOUNT))>
                                     Account
                                 </Button>
                             </Authorized>
@@ -34,7 +34,7 @@
                                 </Button>
                             </Authorized>
                             <NotAuthorized>
-                                <Button Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(ConstPage.ADMIN_REGISTER))>
+                                <Button Type="@ButtonType.Dashed" OnClick=@(() => Navigation.NavigateTo(AdminPage.ADMIN_REGISTER))>
                                     Sign up
                                 </Button>
                             </NotAuthorized>

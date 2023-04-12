@@ -38,5 +38,16 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Admin.Products
             VwProduct result = (await _dataRepo.GetProductAsync(repoResult.sku)) ?? new(); // check product in repository
             return new Product(result);
         }
+
+
+        /// <summary>
+        /// Method returns all products
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            var result = await _dataRepo.GetAllProductsAsync();
+            return result.Select(x => new Product(x)).OrderByDescending(x => x.DateTimeModified).ToList();
+        }
     }
 }
