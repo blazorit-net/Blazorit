@@ -1,6 +1,7 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 
-namespace Blazorit.Client.Services.Abstract.Admin.Products
+namespace Blazorit.Client.Services.Abstract.ECommerce.Admin.Products
 {
     public interface IProductService
     {
@@ -12,5 +13,11 @@ namespace Blazorit.Client.Services.Abstract.Admin.Products
         Task<Product> AddProductAsync(Product product);
 
         Task<IEnumerable<Product>> GetAllProductsAsync();
+
+        /// <summary>
+        /// Method returns all categories
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Category>> GetCategoriesAsync();
     }
 }

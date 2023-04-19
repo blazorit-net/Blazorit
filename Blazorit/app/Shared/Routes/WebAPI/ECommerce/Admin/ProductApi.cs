@@ -11,6 +11,7 @@ namespace Blazorit.Shared.Routes.WebAPI.ECommerce.Admin
         public const string CONTROLLER = "api/ecommerce/admin/product";
         public const string GET_PRODUCTS = "get-products";
         public const string ADD_PRODUCT = "add-product";
+        public const string GET_CATEGORIES = "get-categories";
         //public const string DELETE_PRODUCT = "delete-product";
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Blazorit.Core.Services.Abstract.ECommerce.Admin.Products;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Admin.Products
         public async Task<Product?> AddProductAsync(Product product)
         {
             var repoResult = await _dataRepo.AddProductAsync(product.Name, product.Curr, 
-                product.Price, product.Description, product.Category, product.CategoryFullName, product.LinkPart);
+                product.Price, product.Description, product.Category, product.CategoryFullName, product.LinkPart, product.IsOnSite);
 
             if (!repoResult.ok) 
             {
@@ -48,6 +49,17 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Admin.Products
         {
             var result = await _dataRepo.GetAllProductsAsync();
             return result.Select(x => new Product(x)).OrderByDescending(x => x.DateTimeModified).ToList();
+        }
+
+
+        /// <summary>
+        /// Method returns all categories
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
+        {
+            var result = await _dataRepo.GetCategoriesAsync();
+            return result;
         }
     }
 }

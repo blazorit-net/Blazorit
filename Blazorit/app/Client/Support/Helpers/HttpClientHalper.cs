@@ -116,7 +116,7 @@ namespace Blazorit.Client.Support.Helpers {
             catch (Exception ex)
             {
 #if DEBUG
-                WriteErrorToConsole(ex, requestUri);
+                WriteErrorForNewObjectToConsole(ex, requestUri);
 #endif
             }
 
@@ -149,7 +149,7 @@ namespace Blazorit.Client.Support.Helpers {
             catch (Exception ex)
             {
 #if DEBUG
-                WriteErrorToConsole(ex, requestUri);
+                WriteErrorForNewObjectToConsole(ex, requestUri);
 #endif
             }
 
@@ -179,7 +179,7 @@ namespace Blazorit.Client.Support.Helpers {
             catch (Exception ex)
             {
 #if DEBUG
-                WriteErrorToConsole(ex, requestUri);
+                WriteErrorForNewObjectToConsole(ex, requestUri);
 #endif
             }
 
@@ -190,6 +190,13 @@ namespace Blazorit.Client.Support.Helpers {
         private static void WriteErrorToConsole(Exception ex, string? requestUri)
         {
             Console.WriteLine($"Blazorit: Request error: '{requestUri ?? string.Empty}'. default returned.");
+            Console.WriteLine(ex.ToString());
+            Console.WriteLine(ex.InnerException?.Message ?? string.Empty);
+        }
+
+        private static void WriteErrorForNewObjectToConsole(Exception ex, string? requestUri)
+        {
+            Console.WriteLine($"Blazorit: Request error: '{requestUri ?? string.Empty}'. new() returned.");
             Console.WriteLine(ex.ToString());
             Console.WriteLine(ex.InnerException?.Message ?? string.Empty);
         }

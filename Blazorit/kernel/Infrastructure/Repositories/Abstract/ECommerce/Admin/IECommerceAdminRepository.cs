@@ -1,4 +1,5 @@
-﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,9 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin
         /// <param name="categoryName"></param>
         /// <param name="categoryFullName"></param>
         /// <param name="linkPart"></param>
+        /// <param name="isOnSite"></param>
         /// <returns>(Success, unique SKU)</returns>
-        Task<(bool ok, string sku)> AddProductAsync(string productName, string curr, decimal price, string? description, string categoryName, string categoryFullName, string linkPart);
+        Task<(bool ok, string sku)> AddProductAsync(string productName, string curr, decimal price, string? description, string categoryName, string categoryFullName, string linkPart, bool isOnSite);
 
         /// <summary>
         /// Method returns product by SKU
@@ -34,5 +36,11 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<VwProduct>> GetAllProductsAsync();
+
+        /// <summary>
+        /// Method returns all categories
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Category>> GetCategoriesAsync();
     }
 }

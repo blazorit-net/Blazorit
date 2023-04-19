@@ -2,6 +2,7 @@
 using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom;
 using Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -40,7 +41,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
         /// <param name="categoryFullName"></param>
         /// <param name="linkPart"></param>
         /// <returns>(Success, unique SKU)</returns>
-        public async Task<(bool ok, string sku)> AddProductAsync(string productName, string curr, decimal price, string? description, string categoryName, string categoryFullName, string linkPart)
+        public async Task<(bool ok, string sku)> AddProductAsync(string productName, string curr, decimal price, string? description, string categoryName, string categoryFullName, string linkPart, bool isOnSite)
         {
             try
             {
@@ -57,6 +58,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
                     Price = price,
                     Description = description,
                     LinkPart = linkPart,
+                    IsOnSite = isOnSite
                 };
 
                 ProdCategory? category = await context.ProdCategories.FirstOrDefaultAsync(x => x.Name == categoryName);
@@ -171,6 +173,37 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
             }
 
             return Enumerable.Empty<VwProduct>();
+        }
+
+
+        /// <summary>
+        /// Method returns all categories
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
+        {
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var result = await context.ProdCategories
+                    .Select(x => new Category
+                    {
+                        FullName = x.FullName,
+                        Id = x.Id,
+                        Name = x.Name,
+                        PrefixSku = x.PrefixSku ?? string.Empty
+                    })
+                    .ToListAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(GetCategoriesAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return Enumerable.Empty<Category>();
         }
     }
 }

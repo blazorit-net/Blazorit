@@ -2,6 +2,7 @@
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Admin;
 using Blazorit.SharedKernel.Core.IdentityRoles.Admin;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,20 @@ namespace Blazorit.Server.Controllers.ECommerce.Admin.Products
             var result = await _productService.AddProductAsync(product);
 
             if (result == null)
+            {
+                return Problem();
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpGet($"{ProductApi.GET_CATEGORIES}")]
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategoriesAsync()
+        {
+            IEnumerable<Category> result = await _productService.GetCategoriesAsync();
+
+            if (result.Count() == 0)
             {
                 return Problem();
             }

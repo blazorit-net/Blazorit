@@ -1,6 +1,7 @@
 ﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,10 +30,12 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products
 
         public long Id { get; set; }
 
+        [Required]
         public string Name { get; set; } = string.Empty;
 
         public string Sku { get; set; } = string.Empty;
 
+        [Required]
         public string Curr { get; set; } = string.Empty;
 
         public decimal Price { get; set; }
@@ -51,6 +54,7 @@ namespace Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products
 
         public string Description { get; set; } = string.Empty;
 
+        [Required]
         public string LinkPart { get; set; } = string.Empty;
 
         public bool IsOnSite { get; set; }

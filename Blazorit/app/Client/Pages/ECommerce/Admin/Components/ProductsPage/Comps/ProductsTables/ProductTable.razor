@@ -1,17 +1,27 @@
 ﻿@using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+@using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 @implements IBlazoritComponent
 
 <div class="@(((IBlazoritComponent)this).GetClass("bit-products-table"))">
     <GridRow>
         <GridCol>
-            <Table TItem="Product" DataSource="products" OnRowClick="@(async (row) => await ProductsTable_ClickRowHandlerAsync(row))">
-                <Selection Key="@context.Id.ToString()" />
+            <Space>
+                <SpaceItem>
+                    <Button OnClick="AddProductButton_ClickHandler">Add</Button>
+                </SpaceItem>
+            </Space>
+        </GridCol>
+    </GridRow>
+    <GridRow>
+        <GridCol>
+            <Table TItem="Product" DataSource="products" OnRow="ProductsTable_RowHandler">
+                <Selection Key="@context.Id.ToString()" CheckStrictly=false  />
                 <PropertyColumn Property="c => c!.Id" Sortable />
                 <PropertyColumn Property="c => c!.IsOnSite" Sortable />
                 <PropertyColumn Property="c => c!.Sku" Sortable />
                 <PropertyColumn Property="c => c!.Name" Sortable />
                 <PropertyColumn Property="c => c!.Curr" Sortable Filterable />
-                <PropertyColumn Property="c => c!.Price" Format="N2" Sortable />
+                <PropertyColumn Property="c => c!.StrPrice" Sortable />
                 <PropertyColumn Property="c => c!.CategoryFullName" Sortable />
                 <PropertyColumn Property="c => c!.Category" Sortable />
                 <PropertyColumn Property="c => c!.LinkPart" Sortable />
@@ -19,4 +29,40 @@
             </Table>
         </GridCol>
     </GridRow>
+
+
+    <Modal Title="Add product" Visible="@isVisibleAddProductModal"
+        ConfirmLoading="@isConfirmLoadingModal"
+        OnOk="AddProductOkButton_ClickHandler"
+        OnCancel="@(() => isVisibleAddProductModal = false)"
+    >
+        <Form @ref=@formProduct
+             Model="product"
+              OnFinish="AddProductForm_FinishHandler">
+            <FormItem Label="Product name">
+                <Input @bind-Value="@context.Name" />
+            </FormItem>
+            <FormItem Label="Currency">
+                <Input @bind-Value="@context.Curr" />
+            </FormItem>
+            <FormItem Label="Price">
+                <Input @bind-Value="@context.Price" />
+            </FormItem>
+            <FormItem Label="Select category">
+                <Select TItem="Category" TItemValue="Category" DataSource="@categories"
+                        @bind-Value="@SelectedCategory"
+                        LabelName="@nameof(Category.FullName)"
+                        Placeholder="Select category"
+                        >
+                </Select>
+            </FormItem>
+            <FormItem Label="Link part">
+                <Input @bind-Value="@context.LinkPart" />
+            </FormItem>
+            <FormItem Label="On Site">
+                <Switch @bind-Checked="@context.IsOnSite" />
+            </FormItem>
+        </Form>
+    </Modal>
+
 </div>

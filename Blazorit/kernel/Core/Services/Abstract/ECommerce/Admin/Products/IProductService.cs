@@ -1,4 +1,5 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,11 @@ namespace Blazorit.Core.Services.Abstract.ECommerce.Admin.Products
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Product>> GetAllProductsAsync();
+
+        /// <summary>
+        /// Method returns all categories
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Category>> GetCategoriesAsync();
     }
 }

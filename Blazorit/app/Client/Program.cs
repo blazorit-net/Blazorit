@@ -16,8 +16,8 @@ using Blazorit.Client.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Client.Services.Concrete.ECommerce.Domain.Deliveries;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Payments;
 using Blazorit.Client.Services.Concrete.ECommerce.Domain.Payments;
-using Blazorit.Client.Services.Abstract.Admin.Products;
-using Blazorit.Client.Services.Concrete.Admin.Products;
+using Blazorit.Client.Services.Abstract.ECommerce.Admin.Products;
+using Blazorit.Client.Services.Concrete.ECommerce.Admin.Products;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
