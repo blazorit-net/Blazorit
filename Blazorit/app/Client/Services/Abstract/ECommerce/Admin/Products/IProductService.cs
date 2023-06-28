@@ -1,5 +1,6 @@
 ﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Shr = Blazorit.Shared.Models.Universal;
 
 namespace Blazorit.Client.Services.Abstract.ECommerce.Admin.Products
 {
@@ -10,7 +11,7 @@ namespace Blazorit.Client.Services.Abstract.ECommerce.Admin.Products
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        Task<Product> AddProductAsync(Product product);
+        Task<Shr.Response<Product>> AddProductAsync(Product product);
 
         /// <summary>
         /// Method updates product

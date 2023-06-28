@@ -4,9 +4,9 @@ using Blazorit.SharedKernel.Core.IdentityRoles.Admin;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using Shr = Blazorit.Shared.Models.Universal;
+
 
 namespace Blazorit.Server.Controllers.ECommerce.Admin.Products
 {
@@ -24,16 +24,11 @@ namespace Blazorit.Server.Controllers.ECommerce.Admin.Products
 
 
         [HttpPost($"{ProductApi.ADD_PRODUCT}")]
-        public async Task<ActionResult<Product>> AddProductAsync(Product product)
+        public async Task<ActionResult<Shr.Response<Product>>> AddProductAsync(Product product)
         {
-            var result = await _productService.AddProductAsync(product);
-
-            if (result == null)
-            {
-                return Problem();
-            }
-
-            return Ok(result);
+            Product? result = await _productService.AddProductAsync(product);
+            var response = new Shr.Response<Product>(result, "");
+            return Ok(response);
         }
 
 

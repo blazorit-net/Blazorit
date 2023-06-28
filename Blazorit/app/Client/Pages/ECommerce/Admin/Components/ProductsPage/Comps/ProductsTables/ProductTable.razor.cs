@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Blazorit.Client.Services.Abstract.ECommerce.Admin.Products;
 using AntDesign;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
-using System.Security.Cryptography.X509Certificates;
+using Shr = Blazorit.Shared.Models.Universal;
 
 namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.ProductsTables
 {
@@ -80,7 +80,13 @@ namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.Pr
             switch (InitProduct)
             {
                 case InitProduct.Add:
-                    await ProductService.AddProductAsync(product);
+                    Shr.Response<Product> respProd = await ProductService.AddProductAsync(product);
+                    if (respProd.Ok)
+                    {
+                        products.Add(respProd.GetData());
+                        products = products.OrderByDescending(x => x.DateTimeModified).ToList();
+                    }
+                    
                     break;
                 case InitProduct.Update:
                     product = await ProductService.UpdateProductAsync(product);

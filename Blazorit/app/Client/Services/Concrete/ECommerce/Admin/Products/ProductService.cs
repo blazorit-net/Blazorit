@@ -3,6 +3,7 @@ using Blazorit.Client.Support.Helpers;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Admin;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Shr = Blazorit.Shared.Models.Universal;
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Admin.Products
 {
@@ -22,9 +23,9 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Admin.Products
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        public async Task<Product> AddProductAsync(Product product)
+        public async Task<Shr.Response<Product>> AddProductAsync(Product product)
         {
-            Product result = await _http.PostAndReadAsJsonOrNewAsync<Product, Product>($"{ProductApi.CONTROLLER}/{ProductApi.ADD_PRODUCT}", product);
+            Shr.Response<Product> result = await _http.PostAndReadAsJsonOrNewAsync<Product, Shr.Response<Product>>($"{ProductApi.CONTROLLER}/{ProductApi.ADD_PRODUCT}", product);
             return result;
         }
 
