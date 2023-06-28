@@ -25,6 +25,20 @@ namespace Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin
         Task<(bool ok, string sku)> AddProductAsync(string productName, string curr, decimal price, string? description, string categoryName, string categoryFullName, string linkPart, bool isOnSite);
 
         /// <summary>
+        /// Method updates product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="productName"></param>
+        /// <param name="curr"></param>
+        /// <param name="price"></param>
+        /// <param name="description"></param>
+        /// <param name="categoryName"></param>
+        /// <param name="linkPart"></param>
+        /// <param name="isOnSite"></param>
+        /// <returns></returns>
+        Task<bool> UpdateProductAsync(long id, string productName, string curr, decimal price, string? description, string categoryName, string linkPart, bool isOnSite);
+
+        /// <summary>
         /// Method returns product by SKU
         /// </summary>
         /// <param name="sku"></param>

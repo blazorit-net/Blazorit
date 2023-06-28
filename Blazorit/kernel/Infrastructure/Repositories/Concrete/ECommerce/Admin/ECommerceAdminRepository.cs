@@ -97,6 +97,54 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
 
 
         /// <summary>
+        /// Method updates product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="productName"></param>
+        /// <param name="curr"></param>
+        /// <param name="price"></param>
+        /// <param name="description"></param>
+        /// <param name="categoryName"></param>
+        /// <param name="linkPart"></param>
+        /// <param name="isOnSite"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateProductAsync(long id, string productName, string curr, decimal price, string? description, string categoryName, string linkPart, bool isOnSite)
+        {
+
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                description = string.IsNullOrEmpty(description?.Trim() ?? string.Empty) ? null : description; // null for description if it is empty
+
+                ProdProduct? product = await context.ProdProducts.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (product == null)
+                {
+                    return false;
+                }
+
+                product.Name = productName;
+                product.Curr = curr;
+                product.Price = price;
+                product.Description = description;
+                product.LinkPart = linkPart;
+                product.IsOnSite = isOnSite;
+                product.Category = await context.ProdCategories.FirstOrDefaultAsync(x => x.Name == categoryName) ?? new();
+                await context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, $"Error occurred in the method {nameof(UpdateProductAsync)} of the {nameof(ECommerceRepository)} repository");
+            }
+
+            return false;
+        }
+
+
+
+        /// <summary>
         /// Method returns product by SKU
         /// </summary>
         /// <param name="sku"></param>

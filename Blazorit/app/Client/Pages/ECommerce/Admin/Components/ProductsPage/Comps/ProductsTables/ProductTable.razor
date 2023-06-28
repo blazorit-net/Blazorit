@@ -15,7 +15,6 @@
     <GridRow>
         <GridCol>
             <Table TItem="Product" DataSource="products" OnRow="ProductsTable_RowHandler">
-                <Selection Key="@context.Id.ToString()" CheckStrictly=false  />
                 <PropertyColumn Property="c => c!.Id" Sortable />
                 <PropertyColumn Property="c => c!.IsOnSite" Sortable />
                 <PropertyColumn Property="c => c!.Sku" Sortable />
@@ -26,19 +25,25 @@
                 <PropertyColumn Property="c => c!.Category" Sortable />
                 <PropertyColumn Property="c => c!.LinkPart" Sortable />
                 <PropertyColumn Property="c => c!.Description" Sortable />
+                <ActionColumn Title="Action">
+                    <Space>
+                        <SpaceItem><Button Danger OnClick="()=>DeleteButton_ClickHandler(context.Id)">Delete</Button></SpaceItem>
+                        <SpaceItem><Button OnClick="()=>UpdateButton_ClickHandlerAsync(context.Id)">Update</Button></SpaceItem>
+                    </Space>
+                </ActionColumn>
             </Table>
         </GridCol>
     </GridRow>
 
 
-    <Modal Title="Add product" Visible="@isVisibleAddProductModal"
+    <Modal Title="Add product" Visible="@isVisibleInitProductModal"
         ConfirmLoading="@isConfirmLoadingModal"
         OnOk="AddProductOkButton_ClickHandler"
-        OnCancel="@(() => isVisibleAddProductModal = false)"
+        OnCancel="@(() => isVisibleInitProductModal = false)"
     >
         <Form @ref=@formProduct
              Model="product"
-              OnFinish="AddProductForm_FinishHandler">
+              OnFinish="InitProductForm_FinishHandler">
             <FormItem Label="Product name">
                 <Input @bind-Value="@context.Name" />
             </FormItem>
@@ -64,5 +69,13 @@
             </FormItem>
         </Form>
     </Modal>
+
+
+@*    <Modal Title="Update product" Visible="@isVisibleUpdateProductModal"
+           ConfirmLoading="@isConfirmLoadingModal"
+           OnOk="UpdateProductForm_FinishHandler"
+           OnCancel="@(() => isVisibleUpdateProductModal = false)">
+
+    </Modal>*@
 
 </div>

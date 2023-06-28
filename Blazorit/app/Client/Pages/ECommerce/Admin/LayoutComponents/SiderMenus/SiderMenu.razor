@@ -35,6 +35,7 @@
                     <span>Fetch Data</span>
                 </MenuItem>
             </SubMenu>
+            @*TODO: Rewrite code of template*@
             @{
                 RenderFragment userMenuTitle =
                 @<span>
@@ -48,7 +49,16 @@
                 <MenuItem Key="1001" RouterLink=@AdminPage.ADMIN_LOGIN>SignIn</MenuItem>
                 <MenuItem Key="1002" RouterLink=@AdminPage.ADMIN_REGISTER>SignUp</MenuItem>
             </SubMenu>
-            <SubMenu Key="productsMenu" TitleTemplate="userMenuTitle">
+            @*TODO: Rewrite code of template*@
+            @{
+                RenderFragment productMenuTitle =
+                @<span>
+                    <Icon Type="table" Theme="outline" />
+                    <span>Products</span>
+                </span>
+                ;
+            }
+            <SubMenu Key="productsMenu" TitleTemplate="productMenuTitle">
                 <MenuItem Key="2001" RouterLink=@AdminPage.PRODUCTS>Products</MenuItem>
             </SubMenu>
         </Menu>

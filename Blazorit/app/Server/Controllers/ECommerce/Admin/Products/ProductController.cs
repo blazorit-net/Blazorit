@@ -23,20 +23,6 @@ namespace Blazorit.Server.Controllers.ECommerce.Admin.Products
         }
 
 
-        [HttpGet($"{ProductApi.GET_PRODUCTS}")]
-        public async Task<ActionResult<List<Product>>> GetAllProductsAsync()
-        {            
-            var result = await _productService.GetAllProductsAsync();
-
-            if (result.Count() == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(result);
-        }
-
-
         [HttpPost($"{ProductApi.ADD_PRODUCT}")]
         public async Task<ActionResult<Product>> AddProductAsync(Product product)
         {
@@ -45,6 +31,34 @@ namespace Blazorit.Server.Controllers.ECommerce.Admin.Products
             if (result == null)
             {
                 return Problem();
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpPost($"{ProductApi.UPDATE_PRODUCT}")]
+        public async Task<ActionResult<Product>> UpdateProductAsync(Product product)
+        {
+            var result = await _productService.UpdateProductAsync(product);
+
+            if (result == null)
+            {
+                return Problem();
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpGet($"{ProductApi.GET_PRODUCTS}")]
+        public async Task<ActionResult<List<Product>>> GetAllProductsAsync()
+        {            
+            var result = await _productService.GetAllProductsAsync();
+
+            if (result.Count() == 0)
+            {
+                return NotFound();
             }
 
             return Ok(result);

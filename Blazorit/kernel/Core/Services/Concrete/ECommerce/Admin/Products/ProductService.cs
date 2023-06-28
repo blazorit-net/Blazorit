@@ -42,6 +42,25 @@ namespace Blazorit.Core.Services.Concrete.ECommerce.Admin.Products
 
 
         /// <summary>
+        /// Method updates product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public async Task<Product?> UpdateProductAsync(Product product)
+        {
+            bool repoResult = await _dataRepo.UpdateProductAsync(product.Id, product.Name, product.Curr,
+                product.Price, product.Description, product.Category, product.LinkPart, product.IsOnSite);
+
+            if (!repoResult)
+            {
+                return null;
+            }
+
+            VwProduct result = (await _dataRepo.GetProductAsync(product.Sku)) ?? new(); // check product in repository
+            return new Product(result);
+        }
+
+        /// <summary>
         /// Method returns all products
         /// </summary>
         /// <returns></returns>

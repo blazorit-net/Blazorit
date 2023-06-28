@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Blazorit.Client.Services.Abstract.ECommerce.Admin.Products;
 using AntDesign;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.ProductsTables
 {
@@ -13,10 +14,11 @@ namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.Pr
         private List<Product> products = new List<Product>();
         private IEnumerable<Category> categories = new List<Category>();
         private Category SelectedCategory = new();
-        private bool isVisibleAddProductModal = false;
+        private bool isVisibleInitProductModal = false;
         bool isConfirmLoadingModal = false;
         private Product product = new();
         private Form<Product> formProduct = new();
+        private InitProduct InitProduct = InitProduct.Add;
         
 
         [Inject]
@@ -59,7 +61,8 @@ namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.Pr
 
         private async Task AddProductButton_ClickHandler()
         {
-            isVisibleAddProductModal = true;
+            InitProduct = InitProduct.Add;
+            isVisibleInitProductModal = true;
             categories = (await ProductService.GetCategoriesAsync()).ToList();
         }
 
@@ -69,16 +72,57 @@ namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.Pr
         }
 
 
-        private async Task AddProductForm_FinishHandler()
+        private async Task InitProductForm_FinishHandler()
         {
             isConfirmLoadingModal = true;
-
             product.Category = SelectedCategory.Name;
-            await ProductService.AddProductAsync(product);
-            isVisibleAddProductModal = false;
+
+            switch (InitProduct)
+            {
+                case InitProduct.Add:
+                    await ProductService.AddProductAsync(product);
+                    break;
+                case InitProduct.Update:
+                    product = await ProductService.UpdateProductAsync(product);
+                    int index = products.FindIndex(x => x.Id == product.Id);
+                    if (index != -1)
+                    {
+                        products[index] = product;
+                    }               
+                    
+                    break;
+            }
+
+            
+
+            isVisibleInitProductModal = false;
             isConfirmLoadingModal = false;
         }
 
 
+        private async Task DeleteButton_ClickHandler(long id)
+        {
+            products.Remove(products.FirstOrDefault(y => y.Id == id) ?? new());
+        }
+
+
+        private async Task UpdateButton_ClickHandlerAsync(long id)
+        {
+            InitProduct = InitProduct.Update;
+            product = products.FirstOrDefault(x => x.Id == id) ?? new();
+            isVisibleInitProductModal = true;
+            categories = (await ProductService.GetCategoriesAsync()).ToList();
+            SelectedCategory = categories.FirstOrDefault(x => x.Name == product.Category) ?? new();
+        }
+
+
+        //private async Task UpdateProductForm_FinishHandler()
+        //{
+        //    isVisibleUpdateProductModal = true;
+
+
+        //    isVisibleUpdateProductModal = false;
+        //    isConfirmLoadingModal = false;
+        //}
     }
 }

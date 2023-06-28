@@ -28,6 +28,19 @@ namespace Blazorit.Client.Services.Concrete.ECommerce.Admin.Products
             return result;
         }
 
+
+        /// <summary>
+        /// Method updates product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public async Task<Product> UpdateProductAsync(Product product)
+        {
+            Product result = await _http.PostAndReadAsJsonOrNewAsync<Product, Product>($"{ProductApi.CONTROLLER}/{ProductApi.UPDATE_PRODUCT}", product);
+            return result;
+        }
+
+
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
             IEnumerable<Product> result = await _http.GetFromJsonOrNewAsync<List<Product>>($"{ProductApi.CONTROLLER}/{ProductApi.GET_PRODUCTS}");

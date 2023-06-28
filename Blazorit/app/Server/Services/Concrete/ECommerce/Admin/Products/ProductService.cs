@@ -13,6 +13,7 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Admin.Products
             _productService = productService;
         }
 
+
         /// <summary>
         /// Method adds product to products
         /// </summary>
@@ -26,6 +27,18 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Admin.Products
 
 
         /// <summary>
+        /// Method updates product to products
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public async Task<Product?> UpdateProductAsync(Product product)
+        {
+            var result = await _productService.UpdateProductAsync(product);
+            return result;
+        }
+
+
+        /// <summary>
         /// Method returns all products
         /// </summary>
         /// <returns></returns>
@@ -34,6 +47,7 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Admin.Products
             var result = await _productService.GetAllProductsAsync();
             return result;
         }
+
 
         /// <summary>
         /// Method returns all categories
