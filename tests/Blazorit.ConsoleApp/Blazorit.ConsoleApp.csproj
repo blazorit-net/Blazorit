@@ -36,8 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Blazorit\app\Server\Blazorit.Server.csproj" />
-    <ProjectReference Include="..\..\Blazorit\kernel\Core\Blazorit.Core.csproj" />
+    <ProjectReference Include="..\..\src\app\Server\Blazorit.Server.csproj" />
+    <ProjectReference Include="..\..\src\kernel\Core\Blazorit.Core.csproj" />
   </ItemGroup>
 
 </Project>

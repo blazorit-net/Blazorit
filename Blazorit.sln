@@ -11,19 +11,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{4C2CB061-5B7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kernel", "kernel", "{DF4E3067-EF7A-43AE-A677-F63F81B3C69A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Core", "Blazorit\kernel\Core\Blazorit.Core.csproj", "{AEB0A1B4-5213-449C-8116-E0316C4CB7B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Core", "src\kernel\Core\Blazorit.Core.csproj", "{AEB0A1B4-5213-449C-8116-E0316C4CB7B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Infrastructure", "Blazorit\kernel\Infrastructure\Blazorit.Infrastructure.csproj", "{878876B5-1EA8-4F36-9C97-788CDAC1C585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Infrastructure", "src\kernel\Infrastructure\Blazorit.Infrastructure.csproj", "{878876B5-1EA8-4F36-9C97-788CDAC1C585}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.SharedKernel", "Blazorit\kernel\SharedKernel\Blazorit.SharedKernel.csproj", "{151C37DE-35AD-4BBD-8603-C9F8586E958E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.SharedKernel", "src\kernel\SharedKernel\Blazorit.SharedKernel.csproj", "{151C37DE-35AD-4BBD-8603-C9F8586E958E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Shared", "Blazorit\app\Shared\Blazorit.Shared.csproj", "{9DBC1B50-37D4-4363-9DA5-B37899278CD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Shared", "src\app\Shared\Blazorit.Shared.csproj", "{9DBC1B50-37D4-4363-9DA5-B37899278CD9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Client", "Blazorit\app\Client\Blazorit.Client.csproj", "{CFCA5E0C-D8FF-44E0-927B-5A3B99E43B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Client", "src\app\Client\Blazorit.Client.csproj", "{CFCA5E0C-D8FF-44E0-927B-5A3B99E43B2A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Server", "Blazorit\app\Server\Blazorit.Server.csproj", "{C6E1CD81-AAFA-40BC-A9B1-3A3E7F1A114C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Server", "src\app\Server\Blazorit.Server.csproj", "{C6E1CD81-AAFA-40BC-A9B1-3A3E7F1A114C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.ConsoleApp", "tests\Blazorit.ConsoleApp\Blazorit.ConsoleApp.csproj", "{3D5112E9-F6A8-491E-954F-616F93FE98C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazorit.Domain", "src\kernel\Domain\Blazorit.Domain.csproj", "{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{3D5112E9-F6A8-491E-954F-616F93FE98C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D5112E9-F6A8-491E-954F-616F93FE98C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D5112E9-F6A8-491E-954F-616F93FE98C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{CFCA5E0C-D8FF-44E0-927B-5A3B99E43B2A} = {4C2CB061-5B7E-4F42-A184-F1A21843C8E5}
 		{C6E1CD81-AAFA-40BC-A9B1-3A3E7F1A114C} = {4C2CB061-5B7E-4F42-A184-F1A21843C8E5}
 		{3D5112E9-F6A8-491E-954F-616F93FE98C1} = {E120CCC1-612F-4B2A-8CEE-00800ED964A1}
+		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB} = {DF4E3067-EF7A-43AE-A677-F63F81B3C69A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EE3F3B75-FACB-46DA-B08D-87D4F4033171}

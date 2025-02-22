@@ -9,3 +9,11 @@ OR
 for CLI:
 dotnet ef migrations add InitialCreate
 dotnet ef database update
+
+
+######
+cd to Infrastructure project folder
+
+dotnet ef database update -s ../../app/Server/Blazorit.Server.csproj
+dotnet ef migrations add CreateEcommerceEntities -s ../../app/Server/Blazorit.Server.csproj
+dotnet ef database update -s ../../app/Server/Blazorit.Server.csproj

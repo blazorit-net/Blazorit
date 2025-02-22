@@ -7,7 +7,7 @@
             "type": "process",
               "args": [
                 "build",
-                "${workspaceFolder}/Blazorit/app/Client/Blazorit.Server.csproj",
+                "${workspaceFolder}/src/app/Client/Blazorit.Server.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
               ],
@@ -23,7 +23,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Blazorit/app/Client/Blazorit.Server.csproj",
+                "${workspaceFolder}/src/app/Client/Blazorit.Server.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -37,7 +37,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Blazorit/app/Client/Blazorit.Server.csproj"
+                "${workspaceFolder}/src/app/Client/Blazorit.Server.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

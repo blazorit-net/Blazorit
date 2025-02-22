@@ -1,6 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Blazorit.ConsoleApp.Services.ECommerce;
-using Blazorit.Infrastructure.DBStorages.BlazoritDB.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog;
+using Blazorit.Infrastructure.DBStorages.EShop.EF;
 
 
 //################################################################
@@ -30,7 +30,7 @@ try {
         .ConfigureServices((hostContext, services) => {
             //services.AddLogging();
             services.AddHostedService<ConsoleHostedService>();
-            services.AddDbContextFactory<BlazoritContext>(options =>
+            services.AddDbContextFactory<DomDbContext>(options =>
                 options.UseNpgsql(hostContext.Configuration.GetConnectionString("DefaultConnection")));
 
             //################################################################
