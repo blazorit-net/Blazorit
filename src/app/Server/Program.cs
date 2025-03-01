@@ -1,3 +1,4 @@
+using Blazorit.Core.Constants.Identity;
 using Blazorit.Infrastructure.DBStorages.EShop.EF;
 using Blazorit.Server;
 using Blazorit.Server.Extensions;
@@ -48,7 +49,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey =
                 new SymmetricSecurityKey(System.Text.Encoding.UTF8
-                    .GetBytes(builder.Configuration.GetSection("JWT_TOKEN_ENCRYPT_SECURITY_KEY").Value ?? string.Empty)),
+                    .GetBytes(builder.Configuration.GetSection(IdentityConstants.JWT_TOKEN_SECURITY_KEY_ENVIRONMENT_PATH).Value ?? string.Empty)),
                 // .GetBytes(builder.Configuration.GetSection("AppSettings:SecurityKey").Value ?? string.Empty)),
             ValidateIssuer = false,
             ValidateAudience = false

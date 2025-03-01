@@ -3,6 +3,7 @@ using CoreServices = Blazorit.Core.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Blazorit.Core.Constants.Identity;
 using Blazorit.Shared.Models.Identity;
 using Blazorit.SharedKernel.Core.IdentityRoles;
 
@@ -69,7 +70,7 @@ namespace Blazorit.Server.Services.Concrete.Identity
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8
-                .GetBytes(_configuration.GetSection("AppSettings:SecurityKey").Value ?? string.Empty));
+                .GetBytes(_configuration.GetSection(IdentityConstants.JWT_TOKEN_SECURITY_KEY_ENVIRONMENT_PATH).Value ?? string.Empty));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
