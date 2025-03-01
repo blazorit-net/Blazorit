@@ -24,7 +24,7 @@ public static class ContextExtensions
             .UseSnakeCaseNamingConvention();
     }
 
-    public static string? GetScheme(this string connectionString)
+    private static string? GetScheme(this string connectionString)
     {
         return connectionString.Split(';')
             .Where(x => x.StartsWith("Search Path", StringComparison.OrdinalIgnoreCase))

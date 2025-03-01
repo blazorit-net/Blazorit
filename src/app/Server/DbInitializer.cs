@@ -6,7 +6,7 @@ namespace Blazorit.Server;
 /// <summary>
 /// Databases initializer
 /// </summary>
-public class DbInitializer
+public static class DbInitializer
 {
     /// <summary>
     /// Initialize databases from migrations
