@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class DlyUserDelivery : BaseEntity
+public partial class DlyUserDelivery : BaseIdEntity
 {
 
     public long UserId { get; set; }

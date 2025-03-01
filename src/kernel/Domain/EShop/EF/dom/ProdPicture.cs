@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class ProdPicture : BaseEntity
+public partial class ProdPicture : BaseIdEntity
 {
 
     public string LinkPart { get; set; } = null!;

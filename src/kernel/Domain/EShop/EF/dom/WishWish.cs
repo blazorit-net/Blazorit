@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class WishWish : BaseEntity
+public partial class WishWish : BaseIdEntity
 {
 
     public long UserId { get; set; }

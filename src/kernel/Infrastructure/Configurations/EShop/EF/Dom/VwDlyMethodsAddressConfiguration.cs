@@ -8,6 +8,8 @@ public class VwDlyMethodsAddressConfiguration: IEntityTypeConfiguration<VwDlyMet
 {
     public void Configure(EntityTypeBuilder<VwDlyMethodsAddress> builder)
     {
+        builder.HasNoKey();
+        
         builder.Property(e => e.Address)
             .HasMaxLength(200);
 

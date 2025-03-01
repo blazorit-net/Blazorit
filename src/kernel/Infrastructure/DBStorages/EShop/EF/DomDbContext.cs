@@ -5,54 +5,58 @@ using Microsoft.EntityFrameworkCore;
 namespace Blazorit.Infrastructure.DBStorages.EShop.EF; 
 public partial class DomDbContext : DbContext {
     
+    public DomDbContext(DbContextOptions<DomDbContext> options) : base(options) {
+    }
+    
     //################################################################
     //  ###################--DOM EShop--########################
     //################################################################
-    public virtual DbSet<CartShopcart> CartShopcarts { get; set; }
+    public virtual DbSet<CartShopcart> CartShopcart { get; set; }
 
-    public virtual DbSet<CartShopcartList> CartShopcartLists { get; set; }
+    public virtual DbSet<CartShopcartList> CartShopcartList { get; set; }
 
-    public virtual DbSet<DlyDelivery> DlyDeliveries { get; set; }
+    public virtual DbSet<DlyDelivery> DlyDelivery { get; set; }
 
-    public virtual DbSet<DlyDeliveryAddress> DlyDeliveryAddresses { get; set; }
+    public virtual DbSet<DlyDeliveryAddress> DlyDeliveryAddress { get; set; }
 
-    public virtual DbSet<DlyDeliveryMethod> DlyDeliveryMethods { get; set; }
+    public virtual DbSet<DlyDeliveryMethod> DlyDeliveryMethod { get; set; }
 
-    public virtual DbSet<DlyMethodsAddress> DlyMethodsAddresses { get; set; }
+    public virtual DbSet<DlyMethodsAddress> DlyMethodsAddress { get; set; }
 
-    public virtual DbSet<DlyUserDelivery> DlyUserDeliveries { get; set; }
+    public virtual DbSet<DlyUserDelivery> DlyUserDelivery { get; set; }
 
-    public virtual DbSet<OrdCheckoutOrder> OrdCheckoutOrders { get; set; }
+    public virtual DbSet<OrdCheckoutOrder> OrdCheckoutOrder { get; set; }
 
-    public virtual DbSet<OrdOrder> OrdOrders { get; set; }
+    public virtual DbSet<OrdOrder> OrdOrder { get; set; }
 
-    public virtual DbSet<OrdOrderList> OrdOrderLists { get; set; }
+    public virtual DbSet<OrdOrderList> OrdOrderList { get; set; }
 
-    public virtual DbSet<PmntPayment> PmntPayments { get; set; }
+    public virtual DbSet<PmntPayment> PmntPayment { get; set; }
 
-    public virtual DbSet<PmntPaymentMethod> PmntPaymentMethods { get; set; }
+    public virtual DbSet<PmntPaymentMethod> PmntPaymentMethod { get; set; }
 
-    public virtual DbSet<ProdCategory> ProdCategories { get; set; }
+    public virtual DbSet<ProdCategory> ProdCategory { get; set; }
 
-    public virtual DbSet<ProdPicture> ProdPictures { get; set; }
+    public virtual DbSet<ProdPicture> ProdPicture { get; set; }
 
-    public virtual DbSet<ProdProduct> ProdProducts { get; set; }
+    public virtual DbSet<ProdProduct> ProdProduct { get; set; }
 
-    public virtual DbSet<VwCartShopcart> VwCartShopcarts { get; set; }
+    public virtual DbSet<WishWish> WishWish { get; set; }
 
-    public virtual DbSet<VwDlyDelivery> VwDlyDeliveries { get; set; }
+    public virtual DbSet<WishWishList> WishWishList { get; set; }
+    
+    // ////// Views ////////////////////////////////////
+    public virtual DbSet<VwCartShopcart> VwCartShopcart { get; set; }
 
-    public virtual DbSet<VwDlyMethodsAddress> VwDlyMethodsAddresses { get; set; }
+    public virtual DbSet<VwDlyDelivery> VwDlyDelivery { get; set; }
 
-    public virtual DbSet<VwDlyUserDelivery> VwDlyUserDeliveries { get; set; }
+    public virtual DbSet<VwDlyMethodsAddress> VwDlyMethodsAddress { get; set; }
 
-    public virtual DbSet<VwOrdOrder> VwOrdOrders { get; set; }
+    public virtual DbSet<VwDlyUserDelivery> VwDlyUserDelivery { get; set; }
 
-    public virtual DbSet<VwProdProduct> VwProdProducts { get; set; }
+    public virtual DbSet<VwOrdOrder> VwOrdOrder { get; set; }
 
-    public virtual DbSet<WishWish> WishWishes { get; set; }
-
-    public virtual DbSet<WishWishList> WishWishLists { get; set; }
+    public virtual DbSet<VwProdProduct> VwProdProduct { get; set; }
 
     //################################################################
     //  ############################################################
@@ -61,7 +65,7 @@ public partial class DomDbContext : DbContext {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-             // Tables   
+            // Tables   
             .ApplyConfiguration(new CartShopcartConfiguration())
             .ApplyConfiguration(new CartShopcartListConfiguration())
             .ApplyConfiguration(new DlyDeliveryAddressConfiguration())

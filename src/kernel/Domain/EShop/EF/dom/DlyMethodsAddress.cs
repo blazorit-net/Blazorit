@@ -7,7 +7,7 @@ namespace Blazorit.Domain.EShop.EF.dom;
 /// <summary>
 /// The table is for shipping methods where the address offered by the system is common to all users
 /// </summary>
-public partial class DlyMethodsAddress : BaseEntity
+public partial class DlyMethodsAddress : BaseIdEntity
 {
 
     public long MethodId { get; set; }

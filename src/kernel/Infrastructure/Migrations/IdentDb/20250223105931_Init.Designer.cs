@@ -11,21 +11,21 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Blazorit.Infrastructure.Migrations
 {
-    [DbContext(typeof(DomDbContext))]
-    [Migration("20221118185218_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(IdentDbContext))]
+    [Migration("20250223105931_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.ident.User", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.ident.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace Blazorit.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_created");
 
                     b.Property<byte[]>("PasswordHash")
@@ -61,9 +61,9 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("user_role");
 
                     b.HasKey("Id")
-                        .HasName("users_pkey");
+                        .HasName("pk_user");
 
-                    b.ToTable("users", "ident");
+                    b.ToTable("user", (string)null);
                 });
 #pragma warning restore 612, 618
         }

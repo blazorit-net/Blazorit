@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class CartShopcartList : BaseEntity
+public partial class CartShopcartList : BaseIdEntity
 {
     public long CartId { get; set; }
 

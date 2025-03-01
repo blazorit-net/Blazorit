@@ -61,7 +61,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
                     IsOnSite = isOnSite
                 };
 
-                ProdCategory? category = await context.ProdCategories.FirstOrDefaultAsync(x => x.Name == categoryName);
+                ProdCategory? category = await context.ProdCategory.FirstOrDefaultAsync(x => x.Name == categoryName);
 
                 if (category is null)
                 {
@@ -71,7 +71,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
                         FullName = categoryFullName,
                         PrefixSku = null
                     };
-                    await context.ProdCategories.AddAsync(category);
+                    await context.ProdCategory.AddAsync(category);
                 }
 
                 if (!string.IsNullOrEmpty(category.PrefixSku))
@@ -80,10 +80,10 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
                 }
 
                 product.Category = category;
-                long maxProductId = context.ProdProducts.Max(x => x.Id);
+                long maxProductId = context.ProdProduct.Max(x => x.Id);
                 product.Sku = prefixSku + (1200 + (maxProductId + 1)).ToString(); //auto SKU (you can use any logic for auto SKU)
 
-                await context.ProdProducts.AddAsync(product);
+                await context.ProdProduct.AddAsync(product);
                 await context.SaveChangesAsync();
                 return (true, product.Sku);
             }
@@ -117,7 +117,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
 
                 description = string.IsNullOrEmpty(description?.Trim() ?? string.Empty) ? null : description; // null for description if it is empty
 
-                ProdProduct? product = await context.ProdProducts.FirstOrDefaultAsync(x => x.Id == id);
+                ProdProduct? product = await context.ProdProduct.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (product == null)
                 {
@@ -130,7 +130,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
                 product.Description = description;
                 product.LinkPart = linkPart;
                 product.IsOnSite = isOnSite;
-                product.Category = await context.ProdCategories.FirstOrDefaultAsync(x => x.Name == categoryName) ?? new();
+                product.Category = await context.ProdCategory.FirstOrDefaultAsync(x => x.Name == categoryName) ?? new();
                 await context.SaveChangesAsync();
                 return true;
             }
@@ -155,7 +155,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var product = await context.VwProdProducts
+                var product = await context.VwProdProduct
                     .Where(x => x.Sku == sku)
                     .Select(x => new VwProduct
                     {
@@ -193,7 +193,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var result = await context.VwProdProducts
+                var result = await context.VwProdProduct
                     .Select(x => new VwProduct
                     {
                         Category = x.Category!,
@@ -234,7 +234,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var result = await context.ProdCategories
+                var result = await context.ProdCategory
                     .Select(x => new Category
                     {
                         FullName = x.FullName,

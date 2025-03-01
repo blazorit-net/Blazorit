@@ -8,6 +8,8 @@ public class VwCartShopcartConfiguration: IEntityTypeConfiguration<VwCartShopcar
 {
     public void Configure(EntityTypeBuilder<VwCartShopcart> builder)
     {
+        builder.HasNoKey();
+        
         builder.Property(e => e.CartId);
 
         builder.Property(e => e.Category)

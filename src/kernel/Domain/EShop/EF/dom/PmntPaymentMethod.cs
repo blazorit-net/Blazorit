@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class PmntPaymentMethod : BaseEntity
+public partial class PmntPaymentMethod : BaseIdEntity
 {
 
     public string Method { get; set; } = null!;

@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class DlyDeliveryMethod : BaseEntity
+public partial class DlyDeliveryMethod : BaseIdEntity
 {
     public string Method { get; set; } = null!;
 

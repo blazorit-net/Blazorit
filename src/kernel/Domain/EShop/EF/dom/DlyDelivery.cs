@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class DlyDelivery : BaseEntity
+public partial class DlyDelivery : BaseIdEntity
 {
     public DateTime DateTimeCreate { get; set; }
 

@@ -80,17 +80,17 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+                ProdProduct? product = await context.ProdProduct.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
 
                 if (product == null) {
                     return (false, 0);
                 }
 
-                CartShopcart? cart = await context.CartShopcarts.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+                CartShopcart? cart = await context.CartShopcart.Where(x => x.UserId == userId).FirstOrDefaultAsync();
 
                 if (cart is null) { //create cart and insert new product for the cart
                     cart = new CartShopcart { UserId = userId };
-                    await context.CartShopcarts.AddAsync(cart);
+                    await context.CartShopcart.AddAsync(cart);
 
                     CartShopcartList cartList = new() {
                         Cart = cart,
@@ -98,9 +98,9 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         Quantity = quantity
                     };
 
-                    await context.CartShopcartLists.AddAsync(cartList);
+                    await context.CartShopcartList.AddAsync(cartList);
                 } else {
-                    CartShopcartList? cartList = await context.CartShopcartLists.Where(x => x.CartId == cart.Id && x.ProductId == product.Id).FirstOrDefaultAsync();
+                    CartShopcartList? cartList = await context.CartShopcartList.Where(x => x.CartId == cart.Id && x.ProductId == product.Id).FirstOrDefaultAsync();
 
                     //insert new product for the cart
                     if (cartList is null) {
@@ -110,7 +110,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                             Quantity = quantity
                         };
 
-                        await context.CartShopcartLists.AddAsync(cartList);
+                        await context.CartShopcartList.AddAsync(cartList);
                     } else { //update quantity
                         // check cart item for logic (zero or negative number) quantity 
                         if ((cartList.Quantity + quantity) > 0)
@@ -147,12 +147,12 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                CartShopcart? cart = await context.CartShopcarts.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+                CartShopcart? cart = await context.CartShopcart.Where(x => x.UserId == userId).FirstOrDefaultAsync();
 
                 if (cart is null)
                 { //create cart and insert new product for the cart
                     cart = new CartShopcart { UserId = userId };
-                    await context.CartShopcarts.AddAsync(cart);
+                    await context.CartShopcart.AddAsync(cart);
 
                     CartShopcartList cartList = new()
                     {
@@ -161,11 +161,11 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         Quantity = quantity
                     };
 
-                    await context.CartShopcartLists.AddAsync(cartList);
+                    await context.CartShopcartList.AddAsync(cartList);
                 }
                 else
                 {
-                    CartShopcartList? productOfCartList = await context.CartShopcartLists
+                    CartShopcartList? productOfCartList = await context.CartShopcartList
                         .Where(x => x.CartId == cart.Id && x.ProductId == productId)
                         .FirstOrDefaultAsync();
 
@@ -179,7 +179,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                             Quantity = quantity
                         };
 
-                        await context.CartShopcartLists.AddAsync(productOfCartList);
+                        await context.CartShopcartList.AddAsync(productOfCartList);
                     }
                     else
                     { //update quantity
@@ -220,8 +220,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                CartShopcart cart = await context.CartShopcarts.FirstAsync(x => x.UserId == userId);
-                context.RemoveRange(context.CartShopcartLists.Where(x => x.Cart == cart && x.ProductId == productId));                
+                CartShopcart cart = await context.CartShopcart.FirstAsync(x => x.UserId == userId);
+                context.RemoveRange(context.CartShopcartList.Where(x => x.Cart == cart && x.ProductId == productId));                
                 await context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -243,17 +243,17 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+                ProdProduct? product = await context.ProdProduct.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
 
                 if (product == null) {
                     return (false, 0);
                 }
 
-                WishWish? wish = await context.WishWishes.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+                WishWish? wish = await context.WishWish.Where(x => x.UserId == userId).FirstOrDefaultAsync();
 
                 if (wish is null) {
                     wish = new WishWish { UserId = userId };
-                    await context.WishWishes.AddAsync(wish);
+                    await context.WishWish.AddAsync(wish);
                 }
 
                 WishWishList wishList = new() {
@@ -261,7 +261,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     Product = product
                 };
 
-                await context.WishWishLists.AddAsync(wishList);
+                await context.WishWishList.AddAsync(wishList);
                 await context.SaveChangesAsync();
                 return (true, wish.Id);
 
@@ -283,7 +283,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                ProdProduct? product = await context.ProdProducts.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
+                ProdProduct? product = await context.ProdProduct.Where(prod => prod.Sku == productSKU).FirstOrDefaultAsync();
 
                 if (product == null) {
                     return false;
@@ -294,7 +294,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     Product = product
                 };
 
-                await context.WishWishLists.AddAsync(wishList);
+                await context.WishWishList.AddAsync(wishList);
                 await context.SaveChangesAsync();
                 return true;
 
@@ -328,7 +328,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     PaymentInfo = manyParamsAboutPayments
                 };
 
-                await context.PmntPayments.AddAsync(payment);
+                await context.PmntPayment.AddAsync(payment);
                 await context.SaveChangesAsync();
                 return (true, payment.Id);
             }
@@ -353,7 +353,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                DlyUserDelivery? userDelivery = await context.DlyUserDeliveries
+                DlyUserDelivery? userDelivery = await context.DlyUserDelivery
                     .FirstOrDefaultAsync(x => x.UserId == userId && x.MethodId == methodId && x.AddressId == addressId);
             
                 if (userDelivery == null)
@@ -365,7 +365,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         AddressId = addressId
                     };
 
-                    await context.DlyUserDeliveries.AddAsync(userDelivery);                    
+                    await context.DlyUserDelivery.AddAsync(userDelivery);                    
                 }
 
                 DlyDelivery delivery = new()
@@ -377,7 +377,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     //DeliveryTimeEnd    
                 };
 
-                await context.DlyDeliveries.AddAsync(delivery);
+                await context.DlyDelivery.AddAsync(delivery);
                 await context.SaveChangesAsync();
 
                 return (true, delivery.Id);
@@ -413,7 +413,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                List<VwCartShopcart>? cartList = context.VwCartShopcarts.Where(x => x.UserId == userId).ToList();
+                List<VwCartShopcart>? cartList = context.VwCartShopcart.Where(x => x.UserId == userId).ToList();
                 
                 if (cartList == null) {
                     return (false, default);
@@ -434,16 +434,16 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                         Quantity = item.Quantity                        
                     };
 
-                    await context.OrdOrderLists.AddAsync(orderListItem);
+                    await context.OrdOrderList.AddAsync(orderListItem);
                 }
 
-                await context.OrdOrders.AddAsync(order);
+                await context.OrdOrder.AddAsync(order);
 
                 // remove all items from user's shopcart
-                context.RemoveRange(context.CartShopcartLists.Where(x => x.Cart.UserId == userId));
-                context.RemoveRange(context.CartShopcarts.Where(x => x.UserId == userId));               
+                context.RemoveRange(context.CartShopcartList.Where(x => x.Cart.UserId == userId));
+                context.RemoveRange(context.CartShopcart.Where(x => x.UserId == userId));               
 
-                OrdCheckoutOrder? checkOrder = await context.OrdCheckoutOrders.FirstOrDefaultAsync(x => x.UserId == userId && x.OrderToken == orderToken);
+                OrdCheckoutOrder? checkOrder = await context.OrdCheckoutOrder.FirstOrDefaultAsync(x => x.UserId == userId && x.OrderToken == orderToken);
 
                 if (checkOrder != null)
                 {
@@ -469,7 +469,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                return context.VwProdProducts
+                return context.VwProdProduct
                     .Where(x => x.IsOnSite == true) // only actual products
                     .Select(x => new VwProduct {
                             Category = x.Category!,
@@ -504,7 +504,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var product = await context.VwProdProducts
+                var product = await context.VwProdProduct
                     .Where(x => x.Category == category && x.LinkPart == linkPart)
                     .Select(x => new VwProduct {
                         Category = x.Category!,
@@ -548,7 +548,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var linkParts = await context.ProdPictures
+                var linkParts = await context.ProdPicture
                     .Where(x => x.ProductId == productId && x.PicSize == pic_size && x.SiteLocation == site_location)
                     .Select(x => new PictureLinkPart {
                         LinkPart = x.LinkPart,
@@ -576,7 +576,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var list = await context.VwCartShopcarts
+                var list = await context.VwCartShopcart
                     .Where(x => x.UserId == userId)
                     .Select(x => new VwShopcart {
                         CartId = x.CartId.GetValueOrDefault(),
@@ -611,15 +611,15 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                CartShopcart? repoCart = context.CartShopcarts.FirstOrDefault(x => x.UserId == userId);
+                CartShopcart? repoCart = context.CartShopcart.FirstOrDefault(x => x.UserId == userId);
                 
                 if (repoCart is null) {
                     repoCart = new CartShopcart { UserId = userId };
-                    await context.CartShopcarts.AddAsync(repoCart);
+                    await context.CartShopcart.AddAsync(repoCart);
                 }
 
                 foreach(var item in sourceCart) {
-                    CartShopcartList? row = context.CartShopcartLists.FirstOrDefault(x => x.CartId == repoCart.Id && x.ProductId == item.ProductId);
+                    CartShopcartList? row = context.CartShopcartList.FirstOrDefault(x => x.CartId == repoCart.Id && x.ProductId == item.ProductId);
                     if (row is not null) {
                         row.Quantity = item.Quantity;
                         //row.DateTimeModified = DateTime.Now;
@@ -630,7 +630,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                             Quantity = item.Quantity
                             ////DateTimeCreated = item.DateTimeCreated.UtcDateTime
                         };
-                        await context.CartShopcartLists.AddAsync(row);
+                        await context.CartShopcartList.AddAsync(row);
                     }                    
                 }
 
@@ -652,7 +652,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                return await context.DlyDeliveryMethods.Select(x => new DeliveryMethod
+                return await context.DlyDeliveryMethod.Select(x => new DeliveryMethod
                 {
                      Id = x.Id,
                      Method = x.Method,
@@ -680,7 +680,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                return await context.DlyUserDeliveries
+                return await context.DlyUserDelivery
                     .Where(x => x.UserId == userId && x.MethodId == methodId)
                     .Select(x => x.Address)
                     .Select(x => new DeliveryAddress
@@ -717,8 +717,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
                     Address = address
                 };
 
-                await context.DlyDeliveryAddresses.AddAsync(newAddress);
-                await context.DlyUserDeliveries
+                await context.DlyDeliveryAddress.AddAsync(newAddress);
+                await context.DlyUserDelivery
                     .AddAsync(new DlyUserDelivery
                     {
                         UserId = userId,
@@ -728,7 +728,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
                 await context.SaveChangesAsync();
                 
-                return await context.DlyUserDeliveries
+                return await context.DlyUserDelivery
                     .Where(x => x.UserId == userId && x.MethodId == methodId)
                     .Select(x => x.Address)
                     .Select(x => new DeliveryAddress
@@ -759,7 +759,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                return await context.DlyMethodsAddresses
+                return await context.DlyMethodsAddress
                     .Where(x => x.MethodId == methodId)
                     .Select(x => x.Address)
                     .Select(x => new DeliveryAddress
@@ -791,7 +791,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                return await context.DlyUserDeliveries
+                return await context.DlyUserDelivery
                     .Where(x => x.UserId == userId && x.MethodId == methodId && x.AddressId == addressId)
                     .Select(x => new UserDelivery
                     {
@@ -824,7 +824,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                await context.OrdCheckoutOrders.AddAsync(
+                await context.OrdCheckoutOrder.AddAsync(
                     new OrdCheckoutOrder
                     {
                         OrderToken = orderToken,
@@ -857,7 +857,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                CheckoutOrder? checkoutOrder = await context.OrdCheckoutOrders
+                CheckoutOrder? checkoutOrder = await context.OrdCheckoutOrder
                     .Where(x => x.OrderToken == orderToken && x.UserId == userId && x.Canceled == false)
                     .Select(x => new CheckoutOrder
                     {
@@ -895,7 +895,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var list = await context.VwOrdOrders
+                var list = await context.VwOrdOrder
                     .Where(x => x.UserId == userId && x.OrderId == orderId)
                     .Select(x => new VwOrder
                     {
@@ -937,14 +937,14 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
             try
             {
-                OrdOrder? order = await context.OrdOrders.FirstOrDefaultAsync(x => x.Id == orderId);
+                OrdOrder? order = await context.OrdOrder.FirstOrDefaultAsync(x => x.Id == orderId);
 
                 if (order == null)
                 {
                     return null;
                 }
 
-                var result = await context.VwDlyDeliveries
+                var result = await context.VwDlyDelivery
                     .Where(x => x.UserId == userId && x.Id == order.DeliveryId)
                     .Select(x => new VwDelivery()
                     {
@@ -985,7 +985,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             try
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
-                Order? order = await context.OrdOrders
+                Order? order = await context.OrdOrder
                     .Where(x => x.UserId == userId && x.Id == orderId)
                     .Select(x => new Order
                     {
@@ -1019,7 +1019,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
 
             try
             {
-                var result = await context.PmntPayments
+                var result = await context.PmntPayment
                     .Where(x => x.Id == paymentId)
                     .Select(x => new Payment
                     {
@@ -1054,7 +1054,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var result = await context.PmntPaymentMethods
+                var result = await context.PmntPaymentMethod
                     .Select(x => new PaymentMethod
                     {
                         Id = x.Id,
@@ -1086,7 +1086,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce
             {
                 using var context = await _contextFactory.CreateDbContextAsync();
 
-                var result = await context.PmntPaymentMethods
+                var result = await context.PmntPaymentMethod
                     .Where(x => x.Id == methodId)
                     .Select(x => new PaymentMethod
                     {

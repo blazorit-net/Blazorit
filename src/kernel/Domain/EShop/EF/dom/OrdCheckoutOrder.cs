@@ -7,7 +7,7 @@ namespace Blazorit.Domain.EShop.EF.dom;
 /// <summary>
 /// this table need for temporary storage info about order, while payment is being made
 /// </summary>
-public partial class OrdCheckoutOrder : BaseEntity
+public partial class OrdCheckoutOrder : BaseIdEntity
 {
 
     public DateTime DateTimeCreated { get; set; }

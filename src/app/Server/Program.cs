@@ -1,4 +1,5 @@
 using Blazorit.Infrastructure.DBStorages.EShop.EF;
+using Blazorit.Server;
 using Blazorit.Server.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 ////using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -16,7 +17,17 @@ var builder = WebApplication.CreateBuilder(args);
 //     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 // });
 
-builder.Services.AddDbContexts(builder.Configuration);
+// Добавление конфигурации из appsettings.json
+//builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+// Добавление конфигурации из User Secrets (только в процессе разработки)
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
+
+builder.Services.AddDbContextsFactories(builder.Configuration);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -29,13 +40,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.Identity.IIdentityRepository, Blazorit.Infrastructure.Repositories.Concrete.Identity.IdentityRepository>();
 builder.Services.AddScoped<Blazorit.Core.Services.Abstract.Identity.IIdentityService, Blazorit.Core.Services.Concrete.Identity.IdentityService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.Identity.IIdentityService, Blazorit.Server.Services.Concrete.Identity.IdentityService>();
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
         options.TokenValidationParameters = new TokenValidationParameters {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey =
                 new SymmetricSecurityKey(System.Text.Encoding.UTF8
-                .GetBytes(builder.Configuration.GetSection("AppSettings:SecurityKey").Value ?? string.Empty)),
+                    .GetBytes(builder.Configuration.GetSection("JWT_TOKEN_ENCRYPT_SECURITY_KEY").Value ?? string.Empty)),
+                // .GetBytes(builder.Configuration.GetSection("AppSettings:SecurityKey").Value ?? string.Empty)),
             ValidateIssuer = false,
             ValidateAudience = false
         };
@@ -95,5 +109,9 @@ app.UseAuthorization(); //custom add
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+
+// For Backend:
+await DbInitializer.MigrateDatabaseAsync(app);
 
 app.Run();

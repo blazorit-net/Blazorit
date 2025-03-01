@@ -8,6 +8,8 @@ public class VwOrdOrderConfiguration: IEntityTypeConfiguration<VwOrdOrder>
 {
     public void Configure(EntityTypeBuilder<VwOrdOrder> builder)
     {
+        builder.HasNoKey();
+        
         builder.Property(e => e.Category)
             .HasMaxLength(100);
 

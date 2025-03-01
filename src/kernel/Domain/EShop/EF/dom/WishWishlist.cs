@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class WishWishList : BaseEntity
+public partial class WishWishList : BaseIdEntity
 {
     public long WishId { get; set; }
 

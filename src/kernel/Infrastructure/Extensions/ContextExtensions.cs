@@ -27,7 +27,7 @@ public static class ContextExtensions
     public static string? GetScheme(this string connectionString)
     {
         return connectionString.Split(';')
-            .Where(x => x.StartsWith("Scheme", StringComparison.OrdinalIgnoreCase))
+            .Where(x => x.StartsWith("Search Path", StringComparison.OrdinalIgnoreCase))
             .Select(x => x.Split('=').Last())
             .SingleOrDefault();
     }

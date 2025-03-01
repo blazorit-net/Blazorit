@@ -8,28 +8,28 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Blazorit.Infrastructure.Migrations
+namespace Blazorit.Infrastructure.Migrations.DomDb
 {
     [DbContext(typeof(DomDbContext))]
-    partial class BlazoritContextModelSnapshot : ModelSnapshot
+    partial class DomDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.CartShopcart", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcart", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("DateTimeCreate")
                         .ValueGeneratedOnAdd()
@@ -42,17 +42,16 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("cart_shopcarts_pkey");
+                        .HasName("pk_cart_shopcart");
 
-                    b.HasIndex(new[] { "UserId" }, "UQIX__cart_shopcarts__user_id")
-                        .IsUnique();
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_cart_shopcart_user_id");
 
-                    b.HasIndex(new[] { "UserId" }, "fki_fk__cart_shop_carts__ident_users");
-
-                    b.ToTable("cart_shopcarts", "dom");
+                    b.ToTable("cart_shopcart", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.CartShopcartList", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcartList", b =>
                 {
                     b.Property<long>("CartId")
                         .HasColumnType("bigint")
@@ -68,26 +67,31 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("date_time_created")
                         .HasDefaultValueSql("now()");
 
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
                         .HasColumnName("quantity");
 
                     b.HasKey("CartId", "ProductId")
-                        .HasName("cart_shopcart_lists_pkey");
+                        .HasName("pk_cart_shopcart_list");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_cart_shopcart_list_product_id");
 
-                    b.ToTable("cart_shopcart_lists", "dom");
+                    b.ToTable("cart_shopcart_list", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDelivery", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateTimeCreate")
                         .ValueGeneratedOnAdd()
@@ -117,21 +121,22 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("user_delivery_id");
 
                     b.HasKey("Id")
-                        .HasName("dly_deliveries_pkey");
+                        .HasName("pk_dly_delivery");
 
-                    b.HasIndex("UserDeliveryId");
+                    b.HasIndex("UserDeliveryId")
+                        .HasDatabaseName("ix_dly_delivery_user_delivery_id");
 
-                    b.ToTable("dly_deliveries", "dom");
+                    b.ToTable("dly_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -151,19 +156,19 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasDefaultValueSql("now()");
 
                     b.HasKey("Id")
-                        .HasName("dly_delivery_address_pkey");
+                        .HasName("pk_dly_delivery_address");
 
-                    b.ToTable("dly_delivery_addresses", "dom");
+                    b.ToTable("dly_delivery_address", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("EnterAddress")
                         .HasColumnType("boolean")
@@ -176,19 +181,19 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("method");
 
                     b.HasKey("Id")
-                        .HasName("dly_delivery_methods_pkey");
+                        .HasName("pk_dly_delivery_method");
 
-                    b.ToTable("dly_delivery_methods", "dom");
+                    b.ToTable("dly_delivery_method", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyMethodsAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyMethodsAddress", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long>("AddressId")
                         .HasColumnType("bigint")
@@ -199,27 +204,26 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("method_id");
 
                     b.HasKey("Id")
-                        .HasName("dly_methods_addresses_pkey");
+                        .HasName("pk_dly_methods_address");
 
-                    b.HasIndex(new[] { "MethodId", "AddressId" }, "UK__dly_methods_addresses")
-                        .IsUnique();
+                    b.HasIndex("AddressId")
+                        .HasDatabaseName("ix_dly_methods_address_address_id");
 
-                    b.HasIndex(new[] { "AddressId" }, "fki_FK__dly_methods_addresses__dly_delivery_addresses");
+                    b.HasIndex("MethodId", "AddressId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_dly_methods_address_method_id_address_id");
 
-                    b.ToTable("dly_methods_addresses", "dom", t =>
-                        {
-                            t.HasComment("The table is for shipping methods where the address offered by the system is common to all users");
-                        });
+                    b.ToTable("dly_methods_address", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long>("AddressId")
                         .HasColumnType("bigint")
@@ -240,39 +244,39 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("dly_user_deliveries_pkey");
+                        .HasName("pk_dly_user_delivery");
 
-                    b.HasIndex(new[] { "UserId", "MethodId", "AddressId" }, "UQ__dly_user_deliveries")
-                        .IsUnique();
+                    b.HasIndex("AddressId")
+                        .HasDatabaseName("ix_dly_user_delivery_address_id");
 
-                    b.HasIndex(new[] { "AddressId" }, "fki_FK__dly_user_deliveries__dly_delivery_addresses");
+                    b.HasIndex("MethodId")
+                        .HasDatabaseName("ix_dly_user_delivery_method_id");
 
-                    b.HasIndex(new[] { "MethodId" }, "fki_FK__dly_user_deliveries__dly_delivery_methods");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_dly_user_delivery_user_id");
 
-                    b.HasIndex(new[] { "UserId" }, "fki_FK__dly_user_deliveries__ident_users");
+                    b.HasIndex("UserId", "MethodId", "AddressId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_dly_user_delivery_user_id_method_id_address_id");
 
-                    b.ToTable("dly_user_deliveries", "dom", t =>
-                        {
-                            t.HasComment("Addresses entered by the users");
-                        });
+                    b.ToTable("dly_user_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdCheckoutOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdCheckoutOrder", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<bool?>("Canceled")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasColumnName("canceled")
-                        .HasDefaultValueSql("true")
-                        .HasComment("if this field is canceled, than you can delete this row from table.");
+                        .HasDefaultValueSql("true");
 
                     b.Property<DateTime>("DateTimeCreated")
                         .ValueGeneratedOnAdd()
@@ -288,8 +292,7 @@ namespace Blazorit.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)")
-                        .HasColumnName("order_token")
-                        .HasComment("uniq token");
+                        .HasColumnName("order_token");
 
                     b.Property<decimal>("PaymentAmount")
                         .HasPrecision(16, 4)
@@ -305,28 +308,27 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("ord_checkout_orders_pkey");
+                        .HasName("pk_ord_checkout_order");
 
-                    b.HasIndex(new[] { "OrderToken" }, "UQ__ord_checkout_orders__order_token")
-                        .IsUnique();
+                    b.HasIndex("OrderToken")
+                        .IsUnique()
+                        .HasDatabaseName("ix_ord_checkout_order_order_token");
 
-                    b.HasIndex(new[] { "OrderToken", "Canceled" }, "uqix__ord_checkout_orders__order_token__canceled")
-                        .IsUnique();
+                    b.HasIndex("OrderToken", "Canceled")
+                        .IsUnique()
+                        .HasDatabaseName("ix_ord_checkout_order_order_token_canceled");
 
-                    b.ToTable("ord_checkout_orders", "dom", t =>
-                        {
-                            t.HasComment("this table need for temporary storage info about order, while payment is being made");
-                        });
+                    b.ToTable("ord_checkout_order", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrder", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateTimeCreate")
                         .ValueGeneratedOnAdd()
@@ -347,26 +349,23 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("ord_orders_pkey");
+                        .HasName("pk_ord_order");
 
-                    b.HasIndex(new[] { "DeliveryId" }, "UQ__ord_orders__delivery_id")
-                        .IsUnique();
+                    b.HasIndex("DeliveryId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_ord_order_delivery_id");
 
-                    b.HasIndex(new[] { "PaymentId" }, "UQ__ord_orders__payment_id")
-                        .IsUnique();
+                    b.HasIndex("PaymentId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_ord_order_payment_id");
 
-                    b.HasIndex(new[] { "DeliveryId" }, "fki_fk__ord_orders__dly_deliveries");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_ord_order_user_id");
 
-                    b.HasIndex(new[] { "DeliveryId" }, "fki_fk__ord_orders__dly_user_deliveries");
-
-                    b.HasIndex(new[] { "PaymentId" }, "fki_fk__ord_orders__pmnt_payments");
-
-                    b.HasIndex(new[] { "UserId" }, "fki_fk__ord_orders__users__id");
-
-                    b.ToTable("ord_orders", "dom");
+                    b.ToTable("ord_order", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrderList", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrderList", b =>
                 {
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint")
@@ -375,6 +374,10 @@ namespace Blazorit.Infrastructure.Migrations
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint")
                         .HasColumnName("product_id");
+
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
 
                     b.Property<decimal?>("Price")
                         .HasPrecision(16, 4)
@@ -386,28 +389,29 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("quantity");
 
                     b.HasKey("OrderId", "ProductId")
-                        .HasName("ord_order_list_pkey");
+                        .HasName("pk_ord_order_list");
 
-                    b.HasIndex(new[] { "OrderId" }, "fki_fk__ord_order_list__ord_order");
+                    b.HasIndex("OrderId")
+                        .HasDatabaseName("ix_ord_order_list_order_id");
 
-                    b.HasIndex(new[] { "ProductId" }, "fki_fk__ord_order_list__prod_products");
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_ord_order_list_product_id");
 
-                    b.ToTable("ord_order_lists", "dom");
+                    b.ToTable("ord_order_list", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.PmntPayment", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPayment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long>("CheckoutOrderId")
                         .HasColumnType("bigint")
-                        .HasColumnName("checkout_order_id")
-                        .HasComment("this field relation to id of ord_checkout_orders, but rows in ord_checkout_orders table can be deleted (whose canceled), than we have not Foreign key to ord_checkout_orders");
+                        .HasColumnName("checkout_order_id");
 
                     b.Property<DateTime>("DateTimeCreate")
                         .ValueGeneratedOnAdd()
@@ -439,31 +443,30 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("payment_method_id");
 
                     b.HasKey("Id")
-                        .HasName("pmnt_payments_pkey");
+                        .HasName("pk_pmnt_payment");
 
-                    b.HasIndex(new[] { "CheckoutOrderId" }, "UQ__checkout_order_id")
-                        .IsUnique();
+                    b.HasIndex("CheckoutOrderId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_pmnt_payment_checkout_order_id");
 
-                    b.HasIndex(new[] { "PaymentMethodId" }, "fki_fk__pmnt_payments__pmnt_payment_methods");
+                    b.HasIndex("PaymentMethodId")
+                        .HasDatabaseName("ix_pmnt_payment_payment_method_id");
 
-                    b.HasIndex(new[] { "CheckoutOrderId" }, "fki_fk_not_valid__pmnt_payments__checout_orders__id");
-
-                    b.ToTable("pmnt_payments", "dom");
+                    b.ToTable("pmnt_payment", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.PmntPaymentMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPaymentMethod", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("IsCod")
                         .HasColumnType("boolean")
-                        .HasColumnName("is_cod")
-                        .HasComment("Is Cash On Delivery");
+                        .HasColumnName("is_cod");
 
                     b.Property<string>("Method")
                         .IsRequired()
@@ -476,20 +479,19 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("ordby");
 
                     b.HasKey("Id")
-                        .HasName("pmnt_payment_methods_pkey");
+                        .HasName("pk_pmnt_payment_method");
 
-                    b.ToTable("pmnt_payment_methods", "dom");
+                    b.ToTable("pmnt_payment_method", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdCategory", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
-                    NpgsqlPropertyBuilderExtensions.HasIdentityOptions(b.Property<long>("Id"), null, null, 0L, null, null, null);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -509,22 +511,23 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("prefix_sku");
 
                     b.HasKey("Id")
-                        .HasName("prod_categories_pkey");
+                        .HasName("pk_prod_category");
 
-                    b.HasIndex(new[] { "Name" }, "UQIX__prod_categories__name")
-                        .IsUnique();
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_prod_category_name");
 
-                    b.ToTable("prod_categories", "dom");
+                    b.ToTable("prod_category", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdPicture", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdPicture", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("LinkPart")
                         .IsRequired()
@@ -557,24 +560,26 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasDefaultValueSql("'site'::character varying");
 
                     b.HasKey("Id")
-                        .HasName("prod_pictures_pkey");
+                        .HasName("pk_prod_picture");
 
-                    b.HasIndex(new[] { "ProductId", "PicSize", "SiteLocation" }, "IX__prod_pictures__include");
+                    b.HasIndex("ProductId", "PicSize", "SiteLocation")
+                        .HasDatabaseName("ix_prod_picture_product_id_pic_size_site_location");
 
-                    b.HasIndex(new[] { "ProductId", "PicSize", "SiteLocation", "OrderNum" }, "UQ__prod_pictures")
-                        .IsUnique();
+                    b.HasIndex("ProductId", "PicSize", "SiteLocation", "OrderNum")
+                        .IsUnique()
+                        .HasDatabaseName("ix_prod_picture_product_id_pic_size_site_location_order_num");
 
-                    b.ToTable("prod_pictures", "dom");
+                    b.ToTable("prod_picture", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint")
@@ -607,8 +612,7 @@ namespace Blazorit.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasColumnName("is_on_site")
-                        .HasDefaultValueSql("true")
-                        .HasComment("if on_site is true than this product show on the site, else not show");
+                        .HasDefaultValueSql("true");
 
                     b.Property<string>("LinkPart")
                         .IsRequired()
@@ -633,24 +637,26 @@ namespace Blazorit.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
-                        .HasColumnName("sku")
-                        .HasComment("articul");
+                        .HasColumnName("sku");
 
                     b.HasKey("Id")
-                        .HasName("prod_products_pkey");
+                        .HasName("pk_prod_product");
 
-                    b.HasIndex(new[] { "LinkPart", "CategoryId" }, "UQIX__prod_products__include")
-                        .IsUnique();
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("ix_prod_product_category_id");
 
-                    b.HasIndex(new[] { "Sku" }, "UQIX__prod_products__sku")
-                        .IsUnique();
+                    b.HasIndex("Sku")
+                        .IsUnique()
+                        .HasDatabaseName("ix_prod_product_sku");
 
-                    b.HasIndex(new[] { "CategoryId" }, "fki_fk__prod_products__prod_categories");
+                    b.HasIndex("LinkPart", "CategoryId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_prod_product_link_part_category_id");
 
-                    b.ToTable("prod_products", "dom");
+                    b.ToTable("prod_product", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.VwCartShopcart", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwCartShopcart", b =>
                 {
                     b.Property<long?>("CartId")
                         .HasColumnType("bigint")
@@ -710,12 +716,10 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("user_id");
 
-                    b.ToTable((string)null);
-
-                    b.ToView("vw_cart_shopcarts", "dom");
+                    b.ToTable("vw_cart_shopcart", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.VwDlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwDlyDelivery", b =>
                 {
                     b.Property<string>("Address")
                         .HasMaxLength(200)
@@ -769,12 +773,10 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("user_id");
 
-                    b.ToTable((string)null);
-
-                    b.ToView("vw_dly_deliveries", "dom");
+                    b.ToTable("vw_dly_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.VwDlyMethodsAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwDlyMethodsAddress", b =>
                 {
                     b.Property<string>("Address")
                         .HasMaxLength(200)
@@ -803,12 +805,10 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("method_id");
 
-                    b.ToTable((string)null);
-
-                    b.ToView("vw_dly_methods_addresses", "dom");
+                    b.ToTable("vw_dly_methods_address", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.VwDlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwDlyUserDelivery", b =>
                 {
                     b.Property<string>("Address")
                         .HasMaxLength(200)
@@ -837,12 +837,10 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("user_id");
 
-                    b.ToTable((string)null);
-
-                    b.ToView("vw_dly_user_deliveries", "dom");
+                    b.ToTable("vw_dly_user_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.VwOrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwOrdOrder", b =>
                 {
                     b.Property<string>("Category")
                         .HasMaxLength(100)
@@ -907,12 +905,10 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("user_id");
 
-                    b.ToTable((string)null);
-
-                    b.ToView("vw_ord_orders", "dom");
+                    b.ToTable("vw_ord_order", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.VwProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwProdProduct", b =>
                 {
                     b.Property<string>("Category")
                         .HasMaxLength(100)
@@ -977,19 +973,17 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("sku");
 
-                    b.ToTable((string)null);
-
-                    b.ToView("vw_prod_products", "dom");
+                    b.ToTable("vw_prod_product", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.WishWish", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWish", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateTimeCreate")
                         .ValueGeneratedOnAdd()
@@ -1002,39 +996,16 @@ namespace Blazorit.Infrastructure.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("wish_wishes_pkey");
+                        .HasName("pk_wish_wish");
 
-                    b.HasIndex(new[] { "UserId" }, "UQIX__wish_wishes__user_id")
-                        .IsUnique();
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_wish_wish_user_id");
 
-                    b.ToTable("wish_wishes", "dom");
+                    b.ToTable("wish_wish", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.WishWishList", b =>
-                {
-                    b.Property<long>("WishId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("wish_id");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("product_id");
-
-                    b.Property<DateTime>("DateTimeCreate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_time_create")
-                        .HasDefaultValueSql("now()");
-
-                    b.HasKey("WishId", "ProductId")
-                        .HasName("wish_wish_lists_pkey");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("wish_wish_lists", "dom");
-                });
-
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.ident.User", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWishList", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1043,246 +1014,245 @@ namespace Blazorit.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateTimeCreate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_created");
+                        .HasColumnName("date_time_create")
+                        .HasDefaultValueSql("now()");
 
-                    b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("bytea")
-                        .HasColumnName("password_hash");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("product_id");
 
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("bytea")
-                        .HasColumnName("password_salt");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnName("user_name");
-
-                    b.Property<string>("UserRole")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("user_role");
+                    b.Property<long>("WishId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("wish_id");
 
                     b.HasKey("Id")
-                        .HasName("users_pkey");
+                        .HasName("pk_wish_wish_list");
 
-                    b.ToTable("users", "ident");
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_wish_wish_list_product_id");
+
+                    b.HasIndex("WishId")
+                        .HasDatabaseName("ix_wish_wish_list_wish_id");
+
+                    b.ToTable("wish_wish_list", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.CartShopcartList", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcartList", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.CartShopcart", "Cart")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.CartShopcart", "Cart")
                         .WithMany("CartShopcartLists")
                         .HasForeignKey("CartId")
                         .IsRequired()
-                        .HasConstraintName("fk__cart_shopcart_lists__cart_shopcart");
+                        .HasConstraintName("fk_cart_shopcart_list_cart_shopcart_cart_id");
 
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("CartShopcartLists")
                         .HasForeignKey("ProductId")
                         .IsRequired()
-                        .HasConstraintName("fk__cart_shopcart_lists__prod_products");
+                        .HasConstraintName("fk_cart_shopcart_list_prod_product_product_id");
 
                     b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDelivery", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyUserDelivery", "UserDelivery")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", "UserDelivery")
                         .WithMany("DlyDeliveries")
                         .HasForeignKey("UserDeliveryId")
                         .IsRequired()
-                        .HasConstraintName("fki_fk__dly_deliveries__dly_user_deliveries");
+                        .HasConstraintName("fk_dly_delivery_dly_user_delivery_user_delivery_id");
 
                     b.Navigation("UserDelivery");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyMethodsAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyMethodsAddress", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryAddress", "Address")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", "Address")
                         .WithMany("DlyMethodsAddresses")
                         .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__dly_methods_addresses__dly_delivery_addresses");
+                        .HasConstraintName("fk_dly_methods_address_dly_delivery_address_address_id");
 
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryMethod", "Method")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", "Method")
                         .WithMany("DlyMethodsAddresses")
                         .HasForeignKey("MethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__dly_methods_addresses__dly_delivery_methods");
+                        .HasConstraintName("fk_dly_methods_address_dly_delivery_method_method_id");
 
                     b.Navigation("Address");
 
                     b.Navigation("Method");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryAddress", "Address")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", "Address")
                         .WithMany("DlyUserDeliveries")
                         .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__dly_user_deliveries__dly_delivery_addresses");
+                        .HasConstraintName("fk_dly_user_delivery_dly_delivery_address_address_id");
 
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryMethod", "Method")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", "Method")
                         .WithMany("DlyUserDeliveries")
                         .HasForeignKey("MethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__dly_user_deliveries__dly_delivery_methods");
+                        .HasConstraintName("fk_dly_user_delivery_dly_delivery_method_method_id");
 
                     b.Navigation("Address");
 
                     b.Navigation("Method");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrder", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDelivery", "Delivery")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDelivery", "Delivery")
                         .WithOne("OrdOrder")
-                        .HasForeignKey("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrder", "DeliveryId")
+                        .HasForeignKey("Blazorit.Domain.EShop.EF.dom.OrdOrder", "DeliveryId")
                         .IsRequired()
-                        .HasConstraintName("fk__ord_orders__dly_deliveries");
+                        .HasConstraintName("fk_ord_order_dly_delivery_delivery_id");
 
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.PmntPayment", "Payment")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.PmntPayment", "Payment")
                         .WithOne("OrdOrder")
-                        .HasForeignKey("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrder", "PaymentId")
+                        .HasForeignKey("Blazorit.Domain.EShop.EF.dom.OrdOrder", "PaymentId")
                         .IsRequired()
-                        .HasConstraintName("fk__ord_orders__pmnt_payments");
+                        .HasConstraintName("fk_ord_order_pmnt_payment_payment_id");
 
                     b.Navigation("Delivery");
 
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrderList", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrderList", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrder", "Order")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.OrdOrder", "Order")
                         .WithMany("OrdOrderLists")
                         .HasForeignKey("OrderId")
                         .IsRequired()
-                        .HasConstraintName("fk__ord_order_list__ord_order");
+                        .HasConstraintName("fk_ord_order_list_ord_order_order_id");
 
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("OrdOrderLists")
                         .HasForeignKey("ProductId")
                         .IsRequired()
-                        .HasConstraintName("fk__ord_order_list__prod_products");
+                        .HasConstraintName("fk_ord_order_list_prod_product_product_id");
 
                     b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.PmntPayment", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPayment", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.PmntPaymentMethod", "PaymentMethod")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.PmntPaymentMethod", "PaymentMethod")
                         .WithMany("PmntPayments")
                         .HasForeignKey("PaymentMethodId")
                         .IsRequired()
-                        .HasConstraintName("fk__pmnt_payments__pmnt_payment_methods");
+                        .HasConstraintName("fk_pmnt_payment_pmnt_payment_method_payment_method_id");
 
                     b.Navigation("PaymentMethod");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdPicture", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdPicture", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("ProdPictures")
                         .HasForeignKey("ProductId")
                         .IsRequired()
-                        .HasConstraintName("fk__prod_pictures__prod_products");
+                        .HasConstraintName("fk_prod_picture_prod_product_product_id");
 
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdProduct", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdCategory", "Category")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdCategory", "Category")
                         .WithMany("ProdProducts")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk__prod_products__prod_categories");
+                        .HasConstraintName("fk_prod_product_prod_category_category_id");
 
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.WishWishList", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWishList", b =>
                 {
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("WishWishLists")
                         .HasForeignKey("ProductId")
                         .IsRequired()
-                        .HasConstraintName("fk__wish_wish_lists__prod_products");
+                        .HasConstraintName("fk_wish_wish_list_prod_product_product_id");
 
-                    b.HasOne("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.WishWish", "Wish")
+                    b.HasOne("Blazorit.Domain.EShop.EF.dom.WishWish", "Wish")
                         .WithMany("WishWishLists")
                         .HasForeignKey("WishId")
                         .IsRequired()
-                        .HasConstraintName("fk__wish_wish_lists__wish_wishes");
+                        .HasConstraintName("fk_wish_wish_list_wish_wish_wish_id");
 
                     b.Navigation("Product");
 
                     b.Navigation("Wish");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.CartShopcart", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcart", b =>
                 {
                     b.Navigation("CartShopcartLists");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDelivery", b =>
                 {
                     b.Navigation("OrdOrder");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", b =>
                 {
                     b.Navigation("DlyMethodsAddresses");
 
                     b.Navigation("DlyUserDeliveries");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyDeliveryMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", b =>
                 {
                     b.Navigation("DlyMethodsAddresses");
 
                     b.Navigation("DlyUserDeliveries");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.DlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", b =>
                 {
                     b.Navigation("DlyDeliveries");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.OrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrder", b =>
                 {
                     b.Navigation("OrdOrderLists");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.PmntPayment", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPayment", b =>
                 {
                     b.Navigation("OrdOrder");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.PmntPaymentMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPaymentMethod", b =>
                 {
                     b.Navigation("PmntPayments");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdCategory", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdCategory", b =>
                 {
                     b.Navigation("ProdProducts");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.ProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdProduct", b =>
                 {
                     b.Navigation("CartShopcartLists");
 
@@ -1293,7 +1263,7 @@ namespace Blazorit.Infrastructure.Migrations
                     b.Navigation("WishWishLists");
                 });
 
-            modelBuilder.Entity("Blazorit.Infrastructure.DBStorages.BlazoritDB.EF.dom.WishWish", b =>
+            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWish", b =>
                 {
                     b.Navigation("WishWishLists");
                 });

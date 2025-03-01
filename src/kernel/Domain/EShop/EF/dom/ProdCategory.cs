@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class ProdCategory : BaseEntity
+public partial class ProdCategory : BaseIdEntity
 {
 
     public string Name { get; set; } = null!;

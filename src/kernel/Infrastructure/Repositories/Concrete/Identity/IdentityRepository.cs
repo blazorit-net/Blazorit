@@ -80,6 +80,8 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity
         public async Task<User?> GetUser(long userId) {            
             try {
                 using (var context = _contextFactory.CreateDbContext()) {
+                    var temp = context.Database.GetConnectionString();
+                    
                     var user = await context.User.FindAsync(userId);
                     if (user is null) return null;
                     return new User {

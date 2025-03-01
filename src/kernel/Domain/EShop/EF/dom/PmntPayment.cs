@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class PmntPayment : BaseEntity
+public partial class PmntPayment : BaseIdEntity
 {
 
     public decimal PaymentAmount { get; set; }

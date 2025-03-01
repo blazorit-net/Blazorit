@@ -8,6 +8,8 @@ public class VwDlyDeliveryConfiguration: IEntityTypeConfiguration<VwDlyDelivery>
 {
     public void Configure(EntityTypeBuilder<VwDlyDelivery> builder)
     {
+        builder.HasNoKey();
+        
         builder.Property(e => e.Address)
             .HasMaxLength(200);
 

@@ -1,0 +1,10 @@
+-- #################################################
+-- Когда ТУЗ не должен быть superuser, создаем для него сначала БД:
+-- CREATE USER blazorit_user WITH PASSWORD 'blaz_pass';
+-- CREATE DATABASE blazorit with OWNER blazorit_user;
+-- ALTER DATABASE blazorit OWNER TO blazorit_user;
+
+-- #################################################
+-- Чтобы можно было создавать БД при миграции (но, если создавать БД не требуется, тогда права superuser не нужны)
+-- ALTER USER blazorit_user WITH SUPERUSER;
+-- ALTER USER blazorit_user WITH NOSUPERUSER; -- забрать права superuser

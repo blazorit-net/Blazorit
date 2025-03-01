@@ -8,6 +8,8 @@ public class VwProdProductConfiguration: IEntityTypeConfiguration<VwProdProduct>
 {
     public void Configure(EntityTypeBuilder<VwProdProduct> builder)
     {
+        builder.HasNoKey();
+        
         builder.Property(e => e.Category)
             .HasMaxLength(100);
 

@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.ident
 {
-    public partial class User : BaseEntity
+    public partial class User : BaseIdEntity
     {
         [StringLength(50)]
         public string UserName { get; set; } = null!;

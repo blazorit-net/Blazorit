@@ -1,19 +1,14 @@
 Commands for create migration and update database
 
-IN VS PMC:
-Add-Migration InitialCreate
-Update-database
-
-OR 
-
-for CLI:
-dotnet ef migrations add InitialCreate
-dotnet ef database update
-
-
 ######
 cd to Infrastructure project folder
 
-dotnet ef database update -s ../../app/Server/Blazorit.Server.csproj
-dotnet ef migrations add CreateEcommerceEntities -s ../../app/Server/Blazorit.Server.csproj
-dotnet ef database update -s ../../app/Server/Blazorit.Server.csproj
+you can only update DB:
+dotnet ef database update -s ../../app/Server/Blazorit.Server.csproj --context IdentDbContext
+dotnet ef database update -s ../../app/Server/Blazorit.Server.csproj --context DomDbContext
+
+if you want create migrations, than first delete old migrations from folder and apply these commands:
+dotnet ef migrations add Init -s ../../app/Server/Blazorit.Server.csproj --context IdentDbContext
+dotnet ef migrations add Init -s ../../app/Server/Blazorit.Server.csproj --context DomDbContext
+
+

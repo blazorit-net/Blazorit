@@ -4,7 +4,7 @@ using Blazorit.Domain.Common;
 
 namespace Blazorit.Domain.EShop.EF.dom;
 
-public partial class OrdOrder : BaseEntity
+public partial class OrdOrder : BaseIdEntity
 {
 
     public long UserId { get; set; }
