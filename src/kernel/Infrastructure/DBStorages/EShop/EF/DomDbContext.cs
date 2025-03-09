@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.EShop.EF.dom;
+﻿using Blazorit.Domain.Entities.EShop.EF.dom;
 using Blazorit.Infrastructure.Configurations.EShop.EF.Dom;
 using Microsoft.EntityFrameworkCore;
 

@@ -3,9 +3,9 @@ using Blazorit.Client.Services.Abstract.Identity;
 using Blazorit.Client.Support.Helpers;
 using Blazorit.Shared.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using System.Net.Http.Json;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Deliveries
 {

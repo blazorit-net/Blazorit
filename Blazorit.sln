@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Core", "src\kernel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Infrastructure", "src\kernel\Infrastructure\Blazorit.Infrastructure.csproj", "{878876B5-1EA8-4F36-9C97-788CDAC1C585}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.SharedKernel", "src\kernel\SharedKernel\Blazorit.SharedKernel.csproj", "{151C37DE-35AD-4BBD-8603-C9F8586E958E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Domain.SharedKernel", "src\kernel\Domain\SharedKernel\Blazorit.Domain.SharedKernel.csproj", "{151C37DE-35AD-4BBD-8603-C9F8586E958E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Shared", "src\app\Shared\Blazorit.Shared.csproj", "{9DBC1B50-37D4-4363-9DA5-B37899278CD9}"
 EndProject
@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.Server", "src\app\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.ConsoleApp", "tests\Blazorit.ConsoleApp\Blazorit.ConsoleApp.csproj", "{3D5112E9-F6A8-491E-954F-616F93FE98C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazorit.Domain", "src\kernel\Domain\Blazorit.Domain.csproj", "{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazorit.Domain.Entities", "src\kernel\Domain\Entities\Blazorit.Domain.Entities.csproj", "{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

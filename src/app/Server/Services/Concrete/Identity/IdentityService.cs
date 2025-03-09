@@ -3,8 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Blazorit.Core.Constants.Identity;
+using Blazorit.Domain.SharedKernel.Core.IdentityRoles;
 using Blazorit.Shared.Models.Identity;
-using Blazorit.SharedKernel.Core.IdentityRoles;
 
 namespace Blazorit.Server.Services.Concrete.Identity
 {

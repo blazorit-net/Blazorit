@@ -2,22 +2,28 @@
 using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using CoreOrders = Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
-using InfrOrders = Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
-
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
-using InfrPayments = Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
-using CorePayments = Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Payments;
+using CoreOrders = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+using InfrOrders = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using InfrPayments = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using CorePayments = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Payments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Payments;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+using CheckOrder = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.CheckOrder;
+using CheckoutOrder = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.CheckoutOrder;
+using Order = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.Order;
+using OrderItem = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.OrderItem;
+using Orders_Order = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.Order;
+using PaidOrder = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.PaidOrder;
+using Payment = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments.Payment;
+using PaymentMethod = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments.PaymentMethod;
+using Payments_Payment = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Payments.Payment;
+using VwOrder = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.VwOrder;
 
 
 namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
@@ -42,7 +48,7 @@ namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
         /// <param name="userId"></param>
         /// <param name="orderData"></param>
         /// <returns></returns>
-        public async Task<(bool ok, string paymentToken)> CreateUniqOrderTokenAsync(long userId, CoreOrders.CheckOrder orderData)
+        public async Task<(bool ok, string paymentToken)> CreateUniqOrderTokenAsync(long userId, CheckOrder orderData)
         {
             decimal paymentAmount = orderData.TotalPrice; // INFO: this amount you can get from kernel (from repository)
             long deliveryMethodId = orderData.Delivery.UserDelivery.MethodId;
@@ -75,14 +81,14 @@ namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
         /// </summary>
         /// <param name="paidOrder"></param>
         /// <returns></returns>
-        public async Task<CoreOrders.Order?> CreateOrder(CoreOrders.PaidOrder paidOrder)
+        public async Task<Order?> CreateOrder(PaidOrder paidOrder)
         {
             long userId = paidOrder.UserId;
             string orderToken = paidOrder.OrderToken;
             decimal paidAmount = paidOrder.PaidAmount;
             string paymentInfo = paidOrder.PaymentInfo;
 
-            InfrOrders.CheckoutOrder? orderTokenData = await _dataRepo.GetTokenOrderInfoAsync(orderToken, userId); // get order data from storage
+            CheckoutOrder? orderTokenData = await _dataRepo.GetTokenOrderInfoAsync(orderToken, userId); // get order data from storage
 
             if (orderTokenData == null)
             {
@@ -120,7 +126,7 @@ namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
             }
 
             // after creating order we return this order from storage
-            CoreOrders.Order? order = await GetUserOrderAsync(userId, orderResult.orderId);            
+            Order? order = await GetUserOrderAsync(userId, orderResult.orderId);            
             return order;
         }
 
@@ -130,9 +136,9 @@ namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<CoreOrders.Order?> GetUserOrderAsync(long userId, long orderId)
+        public async Task<Order?> GetUserOrderAsync(long userId, long orderId)
         {            
-            InfrOrders.Order? infrOrder = await _dataRepo.GetOrder(userId, orderId);
+            Orders_Order? infrOrder = await _dataRepo.GetOrder(userId, orderId);
 
             if (infrOrder == null)
             {
@@ -140,15 +146,15 @@ namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
             }
 
             Delivery delivery = (await _deliveryService.GetDeliveryByOrder(userId, orderId)) ?? new();
-            InfrPayments.Payment infrPayment = (await _dataRepo.GetPayment(infrOrder.PaymentId)) ?? new();
-            InfrPayments.PaymentMethod paymentMethod = (await _paymentService.GetPaymentMethodAsync(infrPayment.PaymentMethodId)) ?? new();
+            Payment infrPayment = (await _dataRepo.GetPayment(infrOrder.PaymentId)) ?? new();
+            PaymentMethod paymentMethod = (await _paymentService.GetPaymentMethodAsync(infrPayment.PaymentMethodId)) ?? new();
 
-            CorePayments.Payment corePayment = new(infrPayment, paymentMethod);            
+            Payments_Payment corePayment = new(infrPayment, paymentMethod);            
 
-            IEnumerable<InfrOrders.VwOrder> repoResult = await _dataRepo.GetUserOrderListAsync(userId, orderId);
-            IEnumerable<CoreOrders.OrderItem> listItems = await GetOrderItemsFromOrdersAsync(repoResult);            
+            IEnumerable<VwOrder> repoResult = await _dataRepo.GetUserOrderListAsync(userId, orderId);
+            IEnumerable<OrderItem> listItems = await GetOrderItemsFromOrdersAsync(repoResult);            
             
-            return listItems.Count() == 0 ? null : new CoreOrders.Order(orderId, infrOrder.DateTimeCreate, listItems, delivery, corePayment);
+            return listItems.Count() == 0 ? null : new Order(orderId, infrOrder.DateTimeCreate, listItems, delivery, corePayment);
         }
 
 
@@ -157,10 +163,10 @@ namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
         /// </summary>
         /// <param name="orderList"></param>
         /// <returns></returns>
-        private async Task<IEnumerable<CoreOrders.OrderItem>> GetOrderItemsFromOrdersAsync(IEnumerable<InfrOrders.VwOrder> orderList)
+        private async Task<IEnumerable<OrderItem>> GetOrderItemsFromOrdersAsync(IEnumerable<VwOrder> orderList)
         {
 
-            IEnumerable<CoreOrders.OrderItem> result = orderList.Select(x => new CoreOrders.OrderItem(x)
+            IEnumerable<OrderItem> result = orderList.Select(x => new OrderItem(x)
             {
                 //ProductId = x.ProductId,
                 //Category = x.Category.Trim(),

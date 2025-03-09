@@ -1,8 +1,8 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Admin.Products;
 using Blazorit.Client.Support.Helpers;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Admin;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Shr = Blazorit.Shared.Models.Universal;
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Admin.Products

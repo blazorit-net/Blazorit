@@ -1,6 +1,6 @@
 ﻿using Blazorit.Infrastructure.DBStorages.EShop.EF;
 using Blazorit.Core.UseCases.Repositories.Abstract.Identity;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.Identity;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.Identity
@@ -34,7 +34,7 @@ namespace Blazorit.Infrastructure.Repositories.Concrete.Identity
         public async Task<(bool isOk, long userId)> RegisterUser(string userName, byte[] passwordHash, byte[] passwordSalt, string userRole) {
             try {
                 using (var context = _contextFactory.CreateDbContext()) {
-                    var user = new Domain.EShop.EF.ident.User() {
+                    var user = new Domain.Entities.EShop.EF.ident.User() {
                         ////Id = long.MinValue,
                         UserName = userName,
                         PasswordHash = passwordHash,

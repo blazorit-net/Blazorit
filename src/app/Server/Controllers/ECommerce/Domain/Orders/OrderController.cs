@@ -1,12 +1,11 @@
 ﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Shared.Models.Universal;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
 
 namespace Blazorit.Server.Controllers.ECommerce.Domain.Orders
 {

@@ -1,9 +1,9 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 
 namespace Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Carts {
     /// <summary>

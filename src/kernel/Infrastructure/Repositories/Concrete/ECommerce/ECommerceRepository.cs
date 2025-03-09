@@ -1,12 +1,12 @@
 ﻿using Blazorit.Infrastructure.DBStorages.EShop.EF;
-using Blazorit.Domain.EShop.EF.dom;
+using Blazorit.Domain.Entities.EShop.EF.dom;
 using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 //using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

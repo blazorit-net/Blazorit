@@ -22,7 +22,7 @@ namespace Blazorit.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.ident.User", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.ident.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()

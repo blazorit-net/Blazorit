@@ -1,6 +1,6 @@
-﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain.Data;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
+﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
+using Blazorit.Server.Services.Abstract.ECommerce.Domain.Data;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Data
 {

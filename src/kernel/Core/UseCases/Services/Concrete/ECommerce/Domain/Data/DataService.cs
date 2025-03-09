@@ -1,14 +1,14 @@
 ﻿using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Data;
 using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 
 namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Data
 {

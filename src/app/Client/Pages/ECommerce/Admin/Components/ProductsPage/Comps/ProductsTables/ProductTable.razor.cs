@@ -1,10 +1,10 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using AntDesign.TableModels;
 using Microsoft.AspNetCore.Components.Web;
 using Blazorit.Client.Services.Abstract.ECommerce.Admin.Products;
 using AntDesign;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Shr = Blazorit.Shared.Models.Universal;
 
 namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.ProductsTables

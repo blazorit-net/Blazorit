@@ -1,6 +1,6 @@
-﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries
 {

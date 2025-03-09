@@ -1,4 +1,4 @@
-﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.Identity;
+﻿using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.Identity;
 
 namespace Blazorit.Core.UseCases.Repositories.Abstract.Identity
 {

@@ -1,5 +1,5 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain.Payments;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.Payments

@@ -25,7 +25,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcart", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.CartShopcart", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("cart_shopcart", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcartList", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.CartShopcartList", b =>
                 {
                     b.Property<long>("CartId")
                         .HasColumnType("bigint")
@@ -87,7 +87,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("cart_shopcart_list", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyDelivery", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,7 +132,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("dly_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryAddress", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,7 +164,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("dly_delivery_address", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryMethod", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,7 +189,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("dly_delivery_method", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyMethodsAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyMethodsAddress", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -219,7 +219,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("dly_methods_address", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyUserDelivery", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -265,7 +265,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("dly_user_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdCheckoutOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.OrdCheckoutOrder", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -324,7 +324,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("ord_checkout_order", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrder", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -368,7 +368,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("ord_order", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrderList", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrderList", b =>
                 {
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint")
@@ -403,7 +403,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("ord_order_list", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPayment", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.PmntPayment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -458,7 +458,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("pmnt_payment", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPaymentMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.PmntPaymentMethod", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -487,7 +487,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("pmnt_payment_method", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdCategory", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.ProdCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -523,7 +523,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("prod_category", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdPicture", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.ProdPicture", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -575,7 +575,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("prod_picture", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.ProdProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -659,7 +659,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("prod_product", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwCartShopcart", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.VwCartShopcart", b =>
                 {
                     b.Property<long?>("CartId")
                         .HasColumnType("bigint")
@@ -722,7 +722,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("vw_cart_shopcart", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwDlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.VwDlyDelivery", b =>
                 {
                     b.Property<string>("Address")
                         .HasMaxLength(200)
@@ -779,7 +779,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("vw_dly_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwDlyMethodsAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.VwDlyMethodsAddress", b =>
                 {
                     b.Property<string>("Address")
                         .HasMaxLength(200)
@@ -811,7 +811,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("vw_dly_methods_address", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwDlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.VwDlyUserDelivery", b =>
                 {
                     b.Property<string>("Address")
                         .HasMaxLength(200)
@@ -843,7 +843,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("vw_dly_user_delivery", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwOrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.VwOrdOrder", b =>
                 {
                     b.Property<string>("Category")
                         .HasMaxLength(100)
@@ -911,7 +911,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("vw_ord_order", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.VwProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.VwProdProduct", b =>
                 {
                     b.Property<string>("Category")
                         .HasMaxLength(100)
@@ -979,7 +979,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("vw_prod_product", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWish", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.WishWish", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1008,7 +1008,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("wish_wish", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWishList", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.WishWishList", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1043,15 +1043,15 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.ToTable("wish_wish_list", (string)null);
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcartList", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.CartShopcartList", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.CartShopcart", "Cart")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.CartShopcart", "Cart")
                         .WithMany("CartShopcartLists")
                         .HasForeignKey("CartId")
                         .IsRequired()
                         .HasConstraintName("fk_cart_shopcart_list_cart_shopcart_cart_id");
 
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("CartShopcartLists")
                         .HasForeignKey("ProductId")
                         .IsRequired()
@@ -1062,9 +1062,9 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyDelivery", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", "UserDelivery")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.DlyUserDelivery", "UserDelivery")
                         .WithMany("DlyDeliveries")
                         .HasForeignKey("UserDeliveryId")
                         .IsRequired()
@@ -1073,16 +1073,16 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("UserDelivery");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyMethodsAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyMethodsAddress", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", "Address")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryAddress", "Address")
                         .WithMany("DlyMethodsAddresses")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_dly_methods_address_dly_delivery_address_address_id");
 
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", "Method")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryMethod", "Method")
                         .WithMany("DlyMethodsAddresses")
                         .HasForeignKey("MethodId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1094,16 +1094,16 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Method");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyUserDelivery", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", "Address")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryAddress", "Address")
                         .WithMany("DlyUserDeliveries")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_dly_user_delivery_dly_delivery_address_address_id");
 
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", "Method")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryMethod", "Method")
                         .WithMany("DlyUserDeliveries")
                         .HasForeignKey("MethodId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1115,17 +1115,17 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Method");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrder", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.DlyDelivery", "Delivery")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.DlyDelivery", "Delivery")
                         .WithOne("OrdOrder")
-                        .HasForeignKey("Blazorit.Domain.EShop.EF.dom.OrdOrder", "DeliveryId")
+                        .HasForeignKey("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrder", "DeliveryId")
                         .IsRequired()
                         .HasConstraintName("fk_ord_order_dly_delivery_delivery_id");
 
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.PmntPayment", "Payment")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.PmntPayment", "Payment")
                         .WithOne("OrdOrder")
-                        .HasForeignKey("Blazorit.Domain.EShop.EF.dom.OrdOrder", "PaymentId")
+                        .HasForeignKey("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrder", "PaymentId")
                         .IsRequired()
                         .HasConstraintName("fk_ord_order_pmnt_payment_payment_id");
 
@@ -1134,15 +1134,15 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrderList", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrderList", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.OrdOrder", "Order")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrder", "Order")
                         .WithMany("OrdOrderLists")
                         .HasForeignKey("OrderId")
                         .IsRequired()
                         .HasConstraintName("fk_ord_order_list_ord_order_order_id");
 
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("OrdOrderLists")
                         .HasForeignKey("ProductId")
                         .IsRequired()
@@ -1153,9 +1153,9 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPayment", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.PmntPayment", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.PmntPaymentMethod", "PaymentMethod")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.PmntPaymentMethod", "PaymentMethod")
                         .WithMany("PmntPayments")
                         .HasForeignKey("PaymentMethodId")
                         .IsRequired()
@@ -1164,9 +1164,9 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("PaymentMethod");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdPicture", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.ProdPicture", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("ProdPictures")
                         .HasForeignKey("ProductId")
                         .IsRequired()
@@ -1175,9 +1175,9 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.ProdProduct", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdCategory", "Category")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.ProdCategory", "Category")
                         .WithMany("ProdProducts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1187,15 +1187,15 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWishList", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.WishWishList", b =>
                 {
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.ProdProduct", "Product")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.ProdProduct", "Product")
                         .WithMany("WishWishLists")
                         .HasForeignKey("ProductId")
                         .IsRequired()
                         .HasConstraintName("fk_wish_wish_list_prod_product_product_id");
 
-                    b.HasOne("Blazorit.Domain.EShop.EF.dom.WishWish", "Wish")
+                    b.HasOne("Blazorit.Domain.Entities.EShop.EF.dom.WishWish", "Wish")
                         .WithMany("WishWishLists")
                         .HasForeignKey("WishId")
                         .IsRequired()
@@ -1206,56 +1206,56 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("Wish");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.CartShopcart", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.CartShopcart", b =>
                 {
                     b.Navigation("CartShopcartLists");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyDelivery", b =>
                 {
                     b.Navigation("OrdOrder");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryAddress", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryAddress", b =>
                 {
                     b.Navigation("DlyMethodsAddresses");
 
                     b.Navigation("DlyUserDeliveries");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyDeliveryMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyDeliveryMethod", b =>
                 {
                     b.Navigation("DlyMethodsAddresses");
 
                     b.Navigation("DlyUserDeliveries");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.DlyUserDelivery", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.DlyUserDelivery", b =>
                 {
                     b.Navigation("DlyDeliveries");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.OrdOrder", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.OrdOrder", b =>
                 {
                     b.Navigation("OrdOrderLists");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPayment", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.PmntPayment", b =>
                 {
                     b.Navigation("OrdOrder");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.PmntPaymentMethod", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.PmntPaymentMethod", b =>
                 {
                     b.Navigation("PmntPayments");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdCategory", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.ProdCategory", b =>
                 {
                     b.Navigation("ProdProducts");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.ProdProduct", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.ProdProduct", b =>
                 {
                     b.Navigation("CartShopcartLists");
 
@@ -1266,7 +1266,7 @@ namespace Blazorit.Infrastructure.Migrations.DomDb
                     b.Navigation("WishWishLists");
                 });
 
-            modelBuilder.Entity("Blazorit.Domain.EShop.EF.dom.WishWish", b =>
+            modelBuilder.Entity("Blazorit.Domain.Entities.EShop.EF.dom.WishWish", b =>
                 {
                     b.Navigation("WishWishLists");
                 });

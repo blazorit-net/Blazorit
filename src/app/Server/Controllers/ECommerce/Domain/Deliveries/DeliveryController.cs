@@ -1,12 +1,12 @@
 ﻿using Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries;
 using Blazorit.Shared.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 
 namespace Blazorit.Server.Controllers.ECommerce.Domain.Deliveries
 {

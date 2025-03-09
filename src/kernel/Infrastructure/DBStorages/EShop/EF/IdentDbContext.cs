@@ -1,4 +1,4 @@
-using Blazorit.Domain.EShop.EF.ident;
+using Blazorit.Domain.Entities.EShop.EF.ident;
 using Blazorit.Infrastructure.Configurations.EShop.EF.Ident;
 using Microsoft.EntityFrameworkCore;
 

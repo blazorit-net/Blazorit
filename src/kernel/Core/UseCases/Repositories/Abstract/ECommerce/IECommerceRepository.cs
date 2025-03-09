@@ -1,8 +1,8 @@
-﻿using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+﻿using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;

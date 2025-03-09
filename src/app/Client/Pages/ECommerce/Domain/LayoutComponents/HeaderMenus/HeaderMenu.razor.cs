@@ -1,4 +1,4 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
+﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderMenus

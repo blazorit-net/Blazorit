@@ -1,4 +1,4 @@
-﻿using Blazorit.SharedKernel.Core.IdentityRoles;
+﻿using Blazorit.Domain.SharedKernel.Core.IdentityRoles;
 
 namespace Blazorit.Core.UseCases.Services.Abstract.Identity
 {

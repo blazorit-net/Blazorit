@@ -1,5 +1,5 @@
-﻿using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 
 namespace Blazorit.Server.Services.Abstract.ECommerce.Admin.Products
 {

@@ -1,7 +1,6 @@
 ﻿using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Microsoft.AspNetCore.Components;
 using Blazorit.Client.Shared.Routes.ECommerce.Domain;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using AntDesign;
 using Blazorit.Client.Services.Abstract.Identity;
 

@@ -1,10 +1,11 @@
 ﻿using AntDesign;
 using Blazorit.Client.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Microsoft.AspNetCore.Components;
-using KernelDeliveries = Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using KernelDeliveries = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
+using UserDeliveryPoint = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries.UserDeliveryPoint;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.Deliveries
 {
@@ -14,7 +15,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.D
         private IEnumerable<DeliveryAddress> deliveryAddresses = new List<DeliveryAddress>();
         private DeliveryAddressRadio choosenDeliveryAddressRadio = DeliveryAddressRadio.ExistingDeliveryAddresses;
         private string deliveryTextArea = string.Empty;
-        private KernelDeliveries.UserDeliveryPoint delivery = new();
+        private UserDeliveryPoint delivery = new();
 
         //private Select<DeliveryAddress, DeliveryAddress>? SelectDeliveryAddressRef = new();
 
@@ -36,7 +37,7 @@ namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.D
 
 
         [Parameter]
-        public EventCallback<KernelDeliveries.UserDeliveryPoint> OnDeliveryChanged { get; set; } = new();
+        public EventCallback<UserDeliveryPoint> OnDeliveryChanged { get; set; } = new();
 
 
 

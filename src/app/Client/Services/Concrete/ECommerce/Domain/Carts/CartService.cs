@@ -1,14 +1,13 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.Services.Abstract.Identity;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
 using System.Net.Http.Json;
 using Blazored.LocalStorage;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 using Blazorit.Client.Support.Helpers;
 using AntDesign.Core.Helpers.MemberPath;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
 {

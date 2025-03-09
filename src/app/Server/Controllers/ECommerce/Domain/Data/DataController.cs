@@ -1,11 +1,10 @@
-﻿using Blazorit.Shared.Models.Universal;
+﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
+using Blazorit.Shared.Models.Universal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 using Blazorit.Server.Services.Abstract.ECommerce.Domain.Data;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
 
 namespace Blazorit.Server.Controllers.ECommerce.Domain.Data
 {

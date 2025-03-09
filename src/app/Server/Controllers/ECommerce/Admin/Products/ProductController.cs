@@ -1,8 +1,8 @@
-﻿using Blazorit.Server.Services.Abstract.ECommerce.Admin.Products;
+﻿using Blazorit.Domain.SharedKernel.Core.IdentityRoles.Admin;
+using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Blazorit.Server.Services.Abstract.ECommerce.Admin.Products;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Admin;
-using Blazorit.SharedKernel.Core.IdentityRoles.Admin;
-using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
-using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shr = Blazorit.Shared.Models.Universal;
