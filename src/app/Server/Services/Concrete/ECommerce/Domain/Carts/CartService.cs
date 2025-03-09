@@ -9,9 +9,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Carts
     /// </summary>
     public class CartService : ICartService
     {
-        private readonly Core.Services.Abstract.ECommerce.Domain.Carts.ICartService _cartService;
+        private readonly Core.UseCases.Services.Abstract.ECommerce.Domain.Carts.ICartService _cartService;
 
-        public CartService(Core.Services.Abstract.ECommerce.Domain.Carts.ICartService cartService)
+        public CartService(Core.UseCases.Services.Abstract.ECommerce.Domain.Carts.ICartService cartService)
         {
             _cartService = cartService;
         }

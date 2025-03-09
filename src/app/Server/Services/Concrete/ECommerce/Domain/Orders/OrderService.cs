@@ -6,9 +6,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Orders
     public class OrderService : IOrderService
     {
 
-        private readonly Core.Services.Abstract.ECommerce.Domain.Orders.IOrderService _orderService;
+        private readonly Core.UseCases.Services.Abstract.ECommerce.Domain.Orders.IOrderService _orderService;
 
-        public OrderService(Core.Services.Abstract.ECommerce.Domain.Orders.IOrderService orderService)
+        public OrderService(Core.UseCases.Services.Abstract.ECommerce.Domain.Orders.IOrderService orderService)
         {
             _orderService = orderService;
         }

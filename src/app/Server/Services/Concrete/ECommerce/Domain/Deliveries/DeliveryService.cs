@@ -6,9 +6,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries
 {
     public class DeliveryService : IDeliveryService
     {
-        private readonly Core.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService _deliveryService;
+        private readonly Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService _deliveryService;
 
-        public DeliveryService(Core.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService deliveryService) 
+        public DeliveryService(Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService deliveryService) 
         {
             _deliveryService = deliveryService;
         }

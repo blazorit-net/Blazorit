@@ -38,8 +38,8 @@ builder.Services.AddRazorPages();
 ////builder.Services.AddSwaggerGen(); //custom add
 
 /***custom add - start***/
-builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.Identity.IIdentityRepository, Blazorit.Infrastructure.Repositories.Concrete.Identity.IdentityRepository>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.Identity.IIdentityService, Blazorit.Core.Services.Concrete.Identity.IdentityService>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Repositories.Abstract.Identity.IIdentityRepository, Blazorit.Infrastructure.Repositories.Concrete.Identity.IdentityRepository>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.Identity.IIdentityService, Blazorit.Core.UseCases.Services.Concrete.Identity.IdentityService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.Identity.IIdentityService, Blazorit.Server.Services.Concrete.Identity.IdentityService>();
 
 
@@ -62,21 +62,21 @@ builder.Services.AddHttpContextAccessor();
 //################################################################
 //  ######################--ECOMMERCE--#########################
 //################################################################
-builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Data.DataService>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Data.DataService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Carts.CartService>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts.CartService>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders.IOrderService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders.OrderService>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Carts.ICartService, Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Carts.CartService>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Orders.IOrderService, Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders.OrderService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Orders.IOrderService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Orders.OrderService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries.DeliveryService>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Deliveries.DeliveryService>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService, Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Deliveries.DeliveryService>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Payments.IPaymentService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Payments.PaymentService>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Payments.IPaymentService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Payments.PaymentService>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Payments.IPaymentService, Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Payments.PaymentService>();
 
-builder.Services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin.IECommerceAdminRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin.ECommerceAdminRepository>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Repositories.Abstract.ECommerce.Admin.IECommerceAdminRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin.ECommerceAdminRepository>();
 builder.Services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Admin.Products.IProductService, Blazorit.Server.Services.Concrete.ECommerce.Admin.Products.ProductService>();
-builder.Services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Admin.Products.IProductService, Blazorit.Core.Services.Concrete.ECommerce.Admin.Products.ProductService>();
+builder.Services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.ECommerce.Admin.Products.IProductService, Blazorit.Core.UseCases.Services.Concrete.ECommerce.Admin.Products.ProductService>();
 //################################################################
 //  ############################################################
 //################################################################
@@ -113,6 +113,11 @@ app.MapFallbackToFile("index.html");
 
 
 // For Backend:
-await DbInitializer.MigrateDatabaseAsync(app);
+#if DEBUG
+    //await DbInitializer.MigrateDatabaseAsync(app);
+#else
+    await DbInitializer.MigrateDatabaseAsync(app);
+#endif
+
 
 app.Run();

@@ -21,9 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!--Dependency only for DI-->
     <ProjectReference Include="..\..\kernel\Core\Blazorit.Core.csproj" />
-    <ProjectReference Include="..\..\kernel\SharedKernel\Blazorit.SharedKernel.csproj" />
+    <!--Dependency only for DI-->
+    <ProjectReference Include="..\..\kernel\Infrastructure\Blazorit.Infrastructure.csproj" />
+    <!--Dependency for sharing with Client-->
     <ProjectReference Include="..\Shared\Blazorit.Shared.csproj" />
+    <!--Dependency for sharing all domain entities from kernel-->
+<!--    <ProjectReference Include="..\..\kernel\SharedKernel\Blazorit.SharedKernel.csproj" />-->
+    
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

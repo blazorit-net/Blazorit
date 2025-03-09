@@ -7,14 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Blazorit.Infrastructure.csproj" />
     <ProjectReference Include="..\SharedKernel\Blazorit.SharedKernel.csproj" />
+    <ProjectReference Include="..\Domain\Blazorit.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
-    <Folder Include="Services\Concrete\Identity\" />
-    <Folder Include="Services\Models\" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

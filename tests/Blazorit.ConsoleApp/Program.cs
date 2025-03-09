@@ -36,8 +36,8 @@ try {
             //################################################################
             //  ######################--ECOMMERCE--#########################
             //################################################################
-            services.AddScoped<Blazorit.Infrastructure.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
-            services.AddScoped<Blazorit.Core.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Core.Services.Concrete.ECommerce.Domain.Data.DataService>();
+            services.AddScoped<Blazorit.Core.UseCases.Repositories.Abstract.ECommerce.IECommerceRepository, Blazorit.Infrastructure.Repositories.Concrete.ECommerce.ECommerceRepository>();
+            services.AddScoped<Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Data.DataService>();
             services.AddScoped<Blazorit.Server.Services.Abstract.ECommerce.Domain.Data.IDataService, Blazorit.Server.Services.Concrete.ECommerce.Domain.Data.DataService>();
             //################################################################
             //  ############################################################

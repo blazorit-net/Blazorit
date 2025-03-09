@@ -1,4 +1,4 @@
-﻿using Blazorit.Infrastructure.Repositories.Abstract.ECommerce;
+﻿using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
 using System;
 using System.Collections.Generic;
 using System.Linq;

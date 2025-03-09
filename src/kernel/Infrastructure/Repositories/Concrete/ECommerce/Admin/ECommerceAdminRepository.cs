@@ -1,6 +1,6 @@
 ﻿using Blazorit.Infrastructure.DBStorages.EShop.EF;
 using Blazorit.Domain.EShop.EF.dom;
-using Blazorit.Infrastructure.Repositories.Abstract.ECommerce.Admin;
+using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce.Admin;
 using Blazorit.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;

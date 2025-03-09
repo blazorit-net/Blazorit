@@ -1,5 +1,5 @@
 ﻿using Blazorit.Infrastructure.DBStorages.EShop.EF;
-using Blazorit.Infrastructure.Repositories.Abstract.Identity;
+using Blazorit.Core.UseCases.Repositories.Abstract.Identity;
 using Blazorit.SharedKernel.Infrastructure.Repositories.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 

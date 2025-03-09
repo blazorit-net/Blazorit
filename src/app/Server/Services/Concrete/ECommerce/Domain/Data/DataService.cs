@@ -6,9 +6,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Data
 {
     public class DataService : IDataService
     {
-        private readonly Core.Services.Abstract.ECommerce.Domain.Data.IDataService _dataService;
+        private readonly Core.UseCases.Services.Abstract.ECommerce.Domain.Data.IDataService _dataService;
 
-        public DataService(Core.Services.Abstract.ECommerce.Domain.Data.IDataService dataService)
+        public DataService(Core.UseCases.Services.Abstract.ECommerce.Domain.Data.IDataService dataService)
         {
             _dataService = dataService;
         }

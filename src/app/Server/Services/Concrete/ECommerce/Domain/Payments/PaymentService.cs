@@ -5,9 +5,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Payments
 {
     public class PaymentService : IPaymentService
     {
-        private readonly Core.Services.Abstract.ECommerce.Domain.Payments.IPaymentService _paymentService;
+        private readonly Core.UseCases.Services.Abstract.ECommerce.Domain.Payments.IPaymentService _paymentService;
 
-        public PaymentService(Core.Services.Abstract.ECommerce.Domain.Payments.IPaymentService paymentService)
+        public PaymentService(Core.UseCases.Services.Abstract.ECommerce.Domain.Payments.IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }
