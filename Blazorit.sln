@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazorit.ConsoleApp", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazorit.Domain.Entities", "src\kernel\Domain\Entities\Blazorit.Domain.Entities.csproj", "{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazorit.UseCases", "src\kernel\UseCases\Blazorit.UseCases.csproj", "{BF07E3FD-FCCC-42E2-BA07-003EAA1ED2F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF07E3FD-FCCC-42E2-BA07-003EAA1ED2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF07E3FD-FCCC-42E2-BA07-003EAA1ED2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF07E3FD-FCCC-42E2-BA07-003EAA1ED2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF07E3FD-FCCC-42E2-BA07-003EAA1ED2F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{C6E1CD81-AAFA-40BC-A9B1-3A3E7F1A114C} = {4C2CB061-5B7E-4F42-A184-F1A21843C8E5}
 		{3D5112E9-F6A8-491E-954F-616F93FE98C1} = {E120CCC1-612F-4B2A-8CEE-00800ED964A1}
 		{0B40A390-47C2-44B2-A0B2-66BB4FDBB7EB} = {DF4E3067-EF7A-43AE-A677-F63F81B3C69A}
+		{BF07E3FD-FCCC-42E2-BA07-003EAA1ED2F8} = {DF4E3067-EF7A-43AE-A677-F63F81B3C69A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EE3F3B75-FACB-46DA-B08D-87D4F4033171}

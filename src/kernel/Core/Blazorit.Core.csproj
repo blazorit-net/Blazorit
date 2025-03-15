@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\SharedKernel\Blazorit.Domain.SharedKernel.csproj" />
-    <ProjectReference Include="..\Domain\Entities\Blazorit.Domain.Entities.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <ProjectReference Include="..\UseCases\Blazorit.UseCases.csproj" />
   </ItemGroup>
 
 </Project>
