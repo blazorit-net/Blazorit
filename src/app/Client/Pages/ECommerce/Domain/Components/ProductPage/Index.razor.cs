@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Data;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProductPage
 {

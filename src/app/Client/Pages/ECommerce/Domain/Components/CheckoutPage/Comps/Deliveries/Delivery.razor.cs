@@ -1,11 +1,11 @@
 ﻿using AntDesign;
 using Blazorit.Client.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Deliveries;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Microsoft.AspNetCore.Components;
-using KernelDeliveries = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using UserDeliveryPoint = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries.UserDeliveryPoint;
+using KernelDeliveries = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Deliveries;
+using UserDeliveryPoint = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Deliveries.UserDeliveryPoint;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.CheckoutPage.Comps.Deliveries
 {

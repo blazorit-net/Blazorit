@@ -1,14 +1,14 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 using Blazorit.Server.Services.Abstract.ECommerce.Domain.Deliveries;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Deliveries
 {
     public class DeliveryService : IDeliveryService
     {
-        private readonly Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService _deliveryService;
+        private readonly Core.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService _deliveryService;
 
-        public DeliveryService(Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService deliveryService) 
+        public DeliveryService(Core.Services.Abstract.ECommerce.Domain.Deliveries.IDeliveryService deliveryService) 
         {
             _deliveryService = deliveryService;
         }

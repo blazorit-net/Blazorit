@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Deliveries;
 
-namespace Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries
+namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries
 {
     public interface IDeliveryService
     {

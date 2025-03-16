@@ -1,5 +1,5 @@
 ﻿using Blazorit.ConsoleApp.Programs.ECommerce;
-using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
+using Blazorit.UseCases.Infrastructure.Repositories.Abstract.ECommerce;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 

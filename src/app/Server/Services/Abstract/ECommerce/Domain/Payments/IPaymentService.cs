@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+﻿using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 
 namespace Blazorit.Server.Services.Abstract.ECommerce.Domain.Payments
 {

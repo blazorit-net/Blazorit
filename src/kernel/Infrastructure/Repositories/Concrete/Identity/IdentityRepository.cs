@@ -1,6 +1,6 @@
 ﻿using Blazorit.Infrastructure.DBStorages.EShop.EF;
-using Blazorit.Core.UseCases.Repositories.Abstract.Identity;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.Identity;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.Identity;
+using Blazorit.UseCases.Infrastructure.Repositories.Abstract.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.Identity

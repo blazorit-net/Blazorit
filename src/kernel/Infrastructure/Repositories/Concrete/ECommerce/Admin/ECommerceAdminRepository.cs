@@ -1,6 +1,6 @@
 ﻿using Blazorit.Infrastructure.DBStorages.EShop.EF;
 using Blazorit.Domain.Entities.EShop.EF.dom;
-using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce.Admin;
+using Blazorit.UseCases.Infrastructure.Repositories.Abstract.ECommerce.Admin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 
 namespace Blazorit.Infrastructure.Repositories.Concrete.ECommerce.Admin
 {

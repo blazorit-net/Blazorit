@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+﻿using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using Blazorit.Server.Services.Abstract.ECommerce.Domain.Payments;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
 using Microsoft.AspNetCore.Http;

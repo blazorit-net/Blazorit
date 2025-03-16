@@ -1,5 +1,5 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
 
 namespace Blazorit.Client.Shared.Routes.ECommerce.Domain
 {

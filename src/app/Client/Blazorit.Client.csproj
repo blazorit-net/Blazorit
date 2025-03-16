@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\kernel\Domain\SharedKernel\Blazorit.Domain.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\kernel\Domain\SharedDomain\Blazorit.Domain.SharedDomain.csproj" />
     <ProjectReference Include="..\Shared\Blazorit.Shared.csproj" />
   </ItemGroup>
 

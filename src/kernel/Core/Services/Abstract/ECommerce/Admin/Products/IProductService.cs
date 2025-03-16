@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 
-namespace Blazorit.Core.UseCases.Services.Abstract.ECommerce.Admin.Products
+namespace Blazorit.Core.Services.Abstract.ECommerce.Admin.Products
 {
     public interface IProductService
     {

@@ -1,6 +1,6 @@
 ﻿using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Carts;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.AddingCartButtons

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
 
-namespace Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Orders
+namespace Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders
 {
     public interface IOrderService
     {

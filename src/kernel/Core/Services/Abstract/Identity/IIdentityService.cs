@@ -1,6 +1,6 @@
-﻿using Blazorit.Domain.SharedKernel.Core.IdentityRoles;
+﻿using Blazorit.Domain.SharedDomain.Core.IdentityRoles;
 
-namespace Blazorit.Core.UseCases.Services.Abstract.Identity
+namespace Blazorit.Core.Services.Abstract.Identity
 {
     public interface IIdentityService {
         Task<IdentResult<UserTokenData>> CheckUser(string userName, string password);

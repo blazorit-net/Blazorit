@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Carts;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts

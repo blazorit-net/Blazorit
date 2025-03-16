@@ -3,7 +3,7 @@ using Blazorit.Client.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Client.Services.Abstract.Identity;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Blazorit.Client.Support.Helpers;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
 using Blazorit.Shared.Models.Universal;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
 

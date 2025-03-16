@@ -3,17 +3,17 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Blazorit.Core.Constants.Identity;
-using Blazorit.Domain.SharedKernel.Core.IdentityRoles;
+using Blazorit.Domain.SharedDomain.Core.IdentityRoles;
 using Blazorit.Shared.Models.Identity;
 
 namespace Blazorit.Server.Services.Concrete.Identity
 {
     public class IdentityService : IIdentityService {
-        private readonly Core.UseCases.Services.Abstract.Identity.IIdentityService _identService;
+        private readonly Core.Services.Abstract.Identity.IIdentityService _identService;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityService(Core.UseCases.Services.Abstract.Identity.IIdentityService identService, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) {
+        public IdentityService(Core.Services.Abstract.Identity.IIdentityService identService, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) {
             _identService = identService;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;

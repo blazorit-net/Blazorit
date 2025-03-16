@@ -1,13 +1,13 @@
-﻿using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Payments;
-using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
+﻿using Blazorit.UseCases.Infrastructure.Repositories.Abstract.ECommerce;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using Blazorit.Core.Services.Abstract.ECommerce.Domain.Payments;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 
-namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Payments
+namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Payments
 {
     public class PaymentService : IPaymentService
     {

@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Admin.Products;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage

@@ -1,6 +1,6 @@
-﻿using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.Identity;
+﻿using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.Identity;
 
-namespace Blazorit.Core.UseCases.Repositories.Abstract.Identity
+namespace Blazorit.UseCases.Infrastructure.Repositories.Abstract.Identity
 {
     public interface IIdentityRepository {
         Task<UserExistsResult> UserExists(string userName);

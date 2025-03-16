@@ -1,15 +1,15 @@
-﻿using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Carts;
-using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
+﻿using Blazorit.UseCases.Infrastructure.Repositories.Abstract.ECommerce;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+using Blazorit.Core.Services.Abstract.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
 
-namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Carts {
+namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Carts {
     /// <summary>
     /// Cart service for shopcarts
     /// </summary>

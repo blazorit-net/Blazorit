@@ -3,10 +3,10 @@ using Blazorit.Client.Services.Abstract.ECommerce.Domain.Carts;
 using Blazorit.Client.Services.Abstract.ECommerce.Domain.Orders;
 using Blazorit.Client.Shared.Routes.ECommerce.Domain;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
 using Blazorit.Shared.Models.Universal;
 using Microsoft.AspNetCore.Components;
 

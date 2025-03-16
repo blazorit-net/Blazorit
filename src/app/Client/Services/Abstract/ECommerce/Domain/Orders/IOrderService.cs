@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
 using Blazorit.Shared.Models.Universal;
 
 namespace Blazorit.Client.Services.Abstract.ECommerce.Domain.Orders

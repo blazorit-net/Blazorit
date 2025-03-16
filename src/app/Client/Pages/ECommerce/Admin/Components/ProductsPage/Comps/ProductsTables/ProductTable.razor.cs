@@ -3,8 +3,8 @@ using AntDesign.TableModels;
 using Microsoft.AspNetCore.Components.Web;
 using Blazorit.Client.Services.Abstract.ECommerce.Admin.Products;
 using AntDesign;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Shr = Blazorit.Shared.Models.Universal;
 
 namespace Blazorit.Client.Pages.ECommerce.Admin.Components.ProductsPage.Comps.ProductsTables

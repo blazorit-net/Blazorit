@@ -7,7 +7,7 @@ using Blazorit.Client.Support.Helpers;
 using AntDesign.Core.Helpers.MemberPath;
 using Blazorit.Client.States.ECommerce.Domain.Carts;
 using Blazorit.Client.Pages.ECommerce.Domain.LayoutComponents.HeaderToolbars.Comps.Shopcarts;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Carts;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Carts;
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Carts
 {

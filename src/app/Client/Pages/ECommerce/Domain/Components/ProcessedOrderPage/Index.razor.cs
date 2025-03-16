@@ -4,7 +4,7 @@ using Blazorit.Client.Support.Enums;
 using Blazorit.Shared.Models.Universal;
 using Microsoft.AspNetCore.Components;
 using System.Xml.Linq;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.ProcessedOrderPage
 {

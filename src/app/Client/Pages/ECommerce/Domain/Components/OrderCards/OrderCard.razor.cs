@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazorit.Client.Pages.ECommerce.Domain.Components.OrderCards

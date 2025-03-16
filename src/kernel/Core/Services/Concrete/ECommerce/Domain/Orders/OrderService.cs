@@ -1,32 +1,32 @@
-﻿using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Carts;
-using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Deliveries;
-using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Orders;
-using Blazorit.Core.UseCases.Repositories.Abstract.ECommerce;
-using CoreOrders = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
-using InfrOrders = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
-using InfrPayments = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
-using CorePayments = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Payments;
+﻿using Blazorit.Core.Services.Abstract.ECommerce.Domain.Carts;
+using Blazorit.UseCases.Infrastructure.Repositories.Abstract.ECommerce;
+using CoreOrders = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
+using InfrOrders = Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Orders;
+using InfrPayments = Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Payments;
+using CorePayments = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Payments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blazorit.Core.UseCases.Services.Abstract.ECommerce.Domain.Payments;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Deliveries;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
-using CheckOrder = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.CheckOrder;
-using CheckoutOrder = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.CheckoutOrder;
-using Order = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.Order;
-using OrderItem = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.OrderItem;
-using Orders_Order = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.Order;
-using PaidOrder = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders.PaidOrder;
-using Payment = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments.Payment;
-using PaymentMethod = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Payments.PaymentMethod;
-using Payments_Payment = Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Payments.Payment;
-using VwOrder = Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.VwOrder;
+using Blazorit.Core.Services.Abstract.ECommerce.Domain.Deliveries;
+using Blazorit.Core.Services.Abstract.ECommerce.Domain.Orders;
+using Blazorit.Core.Services.Abstract.ECommerce.Domain.Payments;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Deliveries;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Products;
+using CheckOrder = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders.CheckOrder;
+using CheckoutOrder = Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.CheckoutOrder;
+using Order = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders.Order;
+using OrderItem = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders.OrderItem;
+using Orders_Order = Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.Order;
+using PaidOrder = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders.PaidOrder;
+using Payment = Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Payments.Payment;
+using PaymentMethod = Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Payments.PaymentMethod;
+using Payments_Payment = Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Payments.Payment;
+using VwOrder = Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Domain.Orders.VwOrder;
 
 
-namespace Blazorit.Core.UseCases.Services.Concrete.ECommerce.Domain.Orders
+namespace Blazorit.Core.Services.Concrete.ECommerce.Domain.Orders
 {
     public class OrderService : IOrderService
     {

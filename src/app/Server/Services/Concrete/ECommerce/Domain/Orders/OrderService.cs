@@ -1,4 +1,4 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Orders;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Orders;
 using Blazorit.Server.Services.Abstract.ECommerce.Domain.Orders;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Orders
@@ -6,9 +6,9 @@ namespace Blazorit.Server.Services.Concrete.ECommerce.Domain.Orders
     public class OrderService : IOrderService
     {
 
-        private readonly Core.UseCases.Services.Abstract.ECommerce.Domain.Orders.IOrderService _orderService;
+        private readonly Core.Services.Abstract.ECommerce.Domain.Orders.IOrderService _orderService;
 
-        public OrderService(Core.UseCases.Services.Abstract.ECommerce.Domain.Orders.IOrderService orderService)
+        public OrderService(Core.Services.Abstract.ECommerce.Domain.Orders.IOrderService orderService)
         {
             _orderService = orderService;
         }

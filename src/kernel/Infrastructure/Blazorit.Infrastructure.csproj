@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UseCases\Blazorit.UseCases.csproj" />
+    <ProjectReference Include="..\Domain\Entities\Blazorit.Domain.Entities.csproj" />
   </ItemGroup>
 
   <ItemGroup Label="External">

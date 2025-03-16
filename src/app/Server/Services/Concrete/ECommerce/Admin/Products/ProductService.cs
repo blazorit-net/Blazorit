@@ -1,14 +1,14 @@
-﻿using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Admin.Products;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
+﻿using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Admin.Products;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.ECommerce.Admin.Products;
 using Blazorit.Server.Services.Abstract.ECommerce.Admin.Products;
 
 namespace Blazorit.Server.Services.Concrete.ECommerce.Admin.Products
 {
     public class ProductService : IProductService
     {
-        private readonly Core.UseCases.Services.Abstract.ECommerce.Admin.Products.IProductService _productService;
+        private readonly Core.Services.Abstract.ECommerce.Admin.Products.IProductService _productService;
 
-        public ProductService(Core.UseCases.Services.Abstract.ECommerce.Admin.Products.IProductService productService)
+        public ProductService(Core.Services.Abstract.ECommerce.Admin.Products.IProductService productService)
         {
             _productService = productService;
         }

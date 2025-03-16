@@ -1,10 +1,10 @@
-﻿using Blazorit.Core.UseCases.Services.Abstract.Identity;
-using Blazorit.Core.UseCases.Repositories.Abstract.Identity;
-using System.Security.Cryptography;
-using Blazorit.Domain.SharedKernel.Core.IdentityRoles;
-using Blazorit.Domain.SharedKernel.Infrastructure.Repositories.Models.Identity;
+﻿using System.Security.Cryptography;
+using Blazorit.Core.Services.Abstract.Identity;
+using Blazorit.Domain.SharedDomain.Core.IdentityRoles;
+using Blazorit.Domain.SharedDomain.Infrastructure.Repositories.Models.Identity;
+using Blazorit.UseCases.Infrastructure.Repositories.Abstract.Identity;
 
-namespace Blazorit.Core.UseCases.Services.Concrete.Identity
+namespace Blazorit.Core.Services.Concrete.Identity
 {
     public class IdentityService : IIdentityService {
         private readonly IIdentityRepository _identRepo;

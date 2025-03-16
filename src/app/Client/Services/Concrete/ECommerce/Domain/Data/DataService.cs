@@ -4,8 +4,8 @@ using Blazorit.Shared.Models.Universal;
 using Blazorit.Shared.Routes.WebAPI.ECommerce.Domain;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
-using Blazorit.Domain.SharedKernel.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Data.HeaderMenus;
+using Blazorit.Domain.SharedDomain.Core.Services.Models.ECommerce.Domain.Data.ProductCards;
 
 
 namespace Blazorit.Client.Services.Concrete.ECommerce.Domain.Data
